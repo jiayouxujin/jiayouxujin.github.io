@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,绑定," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言为什么突然写Java系列？因为突然发现自己以前学习都没有深入去理解一个知识点，搞的自己看起来都会，其实都不会。所以这个系列里，我会专门来讲Java中的知识点，并且会把这个知识点设计到的每个小知识点都提到。  动态绑定 When compiler is not  able to resolve the call&#x2F;binding at compile time,such binding is kn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java动态绑定和静态绑定详解">
+<meta property="og:url" content="http://blog.xuxiaojin.com/uncategorized/2019-04-20-java%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="徐小晋的博客">
+<meta property="og:description" content="前言为什么突然写Java系列？因为突然发现自己以前学习都没有深入去理解一个知识点，搞的自己看起来都会，其实都不会。所以这个系列里，我会专门来讲Java中的知识点，并且会把这个知识点设计到的每个小知识点都提到。  动态绑定 When compiler is not  able to resolve the call&#x2F;binding at compile time,such binding is kn">
+<meta property="article:published_time" content="2019-04-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-04-20T11:01:00.941Z">
+<meta property="article:author" content="徐晋">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="绑定">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.xuxiaojin.com/uncategorized/2019-04-20-java动态绑定和静态绑定详解/"/>
+
+
+
+
+
+  <title>Java动态绑定和静态绑定详解 | 徐小晋的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91c59f68cca0da6fa05cfcb52fe0b3e8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐小晋的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习成长与思考</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/uncategorized/2019-04-20-java%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="徐晋">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐小晋的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java动态绑定和静态绑定详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T00:00:00+08:00">
+                2019-04-20
+              </time>
+            
+
+            
+
+            
+
+            
+              <span class="post-letters-count">
+                &nbsp; | &nbsp;
+              <span>2.2k 字</span>
+                &nbsp; | &nbsp;
+              <span>10 min</span>
+              </span>
+
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/uncategorized/2019-04-20-java%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E8%AF%A6%E8%A7%A3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/uncategorized/2019-04-20-java%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E8%AF%A6%E8%A7%A3/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为什么突然写Java系列？因为突然发现自己以前学习都没有深入去理解一个知识点，搞的自己看起来都会，其实都不会。所以这个系列里，我会专门来讲Java中的知识点，并且会把这个知识点设计到的每个小知识点都提到。</p>
+<hr>
+<h3 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h3><blockquote>
+<p>When compiler is not  able to resolve the call/binding at compile time,such binding is known as Dynamic or late Binding 。</p>
+</blockquote>
+<p>看到这里，我的表情是这样的:cry:</p>
+<p>我们来看一下example</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 总共两个类 主类Boy继承Human</span></span><br><span class="line"><span class="comment"> * 类Human里有个方法walk() Boy对该方法进行重写(overriding)</span></span><br><span class="line"><span class="comment"> * 然后有三个对象obj obj1 obj2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Human walks"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">extends</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Boy walks"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        Human obj=<span class="keyword">new</span> Boy();</span><br><span class="line">        Human obj2=<span class="keyword">new</span> Human();</span><br><span class="line">        Boy obj3=<span class="keyword">new</span> Boy();</span><br><span class="line"></span><br><span class="line">        obj.walk();</span><br><span class="line">        obj2.walk();</span><br><span class="line">        obj3.walk();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tips:可以先自己想一下输出的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输出结果：</span><br><span class="line">Boy walks</span><br><span class="line">Human walks</span><br><span class="line">Boy walks</span><br></pre></td></tr></table></figure>
+
+<p>不知道跟你想的有没有一样？</p>
+<p>好我们来分析一下这个代码:smile:在此之前我需要补充几个知识点【如果这两个知识点你还不熟悉的话，需要你往下看】</p>
+<ul>
+<li>java转型 向上转型或向下转型</li>
+<li>重写和重载</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*obj是向下转型</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="java转型"><a href="#java转型" class="headerlink" title="java转型"></a>java转型</h3><h4 id="向上转型"><a href="#向上转型" class="headerlink" title="向上转型"></a>向上转型</h4><blockquote>
+<p>upcasting is casting to a supertype and upcasting is always allowed</p>
+</blockquote>
+<blockquote>
+<p>when we want to cast a Sub class to Super class to Super class</p>
+</blockquote>
+<p>这两句话的意思就是：当你想让子类转型成父类就是向上转型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 有三个类 主类C的直接父类为B B的父类是A</span></span><br><span class="line"><span class="comment"> * 其中main函数定义了两个对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"A"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"B"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        A a=<span class="keyword">new</span> B();</span><br><span class="line">        a.a1();</span><br><span class="line">        B b=<span class="keyword">new</span> B();</span><br><span class="line">        b.a1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line">B</span><br><span class="line">B</span><br></pre></td></tr></table></figure>
+
+<p>可能看到这个结果有点疑惑[作为菜鸟的我又去查了资料]</p>
+<blockquote>
+<p>A cast from B to an A is an upcast,because B is-a A.In general,you can upcast whenever there is an is-a relationship between two classes.</p>
+<p>[is-a]在知识表示、面向对象程序设计与面向对象设计的领域中表示类的父子继承关系</p>
+</blockquote>
+<p>现在应该比较好理解了，a呢实际上指向的是一个子类对象，只不过这个子类对象进行了upcasting。[不过由于向上转型，a对象可能会丢失和父类不同的方法—表示a对象只能调用父类继承过来的方法]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个代码是错误的不可运行</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"A"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"B"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">b1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"B1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        A a=<span class="keyword">new</span> B();</span><br><span class="line">        a.a1();</span><br><span class="line">        a.b1();<span class="comment">//这句话会报错</span></span><br><span class="line">        ((B) a).b1();</span><br><span class="line">        B b=<span class="keyword">new</span> B();</span><br><span class="line">        b.a1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可能会觉得疑惑，这个向上转型有什么用？—增强了程序的简洁性:question:</p>
+<p>这里又会设计到另外一个概念：<strong>类的多态</strong></p>
+<h5 id="类的多态"><a href="#类的多态" class="headerlink" title="类的多态"></a>类的多态</h5><p>先来看一下example</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> number;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(String name,String address,<span class="keyword">int</span> number)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Constructing an Employee"</span>);</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">        <span class="keyword">this</span>.address=address;</span><br><span class="line">        <span class="keyword">this</span>.number=number;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mailCheck</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"with employee"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Salary</span> <span class="keyword">extends</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Salary</span><span class="params">(String name,String address,<span class="keyword">int</span> number,<span class="keyword">double</span> salary)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name,address,number);</span><br><span class="line">        setSalary(salary);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSalary</span><span class="params">(<span class="keyword">double</span> salary)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(salary&gt;=<span class="number">0.0</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.salary=salary;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mailCheck</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Within mailCkeck of Salary class"</span>);</span><br><span class="line">        System.out.println(<span class="string">"with salary"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VirtualDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        Salary s=<span class="keyword">new</span> Salary(<span class="string">"jin"</span>,<span class="string">"shanghai"</span>,<span class="number">1</span>,<span class="number">3.0</span>);</span><br><span class="line">        Employee e=<span class="keyword">new</span> Salary(<span class="string">"xu"</span>,<span class="string">"sh"</span>,<span class="number">2</span>,<span class="number">3.0</span>);</span><br><span class="line">        System.out.println(<span class="string">"Call mailCheck using Salary reference --"</span>);</span><br><span class="line">        s.mailCheck();</span><br><span class="line">        System.out.println(<span class="string">"Call mailCheck using Employee reference--"</span>);</span><br><span class="line">        e.mailCheck();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> * 预计运行结果</span></span><br><span class="line"><span class="comment"> * 都是通过mailCheck()</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>先来猜测一下，输出结果是什么？</p>
+<p>没错都是通过Salary类输出mailCheck();[在调试代码的时候，因为方法名字写错。对其有着更深理解 Salary类继承Empolyee 重写mailCheck()方法]</p>
+<p>好了，那多态的概念是什么呢？</p>
+<blockquote>
+<p>多态指的是 Java的父类对象可以引用其所有子类对象。但是其引用完后，仍然是“父类对象”，只能调用父类中能够被子类继承的方法或者对象。</p>
+</blockquote>
+<p>从上面多态的例子和向上转型，你应该可以看出多态其实就是一种<strong>upcasting</strong>.</p>
+<h4 id="向下转型"><a href="#向下转型" class="headerlink" title="向下转型"></a>向下转型</h4><blockquote>
+<p>Downcasting is casting to a subtype and downcasting involves a type check and can throw a ClassCastException.</p>
+</blockquote>
+<p>定义就是讲，当父类对象转为子类，不过不像upcasting，会有ClassCastExeption的异常</p>
+<p>你们查这个代码是否可以运行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VirtualDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        Employee e=<span class="keyword">new</span> Salary(<span class="string">"xu"</span>,<span class="string">"sh"</span>,<span class="number">2</span>,<span class="number">3.0</span>);</span><br><span class="line">        Employee ee=<span class="keyword">new</span> Employee(<span class="string">"xu"</span>,<span class="string">"sh"</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        Salary sss= (Salary) ee;</span><br><span class="line">        Salary ss= (Salary) e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实不行，会有ClassCastExveption异常。</p>
+<p>为什么呢？因为在运行的时候 ee就是 Employee,当你让他变成Salary，就会抛出异常</p>
+<p>所以为了不抛出异常就需要提前判断 (A instanceof B)</p>
+<blockquote>
+<p>instanceof is used to check if an object is an instance of a specific class</p>
+</blockquote>
+<h3 id="重写-overrding-与重载-overloading"><a href="#重写-overrding-与重载-overloading" class="headerlink" title="重写(overrding)与重载(overloading)"></a>重写(overrding)与重载(overloading)</h3><blockquote>
+<p>overlading occurs when two or more methods in one class have the same method name but different parameters.</p>
+<p>overriding means having two methods with the same method name and parameters.One of the methods is in the parent class and the other is in the child class.</p>
+</blockquote>
+<p>从定义我们可以看到，重写是发生在extends中，子类重写父类的方法。重载则是在同一类中的方法。</p>
+<h3 id="静态绑定"><a href="#静态绑定" class="headerlink" title="静态绑定"></a>静态绑定</h3><blockquote>
+<p>Static binding in java occurs during compile time</p>
+<p>private,final and static methods and variables user static binding and are bonded by compiler.</p>
+<p>static binding uses type (class in java)information for binding</p>
+<p>overloading methods are bonded using static bindign</p>
+</blockquote>
+<p>通过研究动态绑定，我们可以很简单的学会静态绑定</p>
+<ol>
+<li>静态绑定发生在 static final private[就是无法被继承的类型]上</li>
+<li>静态绑定是由class 类型决定的，因为是发生在编译时期</li>
+<li><strong>overloading</strong> 也是静态绑定</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VirtualDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        Salary s=<span class="keyword">new</span> Salary(<span class="string">"jin"</span>,<span class="string">"shanghai"</span>,<span class="number">1</span>,<span class="number">3.0</span>);</span><br><span class="line">        Employee e=<span class="keyword">new</span> Salary(<span class="string">"xu"</span>,<span class="string">"sh"</span>,<span class="number">2</span>,<span class="number">3.0</span>);</span><br><span class="line">        Employee ee=<span class="keyword">new</span> Employee(<span class="string">"xu"</span>,<span class="string">"sh"</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        VirtualDemo virtualDemo=<span class="keyword">new</span> VirtualDemo();</span><br><span class="line">        virtualDemo.testOverloading(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">testOverloading</span><span class="params">(Employee e)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Employee"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">testOverloading</span><span class="params">(Salary ss)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Salary"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你能猜到输出结果吗？</p>
+<p>结果是Empoyee</p>
+<p>是不是很惊喜？？？</p>
+<p>我们来分析一下这个代码：<br>首先 testOverloading是一个重载方法，所以是静态绑定，而静态绑定是由类类型决定，并且e是Employee类型，虽然其指向Salary对象，不过一点都不影响其静态绑定.</p>
+<p>看到这里你应该对静态绑定有更深刻的了解了吧！[说实话，昨天我以为我懂了，今天发现好伐又有新东西。真好]</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<p>Here are a few important differences between static and dynamic binding:</p>
+<ol>
+<li>Static binding in Java occurs during compile time while dynamic binding occurs during runtime</li>
+<li>private，final and static methods and variables use static binding and are bonded by compiler whiler virtual metods are bonded during runtime based upon runtime object</li>
+<li>Static binding users Type (Class in Java) information for binding while dynamic binding uses object to resolve binding </li>
+<li>Overloaded methods are bonded using static binding while overridden methods are boned using dynamic binding at runtime</li>
+</ol>
+</blockquote>
+<p>如定义所说：动态绑定就是指在运行的时候，调用方法才跟方法体联系起来，而静态绑定是在编译的时候就联系起来。并且只有 final static private.这种没法被继承的，(在upcasting或者体现类多态的时候才会有“静态绑定”这一个说法)</p>
+<p>以个例子收尾</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> number;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> flag=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(String name,String address,<span class="keyword">int</span> number)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Constructing an Employee"</span>);</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">        <span class="keyword">this</span>.address=address;</span><br><span class="line">        <span class="keyword">this</span>.number=number;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mailCheck</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"the static method of employee"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mailCheck2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"the public method of employee"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">mailCheck3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"the private employee method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Salary</span> <span class="keyword">extends</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> flag=<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Salary</span><span class="params">(String name,String address,<span class="keyword">int</span> number,<span class="keyword">double</span> salary)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name,address,number);</span><br><span class="line">        setSalary(salary);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSalary</span><span class="params">(<span class="keyword">double</span> salary)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(salary&gt;=<span class="number">0.0</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.salary=salary;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mailCheck</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"with salary static method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mailCheck2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"public method of salary"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">mailCheck3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"private method of salary"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VirtualDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        Salary s=<span class="keyword">new</span> Salary(<span class="string">"jin"</span>,<span class="string">"shanghai"</span>,<span class="number">1</span>,<span class="number">3.0</span>);</span><br><span class="line">        Employee e=<span class="keyword">new</span> Salary(<span class="string">"xu"</span>,<span class="string">"sh"</span>,<span class="number">2</span>,<span class="number">3.0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 初始化完后 需要进行验证</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 验证static 是静态绑定</span></span><br><span class="line"><span class="comment">         * 由分析得  s应该就是salary里的方法 e应该是employee里的方法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        s.mailCheck();</span><br><span class="line">        e.mailCheck();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 验证final是静态绑定</span></span><br><span class="line"><span class="comment">         * 由分析得  s应该是2</span></span><br><span class="line"><span class="comment">         *          e应该是1</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        System.out.println(s.flag);</span><br><span class="line">        System.out.println(e.flag);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 最后验证public 是动态绑定 提升就是可以继承的是动态绑定</span></span><br><span class="line"><span class="comment">         * 由分析的 s是salary</span></span><br><span class="line"><span class="comment">         *          e也是salary</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        s.mailCheck2();</span><br><span class="line">        e.mailCheck2();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 没有想到如何验证private</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最后运行结果：</span><br><span class="line">这里留个悬念，希望读者自己去实现</span><br></pre></td></tr></table></figure>
+
+<p>可以发现与分析结果完全相同。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/%E7%BB%91%E5%AE%9A/" rel="tag"># 绑定</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/uncategorized/2019-04-20-%E6%A0%91/" rel="next" title="树">
+                <i class="fa fa-chevron-left"></i> 树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/uncategorized/2019-04-23-%E7%94%A8%E5%A5%BD%E8%8B%B1%E8%AF%AD%E7%B3%BB%E5%88%971/" rel="prev" title="用好英语系列1">
+                用好英语系列1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  <div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共7.4k字</span></div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="徐晋" />
+            
+              <p class="site-author-name" itemprop="name">徐晋</p>
+              <p class="site-description motion-element" itemprop="description">君子知命不惧，自当日日自新</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态绑定"><span class="nav-number">1.0.1.</span> <span class="nav-text">动态绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java转型"><span class="nav-number">1.0.2.</span> <span class="nav-text">java转型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#向上转型"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">向上转型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类的多态"><span class="nav-number">1.0.2.1.1.</span> <span class="nav-text">类的多态</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#向下转型"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">向下转型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重写-overrding-与重载-overloading"><span class="nav-number">1.0.3.</span> <span class="nav-text">重写(overrding)与重载(overloading)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态绑定"><span class="nav-number">1.0.4.</span> <span class="nav-text">静态绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.0.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐晋</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fUrgV500Iub9AvoTuhS8YmA3-gzGzoHsz',
+        appKey: 'SfEEWyVk3uh3S1oWopriWznO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
