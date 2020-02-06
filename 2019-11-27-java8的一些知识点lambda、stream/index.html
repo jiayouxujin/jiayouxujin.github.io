@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="接口的默认方法上次学到接口只能定义方法，不能定义方法的实现。通过implementations来实现该方法。Java8允许使用default来定义一个非抽象的方法。 1234567interface Formula &amp;#123;    double calculate(int a);    default double sqrt(int a) &amp;#123;        return Math.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8的一些知识点lambda、stream">
+<meta property="og:url" content="http://blog.xuxiaojin.com/2019-11-27-java8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9lambda%E3%80%81stream/index.html">
+<meta property="og:site_name" content="徐小晋的博客">
+<meta property="og:description" content="接口的默认方法上次学到接口只能定义方法，不能定义方法的实现。通过implementations来实现该方法。Java8允许使用default来定义一个非抽象的方法。 1234567interface Formula &amp;#123;    double calculate(int a);    default double sqrt(int a) &amp;#123;        return Math.">
+<meta property="article:published_time" content="2019-11-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-11-27T12:29:46.358Z">
+<meta property="article:author" content="徐晋">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.xuxiaojin.com/2019-11-27-java8的一些知识点lambda、stream/"/>
+
+
+
+
+
+  <title>java8的一些知识点lambda、stream | 徐小晋的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91c59f68cca0da6fa05cfcb52fe0b3e8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐小晋的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习成长与思考</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2019-11-27-java8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9lambda%E3%80%81stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="徐晋">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐小晋的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java8的一些知识点lambda、stream</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-27T00:00:00+08:00">
+                2019-11-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-27T20:29:46+08:00">
+                2019-11-27
+              </time>
+            
+
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019-11-27-java8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9lambda%E3%80%81stream/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019-11-27-java8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9lambda%E3%80%81stream/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h2 id="接口的默认方法"><a href="#接口的默认方法" class="headerlink" title="接口的默认方法"></a>接口的默认方法</h2><p>上次学到接口只能定义方法，不能定义方法的实现。通过implementations来实现该方法。Java8允许使用default来定义一个非抽象的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Formula</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.sqrt(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了定义一个calculate的抽象方法，还定义了一个默认的sqrt方法，所以必须实现calculate的方法，默认方法sqrt可以使用在外部。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Formula formula=<span class="keyword">new</span> Formula() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">double</span> calculate(<span class="keyword">int</span> a) &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="built_in">sqrt</span>(a*<span class="number">100</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">       System.out.println(formula.calculate(<span class="number">100</span>));</span><br><span class="line">       formula.<span class="built_in">sqrt</span>(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这个代码来看不是很简洁，下面在java8中我们可以看到比较简洁的实现方法。</p>
+<h2 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h2><p>以前版本的java是通过如下对一个string的list进行排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names=Arrays.asList(<span class="string">"peter"</span>,<span class="string">"anna"</span>,<span class="string">"mike"</span>,<span class="string">"xenia"</span>);</span><br><span class="line">      Collections.sort(names, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这里我们在深入学习下<a href="https://beginnersbook.com/2013/12/java-string-compareto-method-example/" target="_blank" rel="noopener">compareTo</a></p>
+<p>compareTo主要是为了比较字符串，通过将字符串转为unicode，然后进行比较，如果两者一样返回0，如果前者大于后者返回正数否者返回负数。以上这个例子是从小到大排列。</p>
+<p>当然可以通过lambda表达式来重写上面的compareTo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names,(String a,String b)-&gt;&#123;</span><br><span class="line">           <span class="keyword">return</span> a.compareTo(b);</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>并且还可以更简洁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names,(String a,String b)-&gt;a.compareTo(b));</span><br></pre></td></tr></table></figure>
+
+<p>而且java编译器会自动识别参数的类型，所以你能够省略掉这个参数类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names,( a,b)-&gt;a.compareTo(b));</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数型接口"><a href="#函数型接口" class="headerlink" title="函数型接口"></a>函数型接口</h2><p>每一个lambda对匹配一个给定的类型，一个被叫做函数型接口必须确切办好一个抽象方法的声明每一个lambda表达式会匹配这个抽象方法，因为default方法不是抽象，所以你可以在函数型接口里添加default方法。</p>
+<p>我们可以使用任意的(arbitrary)的接口作为lambda表达式，只要其只有一个抽象方法，为了让自己的接口符合这种条件，你可以添加@FunctiionalInterface注解。编译器会认识该注解，并且当你添加两个抽象方法的声明时，会报错。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Converter</span>&lt;<span class="title">F</span>,<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function">T <span class="title">convert</span><span class="params">(F from)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> Converter&lt;String,Integer&gt; converter=from -&gt; Integer.valueOf(from);</span><br><span class="line">        Integer converted=converter.convert(<span class="string">"123"</span>);</span><br><span class="line">        System.out.println(converted);</span><br></pre></td></tr></table></figure>
+
+<p>看这个例子，我刚刚想了一下，为什么只有一个抽象方法，因为lambda表达式为了让编译器自动识别类型，所以最好是只有一个抽象方法，这样相当于重写就是写该方法。然后可以不用传入参数的类型，只需要传入形参的名字，然后通过-&gt;这边就是写方法体。</p>
+<p>相当于文中重写了convert这个抽象方法。</p>
+<h2 id="方法和结构体引用"><a href="#方法和结构体引用" class="headerlink" title="方法和结构体引用"></a>方法和结构体引用</h2><p>上面这个例子，如果使用static方法的引用将会更加简便。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Converter&lt;String,Integer&gt; converter=Integer::valueOf;</span><br></pre></td></tr></table></figure>
+
+<p>java8允许你通过使用::关键字来传递方法或者结构体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Something</span></span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">startsWith</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(s.charAt(<span class="number">0</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> Something something=<span class="keyword">new</span> Something();</span><br><span class="line">       Converter&lt;String,String&gt; converter=something::startsWith;</span><br><span class="line">       String converted=converter.convert(<span class="string">"JAVA"</span>);</span><br><span class="line">       System.out.println(converted);</span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名对象"><a href="#匿名对象" class="headerlink" title="匿名对象"></a>匿名对象</h2><p>简单将就是，没有对象名的类，一般我们使用一个类的方法都是通过定一个该类的对象引用，但是也可以通过new Object().method</p>
+<p><a href="https://www.tutorialspoint.com/Anonymous-object-in-Java" target="_blank" rel="noopener">Anonymous object in Java</a></p>
+<h2 id="Lambda范围"><a href="#Lambda范围" class="headerlink" title="Lambda范围"></a>Lambda范围</h2><ol>
+<li>可以访问final变量</li>
+<li>可以访问static变量，并且可以修改</li>
+<li><strong>不能访问接口的默认方法</strong>[default]</li>
+</ol>
+<h2 id="Java-8-Stream-Tutorial"><a href="#Java-8-Stream-Tutorial" class="headerlink" title="Java 8 Stream Tutorial"></a>Java 8 Stream Tutorial</h2><p>Stream这个听起来跟InputStream和OutputStream有点像，但是其实两个是完全不同的东西</p>
+<h3 id="Stream是怎么工作的"><a href="#Stream是怎么工作的" class="headerlink" title="Stream是怎么工作的"></a>Stream是怎么工作的</h3><p>Stream是一组连续的元素，并且提供在这些元素上提供不同的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; myList= Arrays.asList(<span class="string">"A1"</span>,<span class="string">"B2"</span>,<span class="string">"C3"</span>,<span class="string">"c1"</span>);</span><br><span class="line"></span><br><span class="line">      myList.stream()</span><br><span class="line">              .filter(s-&gt;s.startsWith(<span class="string">"c"</span>))</span><br><span class="line">              .map(String::toUpperCase)</span><br><span class="line">              .sorted()</span><br><span class="line">              .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<p>[这些其实以前都用过，但是完全不知道是啥]</p>
+<p>补充一个知识点<a href="https://www.geeksforgeeks.org/stream-map-java-examples/" target="_blank" rel="noopener">map()</a></p>
+<p>相当于将元素拿进去执行一下，在返回.</p>
+<h3 id="不同类型的Stream"><a href="#不同类型的Stream" class="headerlink" title="不同类型的Stream"></a>不同类型的Stream</h3><p>一般来说stream用的比较多的是在collection这里，而且提供Stream()和ParallelStream()两种</p>
+<p>也可以通过调用stream.of()，不需要构造一个list或者其他collections。</p>
+<p>而且java8还为基本数据类型中的int、long、double提供一些特殊的stream，IntStream、LongStream、DoubleStream</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntStream.range(<span class="number">1</span>,<span class="number">4</span>)</span><br><span class="line">               .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码跟python有点像哦</p>
+<h3 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h3><p>首先来看一段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>)</span><br><span class="line">               .filter(s-&gt;&#123;</span><br><span class="line">                   System.out.println(<span class="string">"filter:"</span>+s);</span><br><span class="line">                   <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">               &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码什么都不会输出，这是因为中间操作只有在终止操作存在时才会执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> Stream.of(<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>)</span><br><span class="line">                .filter(s-&gt;&#123;</span><br><span class="line">                    System.out.println(<span class="string">"filter:"</span>+s);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;)</span><br><span class="line">                .forEach(System.out::println);</span><br><span class="line"></span><br><span class="line">filter:<span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">filter:<span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">filter:<span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>这段代码就会输出。</p>
+<p>继续来看这段代码的输出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  Stream.of(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line">                .map(s-&gt;&#123;</span><br><span class="line">                   System.out.println(<span class="string">"map "</span>+s);</span><br><span class="line">                   <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">                &#125;)</span><br><span class="line">                .forEach(System.out::println);</span><br><span class="line"></span><br><span class="line">map a</span><br><span class="line">A</span><br><span class="line">map b</span><br><span class="line">B</span><br><span class="line">map c</span><br><span class="line">C</span><br></pre></td></tr></table></figure>
+
+<p> 所以我们有理由相信这个的执行顺序是s先到Map里然后到forEach，说明全程只有一个s</p>
+<h4 id="为什么顺序很重要"><a href="#为什么顺序很重要" class="headerlink" title="为什么顺序很重要"></a>为什么顺序很重要</h4><p>来看一下下面两段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="string">"d2"</span>, <span class="string">"a2"</span>, <span class="string">"b1"</span>, <span class="string">"b3"</span>, <span class="string">"c"</span>)</span><br><span class="line">                .map(s-&gt;&#123;</span><br><span class="line">                    System.out.println(<span class="string">"map "</span>+s);</span><br><span class="line">                    <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">                &#125;)</span><br><span class="line">                .filter(s-&gt;&#123;</span><br><span class="line">                    System.out.println(<span class="string">"fillter "</span>+s);</span><br><span class="line">                    <span class="keyword">return</span> s.startsWith(<span class="string">"A"</span>);</span><br><span class="line">                &#125;)</span><br><span class="line">                .forEach(s-&gt;System.out.println(<span class="string">"ForEach "</span>+s));</span><br><span class="line"></span><br><span class="line">map d2</span><br><span class="line">fillter D2</span><br><span class="line">map a2</span><br><span class="line">fillter A2</span><br><span class="line">ForEach A2</span><br><span class="line">map b1</span><br><span class="line">fillter B1</span><br><span class="line">map b3</span><br><span class="line">fillter B3</span><br><span class="line">map c</span><br><span class="line">fillter C</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> Stream.of(<span class="string">"d2"</span>, <span class="string">"a2"</span>, <span class="string">"b1"</span>, <span class="string">"b3"</span>, <span class="string">"c"</span>)</span><br><span class="line">                .filter(s-&gt;&#123;</span><br><span class="line">                    System.out.println(<span class="string">"fillter "</span>+s);</span><br><span class="line">                    <span class="keyword">return</span> s.startsWith(<span class="string">"a"</span>);</span><br><span class="line">                &#125;)</span><br><span class="line">                .map(s-&gt;&#123;</span><br><span class="line">                    System.out.println(<span class="string">"map "</span>+s);</span><br><span class="line">                    <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">                &#125;)</span><br><span class="line">                .forEach(s-&gt;System.out.println(<span class="string">"ForEach "</span>+s));</span><br><span class="line"></span><br><span class="line">fillter d2</span><br><span class="line">fillter a2</span><br><span class="line">map a2</span><br><span class="line">ForEach A2</span><br><span class="line">fillter b1</span><br><span class="line">fillter b3</span><br><span class="line">fillter c</span><br></pre></td></tr></table></figure>
+
+<p>这两段代码的差别就在map的调用次数，相比于第一个map调用的次数减少了。</p>
+<p>所以有时候，顺序能够决定性能。</p>
+<h3 id="重复使用streams"><a href="#重复使用streams" class="headerlink" title="重复使用streams"></a>重复使用streams</h3><p>记住java8中的stream是不可以被重复使用，只要你调用终止操作后，stream就会被关闭</p>
+<h3 id="其他一些操作"><a href="#其他一些操作" class="headerlink" title="其他一些操作"></a>其他一些操作</h3><h4 id="Collect"><a href="#Collect" class="headerlink" title="Collect"></a>Collect</h4><p>这是一个比较有用的终止操作，能够将stream里面的元素转为List、set或者Map</p>
+<p>我刚刚看了还有许多操作，例如groupby,avage,sum等等，有点帅。</p>
+<p>####flagmap</p>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><hr>
+<p>以上内容就是关于java 8里面的一部分知识。</p>
+<p>以后可以有意识的写stream。确实可以简化代码。</p>
+<h2 id="说点题外话"><a href="#说点题外话" class="headerlink" title="说点题外话"></a>说点题外话</h2><p>其实很早就碰到stream但是一直没学，一直拖到现在才去了解。以后执行力要高点才行哦。</p>
+<p>不懂就学。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/" target="_blank" rel="noopener">Java 8 Stream Tutorial</a></p>
+<p><a href="https://winterbe.com/posts/2014/03/16/java-8-tutorial/" target="_blank" rel="noopener">Java 8 Tutorial</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Xuxiaojin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://blog.xuxiaojin.com/2019-11-27-java8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9lambda%E3%80%81stream/" title="java8的一些知识点lambda、stream">http://blog.xuxiaojin.com/2019-11-27-java8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9lambda%E3%80%81stream/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-11-23-PYTHON%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="next" title="PYTHON基础知识">
+                <i class="fa fa-chevron-left"></i> PYTHON基础知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-11-29-ARTS%E7%AC%AC%E5%8D%81%E4%BA%94%E5%91%A8(%E5%8F%AA%E6%9C%89A)/" rel="prev" title="ARTS第十五周(只有A)">
+                ARTS第十五周(只有A) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="徐晋" />
+            
+              <p class="site-author-name" itemprop="name">徐晋</p>
+              <p class="site-description motion-element" itemprop="description">君子知命不惧，自当日日自新</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">176</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jiayouxujin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1319039722@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口的默认方法"><span class="nav-number">1.</span> <span class="nav-text">接口的默认方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda-表达式"><span class="nav-number">2.</span> <span class="nav-text">Lambda 表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数型接口"><span class="nav-number">3.</span> <span class="nav-text">函数型接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法和结构体引用"><span class="nav-number">4.</span> <span class="nav-text">方法和结构体引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#匿名对象"><span class="nav-number">5.</span> <span class="nav-text">匿名对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda范围"><span class="nav-number">6.</span> <span class="nav-text">Lambda范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-8-Stream-Tutorial"><span class="nav-number">7.</span> <span class="nav-text">Java 8 Stream Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream是怎么工作的"><span class="nav-number">7.1.</span> <span class="nav-text">Stream是怎么工作的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同类型的Stream"><span class="nav-number">7.2.</span> <span class="nav-text">不同类型的Stream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行顺序"><span class="nav-number">7.3.</span> <span class="nav-text">执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么顺序很重要"><span class="nav-number">7.3.1.</span> <span class="nav-text">为什么顺序很重要</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复使用streams"><span class="nav-number">7.4.</span> <span class="nav-text">重复使用streams</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他一些操作"><span class="nav-number">7.5.</span> <span class="nav-text">其他一些操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Collect"><span class="nav-number">7.5.1.</span> <span class="nav-text">Collect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce"><span class="nav-number">7.5.2.</span> <span class="nav-text">reduce</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说点题外话"><span class="nav-number">8.</span> <span class="nav-text">说点题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐晋</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">144.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fUrgV500Iub9AvoTuhS8YmA3-gzGzoHsz',
+        appKey: 'SfEEWyVk3uh3S1oWopriWznO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>

@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="D3.js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言需要图形化neo4j的项目需求 ###力导向图 就是讲有节点和线组成，当鼠标拖拽一个节点时，其他节点都会受到影响。用来可视化neo4j图数据库。 相关链接   The sum of the forces acting on each node by all other nodes The force pushing and pulling between two linked nodes T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3.js力导向图">
+<meta property="og:url" content="http://blog.xuxiaojin.com/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/index.html">
+<meta property="og:site_name" content="徐小晋的博客">
+<meta property="og:description" content="前言需要图形化neo4j的项目需求 ###力导向图 就是讲有节点和线组成，当鼠标拖拽一个节点时，其他节点都会受到影响。用来可视化neo4j图数据库。 相关链接   The sum of the forces acting on each node by all other nodes The force pushing and pulling between two linked nodes T">
+<meta property="article:published_time" content="2020-02-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-04T12:44:38.424Z">
+<meta property="article:author" content="徐晋">
+<meta property="article:tag" content="D3.js">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.xuxiaojin.com/2020-02-04-D3.js力导向图/"/>
+
+
+
+
+
+  <title>D3.js力导向图 | 徐小晋的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91c59f68cca0da6fa05cfcb52fe0b3e8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐小晋的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习成长与思考</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="徐晋">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐小晋的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">D3.js力导向图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-04T00:00:00+08:00">
+                2020-02-04
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-04T20:44:38+08:00">
+                2020-02-04
+              </time>
+            
+
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>需要图形化neo4j的项目需求</p>
+<p>###力导向图</p>
+<p>就是讲有节点和线组成，当鼠标拖拽一个节点时，其他节点都会受到影响。用来可视化neo4j图数据库。</p>
+<p><a href="https://medium.com/@sxywu/understanding-the-force-ef1237017d5" target="_blank" rel="noopener">相关链接</a></p>
+<blockquote>
+<ul>
+<li>The sum of the forces acting on each node by all other nodes</li>
+<li>The force pushing and pulling between two linked nodes</li>
+<li>The force pulling each node to a focal point, usually the center of the user-defined space</li>
+</ul>
+</blockquote>
+<h4 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h4><blockquote>
+<p>d3.forceSimulations([nodes])&lt;&gt;</p>
+<p>新建一个力导向图。如果没有提供nodes，默认是空数组。</p>
+<p>当simulatio运行的时候simulations.on来监听点击事件</p>
+</blockquote>
+<blockquote>
+<p>d3.forceSimulation().force() 添加或者移除一个力</p>
+<p>If <em>force</em> is specified, assigns the <a href="https://github.com/d3/d3-force#forces" target="_blank" rel="noopener">force</a> for the specified <em>name</em> and returns this simulation. If <em>force</em> is not specified, returns the force with the specified name, or undefined if there is no such force. (By default, new simulations have no forces.) For example, to create a new simulation to layout a graph, you might say:</p>
+</blockquote>
+<p>d3.forceSimulation().force(name)当force只有一个参数，这个参数就是某个力的名称，那么这段代码返回的是某个具体的力。例如 d3.forceSimulation().force(“link”) 则返回的是d3.forceLink()</p>
+<blockquote>
+<p>d3.forceSimulation().nodes() 输入的是一个数组，然后将这个输入的数组进行一定的数据转换，例如添加坐标什么的。</p>
+<p>d3.forceSimulation().links()这里输入的是一个数组(边集),然后对输入的边集进行转换</p>
+<p>tick函数，需要不断更新节点和连线的位置</p>
+<p>d3.drag()是力导向图可以被拖动</p>
+</blockquote>
+<h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> marge = &#123;<span class="attr">top</span>:<span class="number">60</span>,<span class="attr">bottom</span>:<span class="number">60</span>,<span class="attr">left</span>:<span class="number">60</span>,<span class="attr">right</span>:<span class="number">60</span>&#125;</span><br><span class="line">    	<span class="keyword">var</span> svg = d3.select(<span class="string">"svg"</span>)</span><br><span class="line">    	<span class="keyword">var</span> width = svg.attr(<span class="string">"width"</span>)</span><br><span class="line">    	<span class="keyword">var</span> height = svg.attr(<span class="string">"height"</span>)</span><br><span class="line">    	<span class="keyword">var</span> g = svg.append(<span class="string">"g"</span>)</span><br><span class="line">    		.attr(<span class="string">"transform"</span>,<span class="string">"translate("</span>+marge.top+<span class="string">","</span>+marge.left+<span class="string">")"</span>);</span><br><span class="line">    		</span><br><span class="line">    	<span class="comment">//准备数据</span></span><br><span class="line">    	<span class="keyword">var</span> nodes = [<span class="comment">//节点集</span></span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"湖南邵阳"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"山东莱州"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"广东阳江"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"山东枣庄"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"泽"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"恒"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"鑫"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"明山"</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">name</span>:<span class="string">"班长"</span>&#125;</span><br><span class="line">    	];</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">var</span> edges = [<span class="comment">//边集</span></span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">0</span>,<span class="attr">target</span>:<span class="number">4</span>,<span class="attr">relation</span>:<span class="string">"籍贯"</span>,<span class="attr">value</span>:<span class="number">1.3</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">4</span>,<span class="attr">target</span>:<span class="number">5</span>,<span class="attr">relation</span>:<span class="string">"舍友"</span>,<span class="attr">value</span>:<span class="number">1</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">4</span>,<span class="attr">target</span>:<span class="number">6</span>,<span class="attr">relation</span>:<span class="string">"舍友"</span>,<span class="attr">value</span>:<span class="number">1</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">4</span>,<span class="attr">target</span>:<span class="number">7</span>,<span class="attr">relation</span>:<span class="string">"舍友"</span>,<span class="attr">value</span>:<span class="number">1</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">1</span>,<span class="attr">target</span>:<span class="number">6</span>,<span class="attr">relation</span>:<span class="string">"籍贯"</span>,<span class="attr">value</span>:<span class="number">2</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">2</span>,<span class="attr">target</span>:<span class="number">5</span>,<span class="attr">relation</span>:<span class="string">"籍贯"</span>,<span class="attr">value</span>:<span class="number">0.9</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">3</span>,<span class="attr">target</span>:<span class="number">7</span>,<span class="attr">relation</span>:<span class="string">"籍贯"</span>,<span class="attr">value</span>:<span class="number">1</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">5</span>,<span class="attr">target</span>:<span class="number">6</span>,<span class="attr">relation</span>:<span class="string">"同学"</span>,<span class="attr">value</span>:<span class="number">1.6</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">6</span>,<span class="attr">target</span>:<span class="number">7</span>,<span class="attr">relation</span>:<span class="string">"朋友"</span>,<span class="attr">value</span>:<span class="number">0.7</span>&#125;,</span><br><span class="line">    		&#123;<span class="attr">source</span>:<span class="number">6</span>,<span class="attr">target</span>:<span class="number">8</span>,<span class="attr">relation</span>:<span class="string">"职责"</span>,<span class="attr">value</span>:<span class="number">2</span>&#125;</span><br><span class="line">    	];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>svg标签用来可以用来构建图像</p>
+<p>g是svg的容器元素。<strong>添加到g元素上的变换都会应用其所有的子元素上</strong></p>
+<p>点必须要有特殊的ids</p>
+<p>边的数据必须有source和target</p>
+</blockquote>
+<p>上面数据渲染后</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">g</span> <span class="attr">transform</span>=<span class="string">"translate(146.3477113893629,263.7985425399116)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">r</span>=<span class="string">"10"</span> <span class="attr">fill</span>=<span class="string">"#7f7f7f"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"-10"</span> <span class="attr">y</span>=<span class="string">"-20"</span> <span class="attr">dy</span>=<span class="string">"10"</span>&gt;</span>明山<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置颜色比例尺"><a href="#设置颜色比例尺" class="headerlink" title="设置颜色比例尺"></a>设置颜色比例尺</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colorScale = d3.scaleOrdinal()</span><br><span class="line">    		.domain(d3.range(nodes.length))</span><br><span class="line">    		.range(d3.schemeCategory10);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Even better, you don’t have to know in advance which things the scale will encounter, as that correspondance can be built incrementally with incoming data.</p>
+</blockquote>
+<p>相当于给一个颜色尺子，对于来的数据，进行涂色</p>
+<h3 id="新建一个力导向图"><a href="#新建一个力导向图" class="headerlink" title="新建一个力导向图"></a>新建一个力导向图</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> forceSimulation = d3.forceSimulation()</span><br><span class="line">    		.force(<span class="string">"link"</span>,d3.forceLink())</span><br><span class="line">    		.force(<span class="string">"charge"</span>,d3.forceManyBody())</span><br><span class="line">    		.force(<span class="string">"center"</span>,d3.forceCenter());</span><br></pre></td></tr></table></figure>
+
+<p>这个是官网提供的，建立一个空的力导向图</p>
+<p><strong>center</strong>把所有节点都放到center</p>
+<p><strong>charge</strong>防止节点之间相互重叠</p>
+<p><strong>link</strong>表名id是link变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> simulation = d3.forceSimulation()</span><br><span class="line">              .force(<span class="string">"center"</span>, d3.forceCenter(width/<span class="number">2</span>, height/<span class="number">2</span>))                  </span><br><span class="line">              .force(<span class="string">"charge"</span>, d3.forceManyBody())</span><br><span class="line">              .force(<span class="string">"link"</span>, d3.forceLink().id(<span class="function"><span class="keyword">function</span>(<span class="params">d =&gt;   d.id</span>)</span></span><br><span class="line"><span class="function">			<span class="title">simulation</span>.<span class="title">stop</span>(<span class="params"></span>)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成节点数据"><a href="#生成节点数据" class="headerlink" title="生成节点数据"></a>生成节点数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">forceSimulation.nodes(nodes)</span><br><span class="line">    		.on(<span class="string">"tick"</span>,ticked);</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成边的数据"><a href="#生成边的数据" class="headerlink" title="生成边的数据"></a>生成边的数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">forceSimulation.force(<span class="string">"link"</span>)</span><br><span class="line">    		.links(edges)</span><br><span class="line">    		.distance(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    			<span class="keyword">return</span> d.value*<span class="number">100</span>;   <span class="comment">//对应边的长度</span></span><br><span class="line">    		&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置图形中心的位置"><a href="#设置图形中心的位置" class="headerlink" title="设置图形中心的位置"></a>设置图形中心的位置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">forceSimulation.force(<span class="string">"center"</span>)</span><br><span class="line">    		.x(width/<span class="number">2</span>)</span><br><span class="line">    		.y(height/<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="绘制边"><a href="#绘制边" class="headerlink" title="绘制边"></a>绘制边</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> links = g.append(<span class="string">"g"</span>)</span><br><span class="line">	.selectAll(<span class="string">"line"</span>)</span><br><span class="line">	.data(edges)</span><br><span class="line">	.enter()</span><br><span class="line">	.append(<span class="string">"line"</span>)</span><br><span class="line">	.attr(<span class="string">"stroke"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d,i</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> colorScale(i);   <span class="comment">//颜色</span></span><br><span class="line">	&#125;)</span><br><span class="line">	.attr(<span class="string">"stroke-width"</span>,<span class="number">1</span>);  <span class="comment">//宽度</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="边上的文字"><a href="#边上的文字" class="headerlink" title="边上的文字"></a>边上的文字</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> linksText = g.append(<span class="string">"g"</span>)</span><br><span class="line">    		.selectAll(<span class="string">"text"</span>)</span><br><span class="line">    		.data(edges)</span><br><span class="line">    		.enter()</span><br><span class="line">    		.append(<span class="string">"text"</span>)</span><br><span class="line">    		.text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    			<span class="keyword">return</span> d.relation;</span><br><span class="line">    		&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立用来放每个节点和文字的分组g"><a href="#建立用来放每个节点和文字的分组g" class="headerlink" title="建立用来放每个节点和文字的分组g"></a>建立用来放每个节点和文字的分组g</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gs = g.selectAll(<span class="string">".circleText"</span>)</span><br><span class="line">    		.data(nodes)</span><br><span class="line">    		.enter()</span><br><span class="line">    		.append(<span class="string">"g"</span>)</span><br><span class="line">    		.attr(<span class="string">"transform"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d,i</span>)</span>&#123;</span><br><span class="line">    			<span class="keyword">var</span> cirX = d.x;</span><br><span class="line">    			<span class="keyword">var</span> cirY = d.y;</span><br><span class="line">    			<span class="keyword">return</span> <span class="string">"translate("</span>+cirX+<span class="string">","</span>+cirY+<span class="string">")"</span>;</span><br><span class="line">    		&#125;)</span><br><span class="line">    		.call(d3.drag()</span><br><span class="line">    			.on(<span class="string">"start"</span>,started)</span><br><span class="line">    			.on(<span class="string">"drag"</span>,dragged)</span><br><span class="line">    			.on(<span class="string">"end"</span>,ended)</span><br><span class="line">    		);</span><br></pre></td></tr></table></figure>
+
+<h3 id="节点和文字"><a href="#节点和文字" class="headerlink" title="节点和文字"></a>节点和文字</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gs.append(<span class="string">"circle"</span>)</span><br><span class="line">    		.attr(<span class="string">"r"</span>,<span class="number">15</span>)</span><br><span class="line">    		.attr(<span class="string">"fill"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d,i</span>)</span>&#123;</span><br><span class="line">    			<span class="keyword">return</span> colorScale(i);</span><br><span class="line">    		&#125;)</span><br><span class="line">    	<span class="comment">//文字</span></span><br><span class="line">    		gs.append(<span class="string">"text"</span>)</span><br><span class="line">    			.attr(<span class="string">"x"</span>,<span class="number">-10</span>)</span><br><span class="line">    			.attr(<span class="string">"y"</span>,<span class="number">-20</span>)</span><br><span class="line">    			.attr(<span class="string">"dy"</span>,<span class="number">10</span>)</span><br><span class="line">    			.text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    				<span class="keyword">return</span> d.name;</span><br><span class="line">				&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ticked</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    		links</span><br><span class="line">    			.attr(<span class="string">"x1"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;<span class="keyword">return</span> d.source.x;&#125;)</span><br><span class="line">    			.attr(<span class="string">"y1"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;<span class="keyword">return</span> d.source.y;&#125;)</span><br><span class="line">    			.attr(<span class="string">"x2"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;<span class="keyword">return</span> d.target.x;&#125;)</span><br><span class="line">    			.attr(<span class="string">"y2"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;<span class="keyword">return</span> d.target.y;&#125;);</span><br><span class="line">    			</span><br><span class="line">    		linksText</span><br><span class="line">    			.attr(<span class="string">"x"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    			<span class="keyword">return</span> (d.source.x+d.target.x)/<span class="number">2</span>;</span><br><span class="line">    		&#125;)</span><br><span class="line">    		.attr(<span class="string">"y"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    			<span class="keyword">return</span> (d.source.y+d.target.y)/<span class="number">2</span>;</span><br><span class="line">    		&#125;);</span><br><span class="line">    			</span><br><span class="line">    		gs</span><br><span class="line">    			.attr(<span class="string">"transform"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> <span class="string">"translate("</span> + d.x + <span class="string">","</span> + d.y + <span class="string">")"</span>; &#125;);</span><br><span class="line"></span><br><span class="line">    		&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">started</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    		<span class="keyword">if</span>(!d3.event.active)&#123;</span><br><span class="line">    			forceSimulation.alphaTarget(<span class="number">0.8</span>).restart();</span><br><span class="line">    		&#125;</span><br><span class="line">    		d.fx = d.x;</span><br><span class="line">    		d.fy = d.y;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="function"><span class="keyword">function</span> <span class="title">dragged</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    		d.fx = d3.event.x;</span><br><span class="line">    		d.fy = d3.event.y;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="function"><span class="keyword">function</span> <span class="title">ended</span>(<span class="params">d</span>)</span>&#123;</span><br><span class="line">    		<span class="keyword">if</span>(!d3.event.active)&#123;</span><br><span class="line">    			forceSimulation.alphaTarget(<span class="number">0</span>);</span><br><span class="line">    		&#125;</span><br><span class="line">    		d.fx = <span class="literal">null</span>;</span><br><span class="line">    		d.fy = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>D3<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://d3js.org/d3.v5.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">		</span><br><span class="line"><span class="actionscript">		<span class="keyword">var</span> marge = &#123;top:<span class="number">60</span>,bottom:<span class="number">60</span>,left:<span class="number">60</span>,right:<span class="number">60</span>&#125;</span></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> svg = d3.select(<span class="string">"svg"</span>)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"width"</span>,<span class="number">400</span>)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"height"</span>,<span class="number">600</span>)</span></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> width = svg.attr(<span class="string">"width"</span>)</span></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> height = svg.attr(<span class="string">"height"</span>)</span></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> g = svg.append(<span class="string">"g"</span>)</span></span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"transform"</span>,<span class="string">"translate("</span>+marge.top+<span class="string">","</span>+marge.left+<span class="string">")"</span>);</span></span><br><span class="line">    		</span><br><span class="line"><span class="actionscript">    	<span class="comment">//准备数据</span></span></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> nodes = [<span class="comment">//节点集</span></span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"湖南邵阳"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"山东莱州"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"广东阳江"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"山东枣庄"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"泽"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"恒"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"鑫"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"明山"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;name:<span class="string">"班长"</span>&#125;</span></span><br><span class="line">    	];</span><br><span class="line">    	</span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> edges = [<span class="comment">//边集</span></span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">0</span>,target:<span class="number">4</span>,relation:<span class="string">"籍贯"</span>,value:<span class="number">1.3</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">4</span>,target:<span class="number">5</span>,relation:<span class="string">"舍友"</span>,value:<span class="number">1</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">4</span>,target:<span class="number">6</span>,relation:<span class="string">"舍友"</span>,value:<span class="number">1</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">4</span>,target:<span class="number">7</span>,relation:<span class="string">"舍友"</span>,value:<span class="number">1</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">1</span>,target:<span class="number">6</span>,relation:<span class="string">"籍贯"</span>,value:<span class="number">2</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">2</span>,target:<span class="number">5</span>,relation:<span class="string">"籍贯"</span>,value:<span class="number">0.9</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">3</span>,target:<span class="number">7</span>,relation:<span class="string">"籍贯"</span>,value:<span class="number">1</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">5</span>,target:<span class="number">6</span>,relation:<span class="string">"同学"</span>,value:<span class="number">1.6</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">6</span>,target:<span class="number">7</span>,relation:<span class="string">"朋友"</span>,value:<span class="number">0.7</span>&#125;,</span></span><br><span class="line"><span class="actionscript">    		&#123;source:<span class="number">6</span>,target:<span class="number">8</span>,relation:<span class="string">"职责"</span>,value:<span class="number">2</span>&#125;</span></span><br><span class="line">    	];</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    	<span class="comment">//设置一个color的颜色比例尺，为了让不同的扇形呈现不同的颜色</span></span></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> colorScale = d3.scaleOrdinal()</span></span><br><span class="line">    		.domain(d3.range(nodes.length))</span><br><span class="line">    		.range(d3.schemeCategory10);</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> forceSimulation = d3.forceSimulation()</span></span><br><span class="line"><span class="actionscript">    		.force(<span class="string">"link"</span>,d3.forceLink())</span></span><br><span class="line"><span class="actionscript">    		.force(<span class="string">"charge"</span>,d3.forceManyBody())</span></span><br><span class="line"><span class="actionscript">    		.force(<span class="string">"center"</span>,d3.forceCenter());</span></span><br><span class="line"></span><br><span class="line">    	forceSimulation.nodes(nodes)</span><br><span class="line"><span class="actionscript">    		.on(<span class="string">"tick"</span>,ticked);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    	forceSimulation.force(<span class="string">"link"</span>)</span></span><br><span class="line">    		.links(edges)</span><br><span class="line"><span class="actionscript">    		.distance(<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> d.value*<span class="number">100</span>;</span></span><br><span class="line">    		&#125;)</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    	forceSimulation.force(<span class="string">"center"</span>)</span></span><br><span class="line">    		.x(width/2)</span><br><span class="line">    		.y(height/2);</span><br><span class="line"></span><br><span class="line"><span class="javascript">    	<span class="built_in">console</span>.log(nodes)</span></span><br><span class="line"><span class="javascript">    	<span class="built_in">console</span>.log(edges)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> links = g.append(<span class="string">"g"</span>)</span></span><br><span class="line"><span class="actionscript">    		.selectAll(<span class="string">"line"</span>)</span></span><br><span class="line">    		.data(edges)</span><br><span class="line">    		.enter()</span><br><span class="line"><span class="actionscript">    		.append(<span class="string">"line"</span>)</span></span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"stroke"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d,i)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> colorScale(i);</span></span><br><span class="line">    		&#125;)</span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"stroke-width"</span>,<span class="number">1</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    	<span class="keyword">var</span> linksText = g.append(<span class="string">"g"</span>)</span></span><br><span class="line"><span class="actionscript">    		.selectAll(<span class="string">"text"</span>)</span></span><br><span class="line">    		.data(edges)</span><br><span class="line">    		.enter()</span><br><span class="line"><span class="actionscript">    		.append(<span class="string">"text"</span>)</span></span><br><span class="line"><span class="actionscript">    		.text(<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> <span class="string">'COVER'</span>;</span></span><br><span class="line">    		&#125;)</span><br><span class="line">   </span><br><span class="line">		</span><br><span class="line"><span class="actionscript">		<span class="keyword">var</span> gs = g.selectAll(<span class="string">".circleText"</span>)</span></span><br><span class="line">    		.data(nodes)</span><br><span class="line">    		.enter()</span><br><span class="line"><span class="actionscript">    		.append(<span class="string">"g"</span>)</span></span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"transform"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d,i)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">var</span> cirX = d.x;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">var</span> cirY = d.y;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> <span class="string">"translate("</span>+cirX+<span class="string">","</span>+cirY+<span class="string">")"</span>;</span></span><br><span class="line">    		&#125;)</span><br><span class="line">    		.call(d3.drag()</span><br><span class="line"><span class="actionscript">    			.on(<span class="string">"start"</span>,started)</span></span><br><span class="line"><span class="actionscript">    			.on(<span class="string">"drag"</span>,dragged)</span></span><br><span class="line"><span class="actionscript">    			.on(<span class="string">"end"</span>,ended)</span></span><br><span class="line">    		);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    		gs.append(<span class="string">"circle"</span>)</span></span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"r"</span>,<span class="number">15</span>)</span></span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"fill"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d,i)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> colorScale(i);</span></span><br><span class="line">    		&#125;)</span><br><span class="line"><span class="actionscript">    	<span class="comment">//文字</span></span></span><br><span class="line"><span class="actionscript">    		gs.append(<span class="string">"text"</span>)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"x"</span>,<span class="number">-10</span>)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"y"</span>,<span class="number">-20</span>)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"dy"</span>,<span class="number">10</span>)</span></span><br><span class="line"><span class="actionscript">    			.text(<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    				<span class="keyword">return</span> d.name;</span></span><br><span class="line">				&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="actionscript"><span class="function"><span class="keyword">function</span> <span class="title">ticked</span><span class="params">()</span></span>&#123;</span></span><br><span class="line">    		links</span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"x1"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;<span class="keyword">return</span> d.source.x;&#125;)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"y1"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;<span class="keyword">return</span> d.source.y;&#125;)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"x2"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;<span class="keyword">return</span> d.target.x;&#125;)</span></span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"y2"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;<span class="keyword">return</span> d.target.y;&#125;);</span></span><br><span class="line">    			</span><br><span class="line">    		linksText</span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"x"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> (d.source.x+d.target.x)/<span class="number">2</span>;</span></span><br><span class="line">    		&#125;)</span><br><span class="line"><span class="actionscript">    		.attr(<span class="string">"y"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">    			<span class="keyword">return</span> (d.source.y+d.target.y)/<span class="number">2</span>;</span></span><br><span class="line">    		&#125;);</span><br><span class="line">    			</span><br><span class="line">    		gs</span><br><span class="line"><span class="actionscript">    			.attr(<span class="string">"transform"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span> </span>&#123; <span class="keyword">return</span> <span class="string">"translate("</span> + d.x + <span class="string">","</span> + d.y + <span class="string">")"</span>; &#125;);</span></span><br><span class="line"></span><br><span class="line">    		&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="actionscript"><span class="function"><span class="keyword">function</span> <span class="title">started</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line">    		if(!d3.event.active)&#123;</span><br><span class="line">    			forceSimulation.alphaTarget(0.8).restart();</span><br><span class="line">    		&#125;</span><br><span class="line">    		d.fx = d.x;</span><br><span class="line">    		d.fy = d.y;</span><br><span class="line">    	&#125;</span><br><span class="line"><span class="actionscript">    	<span class="function"><span class="keyword">function</span> <span class="title">dragged</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line">    		d.fx = d3.event.x;</span><br><span class="line">    		d.fy = d3.event.y;</span><br><span class="line">    	&#125;</span><br><span class="line"><span class="actionscript">    	<span class="function"><span class="keyword">function</span> <span class="title">ended</span><span class="params">(d)</span></span>&#123;</span></span><br><span class="line">    		if(!d3.event.active)&#123;</span><br><span class="line">    			forceSimulation.alphaTarget(0);</span><br><span class="line">    		&#125;</span><br><span class="line"><span class="actionscript">    		d.fx = <span class="literal">null</span>;</span></span><br><span class="line"><span class="actionscript">    		d.fy = <span class="literal">null</span>;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    XuxiaoJin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://blog.xuxiaojin.com/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/" title="D3.js力导向图">http://blog.xuxiaojin.com/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/D3-js/" rel="tag"><i class="fa fa-tag"></i> D3.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020-02-04-%E6%81%A2%E5%A4%8Dmysql%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="next" title="恢复mysql数据库">
+                <i class="fa fa-chevron-left"></i> 恢复mysql数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="徐晋" />
+            
+              <p class="site-author-name" itemprop="name">徐晋</p>
+              <p class="site-description motion-element" itemprop="description">君子知命不惧，自当日日自新</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">176</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jiayouxujin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1319039722@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前置知识"><span class="nav-number">1.0.1.</span> <span class="nav-text">前置知识</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据准备"><span class="nav-number">1.1.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置颜色比例尺"><span class="nav-number">1.2.</span> <span class="nav-text">设置颜色比例尺</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建一个力导向图"><span class="nav-number">1.3.</span> <span class="nav-text">新建一个力导向图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成节点数据"><span class="nav-number">1.4.</span> <span class="nav-text">生成节点数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成边的数据"><span class="nav-number">1.5.</span> <span class="nav-text">生成边的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置图形中心的位置"><span class="nav-number">1.6.</span> <span class="nav-text">设置图形中心的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制边"><span class="nav-number">1.7.</span> <span class="nav-text">绘制边</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边上的文字"><span class="nav-number">1.8.</span> <span class="nav-text">边上的文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立用来放每个节点和文字的分组g"><span class="nav-number">1.9.</span> <span class="nav-text">建立用来放每个节点和文字的分组g</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点和文字"><span class="nav-number">1.10.</span> <span class="nav-text">节点和文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.11.</span> <span class="nav-text">函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐晋</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">144.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fUrgV500Iub9AvoTuhS8YmA3-gzGzoHsz',
+        appKey: 'SfEEWyVk3uh3S1oWopriWznO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>
