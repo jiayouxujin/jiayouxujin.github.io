@@ -137,7 +137,7 @@
 <meta property="og:site_name" content="徐小晋的博客">
 <meta property="og:description" content="前言前几天数据库一直被偷，然后必应如何恢复。发现自己的安全意识太弱。 然后重装服务器系统，权限限制，密码增强。 并且学一下备份数据，还有就是binlog恢复数据 MYSQL安全相关信息MYSQL将用户的相关信息(认证信息，权限信息)都存储在了mysql.user的这个系统表中，在这个系统表中可以通过增删改查操作，来定义和管理用户的认证信息，权限列表等。 授权机制1grant all privil">
 <meta property="article:published_time" content="2020-02-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-02-04T14:09:59.313Z">
+<meta property="article:modified_time" content="2020-02-22T11:28:52.694Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary">
@@ -393,8 +393,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-02-04T22:09:59+08:00">
-                2020-02-04
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-22T19:28:52+08:00">
+                2020-02-22
               </time>
             
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  402
+                  465
                 </span>
               
 
@@ -480,7 +480,14 @@
 <p>客体是数据库和表</p>
 <h3 id="通过binlog恢复数据库数据"><a href="#通过binlog恢复数据库数据" class="headerlink" title="通过binlog恢复数据库数据"></a>通过binlog恢复数据库数据</h3><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%log_bin%'</span>;  //查看binlog是否打开</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">logs</span>; //查看所有binlog日志文件列表</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">status</span>; //查看最后一个操作事件pos结束点的值</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">logs</span>; //刷新日志，此刻开始产生一个新编号的binlog文件</span><br></pre></td></tr></table></figure>
 
-<h4 id="查看binlog文件内容"><a href="#查看binlog文件内容" class="headerlink" title="查看binlog文件内容"></a>查看binlog文件内容</h4><h5 id="mysqlbinlog"><a href="#mysqlbinlog" class="headerlink" title="mysqlbinlog"></a>mysqlbinlog</h5><p>通过mysqlbinlog导出sql</p>
+<h4 id="查看binlog文件内容"><a href="#查看binlog文件内容" class="headerlink" title="查看binlog文件内容"></a>查看binlog文件内容</h4><h5 id="mysqlbinlog"><a href="#mysqlbinlog" class="headerlink" title="mysqlbinlog"></a>mysqlbinlog</h5><p>首先进入mysql，设置binlog的格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">set global binlog_format&#x3D;&#39;ROW&#39;</span><br></pre></td></tr></table></figure>
+
+<p>然后进入<code>var/lib/mysql</code></p>
+<p>通过mysqlbinlog查看数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog --base64-output&#x3D;&quot;decode-row&quot; binlog.000016 --stop-datetime&#x3D;&#39;时间&#39;</span><br></pre></td></tr></table></figure>
+
+<p>这个时间跟北京时间大概差6个小时</p>
 <h3 id="Mysqldump数据备份"><a href="#Mysqldump数据备份" class="headerlink" title="Mysqldump数据备份"></a>Mysqldump数据备份</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u root -p  [databasename] &gt;[dump file]</span><br></pre></td></tr></table></figure>
 
 <p>上述命令将制定的数据库备份到dump文件中，包含生成数据库结构哦，和插入数据的insert语句</p>
@@ -546,8 +553,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020-01-31-%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%85%A5%E9%97%A8/" rel="next" title="爬虫基础知识入门">
-                <i class="fa fa-chevron-left"></i> 爬虫基础知识入门
+              <a href="/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/" rel="next" title="D3.js力导向图">
+                <i class="fa fa-chevron-left"></i> D3.js力导向图
               </a>
             
           </div>
@@ -556,8 +563,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/" rel="prev" title="D3.js力导向图">
-                D3.js力导向图 <i class="fa fa-chevron-right"></i>
+              <a href="/2020-02-07-%E5%A4%87%E6%88%98%E8%93%9D%E6%A1%A5%E6%9D%AF/" rel="prev" title="备战蓝桥杯">
+                备战蓝桥杯 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
