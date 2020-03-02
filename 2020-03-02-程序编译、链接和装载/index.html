@@ -148,8 +148,16 @@
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003021134_606.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003021142_171.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003021146_823.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021545_359.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021659_204.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021722_183.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021724_856.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021725_258.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021933_912.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021934_436.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021936_259.png">
 <meta property="article:published_time" content="2020-03-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-02T05:14:58.696Z">
+<meta property="article:modified_time" content="2020-03-02T11:48:01.705Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="ELF">
 <meta name="twitter:card" content="summary">
@@ -406,7 +414,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-02T13:14:58+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-02T19:48:01+08:00">
                 2020-03-02
               </time>
             
@@ -445,7 +453,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  2.2k
                 </span>
               
 
@@ -461,7 +469,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  7
                 </span>
               
             </div>
@@ -587,6 +595,49 @@
 </blockquote>
 <p>为什么同一份程序不可以同时在linux和window下一起执行？</p>
 <p>因为Linux的是ELF文件格式，Window是PE格式。Linux下的装载器只能解析ELF格式而不能解析PE格式</p>
+<h2 id="程序装载"><a href="#程序装载" class="headerlink" title="程序装载"></a>程序装载</h2><p>程序装载需要满足的两个要求</p>
+<ul>
+<li>可执行程序加载后占用的内存空间应该是连续的，因为在程序指令执行时，执行的顺序是一条条指令执行下去，这就是指令需要连续村粗</li>
+<li>需要同时加载多个程序，并且不能让程序自己规定在内存中加载的位置.</li>
+</ul>
+<p>那么要满足这两个做法，只要给地址做一个<strong>映射</strong>就可以。</p>
+<p>程序指令代码里的地址称为<strong>虚拟地址</strong></p>
+<p>实际在硬件中的地址称为<strong>物理内存地址</strong><br>有两种分割的方式</p>
+<h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>段指的是系统分配出来的那个连续的内存空间</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021545_359.png" alt=""></p>
+<p>但是会出现<strong>内存碎片</strong>问题，内存碎片指的是，就是内存被分割掉，要加载一个大的内存空间，但是这个时候任意一个段都无法满足这个内存空间，将这些段加起来就可以满足这个内存空间。</p>
+<p>解决这个问题的方法是<strong>内存交换</strong>，通过将内存上的程序放到硬盘上，在将其取出来，这个时候不是放到原来的位置，而是将内存碎片清除掉，然后就有足够大的内存空间了。</p>
+<p>但是这样也会面临一个问题，就是硬盘的读写速度太慢了，如果一次转移太多的内存的话，会使得整个机器显得卡顿。</p>
+<h3 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h3><p>刚刚上面<strong>内存分段</strong>出现的是当内存交换的时候，机器会显得卡顿。当时如果一次交换的内存比较小的话，这种卡顿的现象就会明显减少。所以提出了将内存进行<strong>分页</strong>，默认Linux的页大小是4KB</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021659_204.png" alt=""></p>
+<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>前面我们讲到了链接，是将多个目标文件进行合并，但是如果某个模块被多个程序调用，都需要合并的话，浪费了很多空间。并且本来我们的<strong>内存空间不够用</strong>在这么整下去的话，都不用运行了。</p>
+<p>生活中，我们会碰到共享单车的例子，那么实际上在计算机上，我们就是用一种新的链接方式，叫做<strong>动态链接</strong></p>
+<blockquote>
+<p>动态链接中链接的不是存储在硬盘上的目标文件代码，而是加载在内存中的共享库</p>
+</blockquote>
+<h3 id="地址无关"><a href="#地址无关" class="headerlink" title="地址无关"></a>地址无关</h3><p>动态链接最重要的就是要做到地址无关，就是无论加载在那个内存地址，都能够正常执行，使用<strong>相对地址</strong>就可以解决地址无关问题</p>
+<h3 id="PLT和GOT"><a href="#PLT和GOT" class="headerlink" title="PLT和GOT"></a>PLT和GOT</h3><p><code>lib.h</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021722_183.png" alt=""></p>
+<p><code>lib.c</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021724_856.png" alt=""></p>
+<p><code>main.c</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021725_258.png" alt=""></p>
+<p>然后将<code>lib.c</code>编译成一个动态的链接库即.so文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc lib.c -fPIC -shared -o lib.so</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-shared 表示创建一个共享库</p>
+<p>-o 把输入放到后面紧跟的文件 lib.so</p>
+<p>-fPIC 表示要将这个编译成一个地址无关代码</p>
+</blockquote>
+<p>然后通过gcc编译main动态链接了lib.so的可执行文件，接着通过objdump可以看到</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o main main.c ./lib.so</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021933_912.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021934_436.png" alt=""></p>
+<p>可以看到在main函数中调用函数是，对应的代码有一个关键字@plt,表示我们从PLT也就是<strong>程序链接表</strong>里面找到调用的函数，就是地址4004f0</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021936_259.png" alt=""></p>
+<p>在4004f0的位置，又进行了一次跳转，跳到<a href="http://bottomupcs.sourceforge.net/csbu/x3824.htm" target="_blank" rel="noopener" title="GOT"><strong>全局偏移表</strong></a></p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2>
       
     </div>
@@ -650,6 +701,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020-03-02-%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/" rel="prev" title="算法练习">
+                算法练习 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -745,7 +800,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -758,7 +813,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -807,7 +862,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译、链接和装载"><span class="nav-number">1.</span> <span class="nav-text">编译、链接和装载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先安装必要的包"><span class="nav-number">1.1.</span> <span class="nav-text">先安装必要的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个简单的程序"><span class="nav-number">1.2.</span> <span class="nav-text">两个简单的程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这里介绍个命令"><span class="nav-number">1.3.</span> <span class="nav-text">这里介绍个命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELF"><span class="nav-number">2.</span> <span class="nav-text">ELF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Header文件头"><span class="nav-number">2.1.</span> <span class="nav-text">File Header文件头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#text-Section-代码段"><span class="nav-number">2.2.</span> <span class="nav-text">.text Section 代码段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-Section-数据段"><span class="nav-number">2.3.</span> <span class="nav-text">.data Section 数据段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rel-text-Section重定位表"><span class="nav-number">2.4.</span> <span class="nav-text">.rel.text Section重定位表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#symtab-Section符号表"><span class="nav-number">2.5.</span> <span class="nav-text">.symtab Section符号表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接器执行过程"><span class="nav-number">2.6.</span> <span class="nav-text">链接器执行过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译、链接和装载"><span class="nav-number">1.</span> <span class="nav-text">编译、链接和装载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先安装必要的包"><span class="nav-number">1.1.</span> <span class="nav-text">先安装必要的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个简单的程序"><span class="nav-number">1.2.</span> <span class="nav-text">两个简单的程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这里介绍个命令"><span class="nav-number">1.3.</span> <span class="nav-text">这里介绍个命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELF"><span class="nav-number">2.</span> <span class="nav-text">ELF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Header文件头"><span class="nav-number">2.1.</span> <span class="nav-text">File Header文件头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#text-Section-代码段"><span class="nav-number">2.2.</span> <span class="nav-text">.text Section 代码段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-Section-数据段"><span class="nav-number">2.3.</span> <span class="nav-text">.data Section 数据段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rel-text-Section重定位表"><span class="nav-number">2.4.</span> <span class="nav-text">.rel.text Section重定位表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#symtab-Section符号表"><span class="nav-number">2.5.</span> <span class="nav-text">.symtab Section符号表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接器执行过程"><span class="nav-number">2.6.</span> <span class="nav-text">链接器执行过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序装载"><span class="nav-number">3.</span> <span class="nav-text">程序装载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分段"><span class="nav-number">3.1.</span> <span class="nav-text">内存分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分页"><span class="nav-number">3.2.</span> <span class="nav-text">内存分页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态链接"><span class="nav-number">4.</span> <span class="nav-text">动态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#地址无关"><span class="nav-number">4.1.</span> <span class="nav-text">地址无关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PLT和GOT"><span class="nav-number">4.2.</span> <span class="nav-text">PLT和GOT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
@@ -848,7 +903,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">58.3k</span>
+    <span title="Site words total count">59.8k</span>
   
 </div>
 
