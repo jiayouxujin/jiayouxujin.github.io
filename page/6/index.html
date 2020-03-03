@@ -346,7 +346,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2019-06-23-python%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2019-06-23-python%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E9%9B%86%E5%90%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="徐晋">
@@ -365,7 +365,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019-06-23-python%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" itemprop="url">python自定义函数与面向对象</a></h1>
+                <a class="post-title-link" href="/2019-06-23-python%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E9%9B%86%E5%90%88/" itemprop="url">python的列表、元组、字典、集合</a></h1>
         
 
         <div class="post-meta">
@@ -393,7 +393,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-23T08:49:11+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-23T10:55:56+08:00">
                 2019-06-23
               </time>
             
@@ -409,8 +409,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019-06-23-python%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019-06-23-python%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" itemprop="commentCount"></span>
+                <a href="/2019-06-23-python%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E9%9B%86%E5%90%88/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019-06-23-python%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E9%9B%86%E5%90%88/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.5k
+                  1.8k
                 </span>
               
 
@@ -448,7 +448,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  7
                 </span>
               
             </div>
@@ -472,13 +472,13 @@
         
           
           
-前言python的最大特点就是dynamically typed就是动态类型，不像java需要定义数据类型
-引入先从一段代码引入：
-12345678910class Dog():    def __init__(self,name,age):        self.name=name      
+前言本文对python的四种基本类型 列表、元组、字典、集合有个全貌的了解，并且分析其性能，不同的应用场景。
+Overview of Python Lists and Tuples在python中经常被创建的数据类型就是列表(list)和元组(tuple)
+相同点：都是存放有一定的顺序存放对象和值
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019-06-23-python%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/#more" rel="contents">
+            <a class="btn" href="/2019-06-23-python%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E9%9B%86%E5%90%88/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2214,7 +2214,7 @@ A set is an abstract data type that can store certain values,without an
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">59.8k</span>
+    <span title="Site words total count">60.3k</span>
   
 </div>
 

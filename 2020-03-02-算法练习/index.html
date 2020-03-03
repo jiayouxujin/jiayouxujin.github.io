@@ -130,14 +130,14 @@
 
 
 
-<meta name="description" content="2020-03-02 水题-奇妙的数字  小明发现了一个奇妙的数字。它的平方和立方正好把0~9的10个数字每个用且只用了一次。你能猜出这个数字是多少吗？  这是一题水题，因为对时间什么要求不没有。但是自己做题的时候，突然用上了抽象的思维，这个很舒服。当然也踩了个坑：没有对数组进行初始化 1234567891011121314151617181920212223242526272829#includ">
+<meta name="description" content="2020-03-03 难题-垒骰子  赌圣atm晚年迷恋上了垒骰子，就是把骰子一个垒在另一个上边，不能歪歪扭扭，要垒成方柱体。经过长期观察，atm 发现了稳定骰子的奥秘：有些数字的面贴着会互相排斥！我们先来规范一下骰子：1 的对面是 4，2 的对面是 5，3 的对面是 6。假设有 m 组互斥现象，每组中的那两个数字的面紧贴在一起，骰子就不能稳定的垒起来。atm想计算一下有多少种不同的可能的垒骰子方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法练习">
 <meta property="og:url" content="http://blog.xuxiaojin.com/2020-03-02-%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/index.html">
 <meta property="og:site_name" content="徐小晋的博客">
-<meta property="og:description" content="2020-03-02 水题-奇妙的数字  小明发现了一个奇妙的数字。它的平方和立方正好把0~9的10个数字每个用且只用了一次。你能猜出这个数字是多少吗？  这是一题水题，因为对时间什么要求不没有。但是自己做题的时候，突然用上了抽象的思维，这个很舒服。当然也踩了个坑：没有对数组进行初始化 1234567891011121314151617181920212223242526272829#includ">
+<meta property="og:description" content="2020-03-03 难题-垒骰子  赌圣atm晚年迷恋上了垒骰子，就是把骰子一个垒在另一个上边，不能歪歪扭扭，要垒成方柱体。经过长期观察，atm 发现了稳定骰子的奥秘：有些数字的面贴着会互相排斥！我们先来规范一下骰子：1 的对面是 4，2 的对面是 5，3 的对面是 6。假设有 m 组互斥现象，每组中的那两个数字的面紧贴在一起，骰子就不能稳定的垒起来。atm想计算一下有多少种不同的可能的垒骰子方">
 <meta property="article:published_time" content="2020-03-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-02T13:54:53.200Z">
+<meta property="article:modified_time" content="2020-03-03T14:47:13.163Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -393,8 +393,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-02T21:54:53+08:00">
-                2020-03-02
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-03T22:47:13+08:00">
+                2020-03-03
               </time>
             
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  613
+                  1.1k
                 </span>
               
 
@@ -448,7 +448,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  5
                 </span>
               
             </div>
@@ -469,7 +469,15 @@
       
 
       
-        <p><code>2020-03-02</code></p>
+        <p><code>2020-03-03</code></p>
+<p>难题-垒骰子</p>
+<blockquote>
+<p>赌圣atm晚年迷恋上了垒骰子，就是把骰子一个垒在另一个上边，不能歪歪扭扭，要垒成方柱体。<br>经过长期观察，atm 发现了稳定骰子的奥秘：有些数字的面贴着会互相排斥！<br>我们先来规范一下骰子：1 的对面是 4，2 的对面是 5，3 的对面是 6。<br>假设有 m 组互斥现象，每组中的那两个数字的面紧贴在一起，骰子就不能稳定的垒起来。<br>atm想计算一下有多少种不同的可能的垒骰子方式。<br>两种垒骰子方式相同，当且仅当这两种方式中对应高度的骰子的对应数字的朝向都相同。<br>由于方案数可能过多，请输出模 10^9 + 7 的结果。</p>
+</blockquote>
+<p>这道题比较难，自己没有想出来。并且看了代码，还有AC。不过也学了矩阵快速幂</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MOD 100000007</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Matrix</span>&#123;</span></span><br><span class="line">	LL v[<span class="number">6</span>][<span class="number">6</span>];</span><br><span class="line">	Matrix()&#123;</span><br><span class="line">		<span class="built_in">memset</span>(v,<span class="number">0</span>,<span class="keyword">sizeof</span>(v));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Matrix <span class="title">mul</span><span class="params">(Matrix x,Matrix y)</span></span>&#123;</span><br><span class="line">	Matrix ans;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">6</span>;i++)</span><br><span class="line">	 <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">6</span>;j++)</span><br><span class="line">	  <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;<span class="number">6</span>;k++)</span><br><span class="line">	   ans.v[i][j]=ans.v[i][j]+x.v[i][k]*y.v[k][j];</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Matrix <span class="title">q_pow</span><span class="params">(Matrix x,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	Matrix ans;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">6</span>;i++) ans.v[i][i]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(k)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k&amp;<span class="number">1</span>) ans=mul(ans,x);</span><br><span class="line">		x=mul(x,x);</span><br><span class="line">		k&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,m,a,b;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m)!=EOF)&#123;</span><br><span class="line">		Matrix T,ans;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">6</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">6</span>;j++)&#123;</span><br><span class="line">			T.v[i][j]=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;b);</span><br><span class="line">		T.v[a<span class="number">-1</span>][b<span class="number">-1</span>]=<span class="number">0</span>;</span><br><span class="line">		T.v[b<span class="number">-1</span>][a<span class="number">-1</span>]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	ans=q_pow(T,n<span class="number">-1</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">6</span>;i++)</span><br><span class="line">	  <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">6</span>;j++)</span><br><span class="line">	   sum=(sum+ans.v[i][j])%MOD;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,(sum*<span class="keyword">int</span>(<span class="built_in">pow</span>(<span class="number">4</span>,n))%MOD)%MOD);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>2020-03-02</code></p>
 <p>水题-奇妙的数字</p>
 <blockquote>
 <p>小明发现了一个奇妙的数字。它的平方和立方正好把0~9的10个数字每个用且只用了一次。你能猜出这个数字是多少吗？</p>
@@ -545,8 +553,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020-03-02-%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E8%A3%85%E8%BD%BD/" rel="next" title="程序编译、链接和装载">
-                <i class="fa fa-chevron-left"></i> 程序编译、链接和装载
+              <a href="/2020-02-22-Git%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E4%B8%8E%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF/" rel="next" title="Git的基本原理与多人协作常见场景">
+                <i class="fa fa-chevron-left"></i> Git的基本原理与多人协作常见场景
               </a>
             
           </div>
@@ -554,6 +562,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020-03-02-%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E8%A3%85%E8%BD%BD/" rel="prev" title="程序编译、链接和装载">
+                程序编译、链接和装载 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -727,7 +739,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">59.8k</span>
+    <span title="Site words total count">60.3k</span>
   
 </div>
 
