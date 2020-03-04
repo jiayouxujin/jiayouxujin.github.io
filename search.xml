@@ -158,8 +158,37 @@
   </entry>
   <entry>
     <title>算法练习</title>
-    <url>/2020-03-02-%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/</url>
-    <content><![CDATA[<p><code>2020-03-03</code></p>
+    <url>/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/</url>
+    <content><![CDATA[<p><code>2020-03-04</code></p>
+<p>超水题-奖券数目</p>
+<blockquote>
+<p>有些人很迷信数字，比如带“4”的数字，认为和“死”谐音，就觉得不吉利。<br>虽然这些说法纯属无稽之谈，但有时还要迎合大众的需求。<br>某抽奖活动奖券号码是5位数(10000-99999)，要求其中不要出现带“4”的号码。<br>主办单位请你计算一下，如果任何两张奖券不重号，最多可发出奖券多少张</p>
+</blockquote>
+<p>这是一道数学题，组合。</p>
+<p>双指针-链表中倒数第K个节点<a href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/" target="_blank" rel="noopener">题目来源</a></p>
+<blockquote>
+<p>输入一个链表，输出该链表中倒数第k个节点。为了符合大多数人的习惯，本题从1开始计数，即链表的尾节点是倒数第1个节点。例如，一个链表有6个节点，从头节点开始，它们的值依次是1、2、3、4、5、6。这个链表的倒数第3个节点是值为4的节点</p>
+</blockquote>
+<p>这题解法是双指针，自己很久之前学到过。这次重新复习，也能够写出来</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">getKthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">            ListNode *first;</span><br><span class="line">            first=head;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;k;i++)&#123;</span><br><span class="line">                first=first-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span>(first-&gt;next)&#123;</span><br><span class="line">                first=first-&gt;next;</span><br><span class="line">                head=head-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>递归、层次遍历-二叉树的深度<a href="https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof/" target="_blank" rel="noopener">题目来源</a></p>
+<blockquote>
+<p>输入一棵二叉树的根节点，求该树的深度。从根节点到叶节点依次经过的节点（含根、叶节点）形成树的一条路径，最长路径的长度为树的深度。</p>
+<p>例如：</p>
+<p>给定二叉树 [3,9,20,null,null,15,7]</p>
+</blockquote>
+<p>这道题，自己的第一个解法想到的解释递归。因为子问题的解法都一样，所以可以很快的写出来，但是发现讨论区里面说，如果是面试的话，可能不会让写递归。</p>
+<p>递归</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">1</span>+<span class="built_in">max</span>(maxDepth(root-&gt;left),maxDepth(root-&gt;right));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>层次遍历</p>
+<p>写这个的时候其实错了挺多的，第一是*号问题，我对指针只是概念上比较熟悉，实战不行。第二就是q.size()这个地方一直错，忘记了pop之后size会发生改变！！</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> level=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">            <span class="keyword">int</span> qsize=q.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">if</span>(qsize&gt;<span class="number">0</span>) level++;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;qsize;i++)&#123;</span><br><span class="line">               TreeNode* head=q.front();</span><br><span class="line">               q.pop();</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span>(head-&gt;left!=<span class="literal">NULL</span>) q.push(head-&gt;left);</span><br><span class="line">               <span class="keyword">if</span>(head-&gt;right!=<span class="literal">NULL</span>) q.push(head-&gt;right);</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> level;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>2020-03-03</code></p>
 <p>难题-垒骰子</p>
 <blockquote>
 <p>赌圣atm晚年迷恋上了垒骰子，就是把骰子一个垒在另一个上边，不能歪歪扭扭，要垒成方柱体。<br>经过长期观察，atm 发现了稳定骰子的奥秘：有些数字的面贴着会互相排斥！<br>我们先来规范一下骰子：1 的对面是 4，2 的对面是 5，3 的对面是 6。<br>假设有 m 组互斥现象，每组中的那两个数字的面紧贴在一起，骰子就不能稳定的垒起来。<br>atm想计算一下有多少种不同的可能的垒骰子方式。<br>两种垒骰子方式相同，当且仅当这两种方式中对应高度的骰子的对应数字的朝向都相同。<br>由于方案数可能过多，请输出模 10^9 + 7 的结果。</p>
@@ -694,142 +723,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Build Systems文档翻译</title>
-    <url>/2019-10-13-Build-Systems%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
-<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
-<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
-<blockquote>
-<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
-<p>但是我们强烈建议你不要写上version</p>
-</blockquote>
-<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
-<ul>
-<li>Java 1.8 作为默认的编译级别</li>
-<li>源代码通过UTF-8编码</li>
-<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
-<li>一个执行的repackage goal</li>
-<li>必要的资源筛选</li>
-<li>必要的插件配置</li>
-<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
-</ul>
-<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
-</blockquote>
-<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
-<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
-</blockquote>
-<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
-<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
-<blockquote>
-<p>命名里奥妙</p>
-<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
-<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
-</blockquote>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
-<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
-<li>以后依赖不写版本，通过springboot的依赖管理</li>
-<li>观察自己引入的依赖是以什么开头</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Beans and Dependency Injection文档翻译</title>
-    <url>/2019-10-13-Spring-Beans-and-Dependency-Injection%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="SpringBeans和依赖注入"><a href="#SpringBeans和依赖注入" class="headerlink" title="SpringBeans和依赖注入"></a>SpringBeans和依赖注入</h1><p>你可以使用任何标准spring框架的技术来定义你的bean和他们的注入依赖。为简单期间，我们通常使用@ComponentScan(来找到你的beans)使用@Autowired(来管理注入)。</p>
-<p>如果你是以先前所有的那种code layout来组织你的代码，将你的主要配置(main方法)放到root package.你可以添加@ComponentScan不需要任何参数，你的所有应用程序组件（@Component,@Service,@Repository,@Controller等等）都会被自动注册为spring Beans。</p>
-<p>以下例子展示了@Service Beans的两种方式</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html" target="_blank" rel="noopener">Spring Beans and Dependency Injection</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>依赖注入，在main方法上的类里添加@ComponentScan就会自动将所有应用的组件内注册为spring bean</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Configuration Classes文档翻译</title>
-    <url>/2019-10-13-Configuration-Classes%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
-<blockquote>
-<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
-</blockquote>
-<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
-<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBootApplication文档翻译</title>
-    <url>/2019-10-13-SpringBootApplication%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
-<ul>
-<li>@EnableAutoConfiguration</li>
-<li>@ComponentScan</li>
-<li>@Configuration</li>
-</ul>
-<p>如下面这个例子</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
-<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
-<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
-<p>也可以讲远程的debugger绑定到你的应用程序。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
-<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Auto-configuration文档翻译</title>
-    <url>/2019-10-13-Auto-configuration%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
-<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
-<blockquote>
-<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
-</blockquote>
-<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
-<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
-<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Installing Spring Boot文档翻译</title>
     <url>/2019-10-13-Installing-Spring-Boot%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
     <content><![CDATA[<hr>
@@ -906,6 +799,77 @@
       </tags>
   </entry>
   <entry>
+    <title>Configuration Classes文档翻译</title>
+    <url>/2019-10-13-Configuration-Classes%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <content><![CDATA[<hr>
+<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
+<blockquote>
+<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
+</blockquote>
+<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
+<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Build Systems文档翻译</title>
+    <url>/2019-10-13-Build-Systems%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <content><![CDATA[<hr>
+<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
+<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
+<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
+<blockquote>
+<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
+<p>但是我们强烈建议你不要写上version</p>
+</blockquote>
+<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
+<ul>
+<li>Java 1.8 作为默认的编译级别</li>
+<li>源代码通过UTF-8编码</li>
+<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
+<li>一个执行的repackage goal</li>
+<li>必要的资源筛选</li>
+<li>必要的插件配置</li>
+<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
+</ul>
+<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
+</blockquote>
+<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
+<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
+</blockquote>
+<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
+<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
+<blockquote>
+<p>命名里奥妙</p>
+<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
+<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
+</blockquote>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
+<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
+<li>以后依赖不写版本，通过springboot的依赖管理</li>
+<li>观察自己引入的依赖是以什么开头</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Structuring Your Code文档翻译</title>
     <url>/2019-10-13-Structuring-Your-Code%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
     <content><![CDATA[<hr>
@@ -930,6 +894,50 @@
 <li>最好是要有包的区分，强烈建议</li>
 <li>官方给的那种形式其实用的比较少吧！还是现在用的形式好，不过官方这种突然想想也挺好的，改起来特别容易，不用来回找，像小程序那样。</li>
 </ol>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Beans and Dependency Injection文档翻译</title>
+    <url>/2019-10-13-Spring-Beans-and-Dependency-Injection%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <content><![CDATA[<hr>
+<h1 id="SpringBeans和依赖注入"><a href="#SpringBeans和依赖注入" class="headerlink" title="SpringBeans和依赖注入"></a>SpringBeans和依赖注入</h1><p>你可以使用任何标准spring框架的技术来定义你的bean和他们的注入依赖。为简单期间，我们通常使用@ComponentScan(来找到你的beans)使用@Autowired(来管理注入)。</p>
+<p>如果你是以先前所有的那种code layout来组织你的代码，将你的主要配置(main方法)放到root package.你可以添加@ComponentScan不需要任何参数，你的所有应用程序组件（@Component,@Service,@Repository,@Controller等等）都会被自动注册为spring Beans。</p>
+<p>以下例子展示了@Service Beans的两种方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html" target="_blank" rel="noopener">Spring Beans and Dependency Injection</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>依赖注入，在main方法上的类里添加@ComponentScan就会自动将所有应用的组件内注册为spring bean</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBootApplication文档翻译</title>
+    <url>/2019-10-13-SpringBootApplication%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <content><![CDATA[<hr>
+<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
+<ul>
+<li>@EnableAutoConfiguration</li>
+<li>@ComponentScan</li>
+<li>@Configuration</li>
+</ul>
+<p>如下面这个例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
+<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
+<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
+<p>也可以讲远程的debugger绑定到你的应用程序。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
+<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -1056,6 +1064,27 @@
 <p>一次只能运行一个LiveReload服务，如果你启动多个应用的话，只有第一个应用支持LiveReload</p>
 </blockquote>
 <h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>已在项目中使用devtools</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Auto-configuration文档翻译</title>
+    <url>/2019-10-13-Auto-configuration%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <content><![CDATA[<hr>
+<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
+<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
+<blockquote>
+<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
+</blockquote>
+<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
+<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
+<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -1976,6 +2005,46 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot通过注解使用MyBatis</title>
+    <url>/2019-08-11-SpringBoot%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8MyBatis/</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的东西。</p>
+<h3 id="通过注解使用MyBatis"><a href="#通过注解使用MyBatis" class="headerlink" title="通过注解使用MyBatis"></a>通过注解使用MyBatis</h3><p>先前一篇的文章，我们通过注解来使用MyBatis，但是跟先前的风格有点不一样，所以这一次我们直接使用注解，能够有一个较直观的对比。引入依赖什么的这里就不说了。</p>
+<h3 id="配置连接数据库"><a href="#配置连接数据库" class="headerlink" title="配置连接数据库"></a>配置连接数据库</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test?serverTimezone=UTC</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=<span class="number">995495</span></span><br></pre></td></tr></table></figure>
+
+<p>题外话：问题是成长的催化剂。刚开始一直连不上数据库，后面一查是时区问题serverTimezone=UTC</p>
+<h3 id="Model层"><a href="#Model层" class="headerlink" title="Model层"></a>Model层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略getter和setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mapper层"><a href="#Mapper层" class="headerlink" title="Mapper层"></a>Mapper层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByName</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此可以发现跟我们先前用的jpa其实是很像的，迁移是很快的，接下来我们就继续探讨其注解</p>
+<h3 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h3><h4 id="使用-Param"><a href="#使用-Param" class="headerlink" title="使用@Param"></a>使用@Param</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age)values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>解释 @Param中定义中的name对应的sql中的#{name},age同理</p>
+<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a>使用Map</h4><p>通过Map&lt;String,Object&gt;对象来作为传递参数的容器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VARCHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByMap</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String,Object&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map.put(<span class="string">"name"</span>,<span class="string">"CCC"</span>);</span><br><span class="line">map.put(<span class="string">"age"</span>,<span class="number">40</span>);</span><br><span class="line">userMapper.insertByMap(map);</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用对象"><a href="#使用对象" class="headerlink" title="使用对象"></a>使用对象</h4><p>可以直接使用java对象来作为查询条件的传参</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByUser</span><span class="params">(User user)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>这样#{name}和#{age}就分别对应了User对象中的name和age属性</p>
+<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByname</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VACHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Update</span>(<span class="string">"update user set age=#&#123;age&#125; where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Delete</span>(<span class="string">"delete from user where id=#&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(Long id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于上面的这些内容都比较好理解</p>
+<h3 id="返回结果的绑定"><a href="#返回结果的绑定" class="headerlink" title="返回结果的绑定"></a>返回结果的绑定</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Results</span>(&#123;</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"name"</span>,column=<span class="string">"name"</span>),</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"age"</span>,column=<span class="string">"age"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@Select</span>(<span class="string">"select name,age from user"</span>)</span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>解释一下：</p>
+<p>@Result中的property属性对应着User对象中的成员名，column对应select出来的字段</p>
+<h3 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h3><p>总的来说，增删改查一般的业务都是够用的，但是有时候需要生成动态sql,mybatis也有这种的注解。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>加油！现在有思路，并且慢慢懂得完善自己的技能库。</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot与MyBatis</title>
     <url>/2019-08-11-SpringBoot%E4%B8%8EMyBatis/</url>
     <content><![CDATA[<hr>
@@ -2049,46 +2118,6 @@
 <h4 id="使用MyBatis"><a href="#使用MyBatis" class="headerlink" title="使用MyBatis"></a>使用MyBatis</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">playWithArtifacts</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Coffee espresso=<span class="keyword">new</span> Coffee()</span><br><span class="line">        .withName(<span class="string">"espresso"</span>)</span><br><span class="line">        .withPrice(Money.of(CurrencyUnit.of(<span class="string">"CNY"</span>),<span class="number">20.0</span>))</span><br><span class="line">        .withCreateTime(<span class="keyword">new</span> Date())</span><br><span class="line">        .withUpdateTime(<span class="keyword">new</span> Date());</span><br><span class="line">    coffeeMapper.insert(espresso);</span><br><span class="line">    </span><br><span class="line">    CoffeeExample example=<span class="keyword">new</span> CoffeeExample();</span><br><span class="line">    example.createCriteria().andNameEqualTo(<span class="string">"latte"</span>);</span><br><span class="line">    List&lt;Coffee&gt; list=coffeeMapper.selectByExample(example);</span><br><span class="line">    list.forEach(c-&gt;log.info(<span class="string">"selectbyExample:&#123;&#125;"</span>,c));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>就是现在，技术有点感觉，但是感觉还不全，精力有。就是现在不断去学习，不断去更新前一天的自己。</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot通过注解使用MyBatis</title>
-    <url>/2019-08-11-SpringBoot%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8MyBatis/</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的东西。</p>
-<h3 id="通过注解使用MyBatis"><a href="#通过注解使用MyBatis" class="headerlink" title="通过注解使用MyBatis"></a>通过注解使用MyBatis</h3><p>先前一篇的文章，我们通过注解来使用MyBatis，但是跟先前的风格有点不一样，所以这一次我们直接使用注解，能够有一个较直观的对比。引入依赖什么的这里就不说了。</p>
-<h3 id="配置连接数据库"><a href="#配置连接数据库" class="headerlink" title="配置连接数据库"></a>配置连接数据库</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test?serverTimezone=UTC</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=<span class="number">995495</span></span><br></pre></td></tr></table></figure>
-
-<p>题外话：问题是成长的催化剂。刚开始一直连不上数据库，后面一查是时区问题serverTimezone=UTC</p>
-<h3 id="Model层"><a href="#Model层" class="headerlink" title="Model层"></a>Model层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略getter和setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mapper层"><a href="#Mapper层" class="headerlink" title="Mapper层"></a>Mapper层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByName</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>至此可以发现跟我们先前用的jpa其实是很像的，迁移是很快的，接下来我们就继续探讨其注解</p>
-<h3 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h3><h4 id="使用-Param"><a href="#使用-Param" class="headerlink" title="使用@Param"></a>使用@Param</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age)values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>解释 @Param中定义中的name对应的sql中的#{name},age同理</p>
-<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a>使用Map</h4><p>通过Map&lt;String,Object&gt;对象来作为传递参数的容器</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VARCHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByMap</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String,Object&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map.put(<span class="string">"name"</span>,<span class="string">"CCC"</span>);</span><br><span class="line">map.put(<span class="string">"age"</span>,<span class="number">40</span>);</span><br><span class="line">userMapper.insertByMap(map);</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用对象"><a href="#使用对象" class="headerlink" title="使用对象"></a>使用对象</h4><p>可以直接使用java对象来作为查询条件的传参</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByUser</span><span class="params">(User user)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>这样#{name}和#{age}就分别对应了User对象中的name和age属性</p>
-<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByname</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VACHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Update</span>(<span class="string">"update user set age=#&#123;age&#125; where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Delete</span>(<span class="string">"delete from user where id=#&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(Long id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于上面的这些内容都比较好理解</p>
-<h3 id="返回结果的绑定"><a href="#返回结果的绑定" class="headerlink" title="返回结果的绑定"></a>返回结果的绑定</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Results</span>(&#123;</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"name"</span>,column=<span class="string">"name"</span>),</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"age"</span>,column=<span class="string">"age"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@Select</span>(<span class="string">"select name,age from user"</span>)</span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>解释一下：</p>
-<p>@Result中的property属性对应着User对象中的成员名，column对应select出来的字段</p>
-<h3 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h3><p>总的来说，增删改查一般的业务都是够用的，但是有时候需要生成动态sql,mybatis也有这种的注解。</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>加油！现在有思路，并且慢慢懂得完善自己的技能库。</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -2365,37 +2394,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot的配置文件解析</title>
-    <url>/2019-08-03-SpringBoot%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%20-%20%E5%89%AF%E6%9C%AC/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
-<p>位置 src/main/java/resources/application.properties</p>
-<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
-<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
-<p>打包后在target的文件夹下</p>
-<p>或者使用 </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
-
-<p>运行jar包</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
-<ul>
-<li>application-dev.properties:开发环境</li>
-<li>application-test.properties:测试环境</li>
-<li>application-prod.properties:生产环境</li>
-</ul>
-<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot的JDBC操作数据库</title>
     <url>/2019-08-03-SpringBoot%E7%9A%84JDBC%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20%E5%89%AF%E6%9C%AC/</url>
     <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
@@ -2412,37 +2410,6 @@
 
 
 
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot开发Web应用</title>
-    <url>/2019-08-03-SpringBoot%E5%BC%80%E5%8F%91Web%E5%BA%94%E7%94%A8%20-%20%E5%89%AF%E6%9C%AC/</url>
-    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
-<p>在application.properties下添加</p>
-<p>spring.mvc.static-path-pattern=/static/**</p>
-<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
-<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>html文件建立在src/main/resources下的templates文件夹下</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在controller</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释</p>
-<ol>
-<li>Controller返回的是视图 index.html</li>
-<li>ModelMap</li>
-</ol>
-<blockquote>
-<p>Modal can supply attributes used for rendering views</p>
-<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
-</blockquote>
-<p>打开浏览器localhost:8080即可访问到</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -2484,6 +2451,68 @@
 </ul>
 <h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">ApplicationTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        userRepository.save(<span class="keyword">new</span> User(<span class="string">"AAA"</span>,<span class="number">0</span>));</span><br><span class="line">        ....</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot开发Web应用</title>
+    <url>/2019-08-03-SpringBoot%E5%BC%80%E5%8F%91Web%E5%BA%94%E7%94%A8%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
+<p>在application.properties下添加</p>
+<p>spring.mvc.static-path-pattern=/static/**</p>
+<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
+<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>html文件建立在src/main/resources下的templates文件夹下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<ol>
+<li>Controller返回的是视图 index.html</li>
+<li>ModelMap</li>
+</ol>
+<blockquote>
+<p>Modal can supply attributes used for rendering views</p>
+<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
+</blockquote>
+<p>打开浏览器localhost:8080即可访问到</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot的配置文件解析</title>
+    <url>/2019-08-03-SpringBoot%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
+<p>位置 src/main/java/resources/application.properties</p>
+<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
+<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
+<p>打包后在target的文件夹下</p>
+<p>或者使用 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<p>运行jar包</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
+<ul>
+<li>application-dev.properties:开发环境</li>
+<li>application-test.properties:测试环境</li>
+<li>application-prod.properties:生产环境</li>
+</ul>
+<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -2546,6 +2575,24 @@
       </tags>
   </entry>
   <entry>
+    <title>python异常与模块化</title>
+    <url>/2019-06-28-python%E5%BC%82%E5%B8%B8%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8C%96%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <content><![CDATA[<p>###异常处理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>还有一种常见形式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+
+<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
+<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
+]]></content>
+      <tags>
+        <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux一些常见的命令行</title>
     <url>/2019-06-28-Linux%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C/</url>
     <content><![CDATA[<hr>
@@ -2590,24 +2637,6 @@
 ]]></content>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python异常与模块化</title>
-    <url>/2019-06-28-python%E5%BC%82%E5%B8%B8%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8C%96%20-%20%E5%89%AF%E6%9C%AC/</url>
-    <content><![CDATA[<p>###异常处理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>还有一种常见形式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
-
-<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
-<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
       </tags>
   </entry>
   <entry>
@@ -3118,6 +3147,43 @@
       </tags>
   </entry>
   <entry>
+    <title>集合(Set)</title>
+    <url>/2019-05-05-%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>集合这个数据结构，需要了解一下，因为对于一些数据只能用集合来存储,没有特定的顺序，并且数据不重复。</p>
+<p>【这部分，我只找到一点材料，所以今天补充一下】</p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>A set is an abstract data type that can store certain values,without any particular order,and no repeated values.</p>
+<p>The Sets data structure is usually used to test whether elements belong to set of values.</p>
+</blockquote>
+<p>这个定义说明，集合经常用来验证<strong>某个值是否在这里面</strong>。</p>
+<h4 id="集合的表示"><a href="#集合的表示" class="headerlink" title="集合的表示"></a>集合的表示</h4><p>用一个数组表示，数组的index表示存储的值，数组存储的值表示 该集合的代表，如果就是集合的代表，则为-1</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">       <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">       Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">           Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h4><h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><p>沿当前节点往上查，当查到某个节点的值为-1时，就是其所在的集合</p>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">       <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">       <span class="keyword">return</span> num;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="集合的并运算"><a href="#集合的并运算" class="headerlink" title="集合的并运算"></a>集合的并运算</h5><p>直接将另外一个集合接到当前集合下</p>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//集合并运算</span></span><br><span class="line">   <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">       Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>改进版</strong></p>
+<p>按秩合并</p>
+<p>就是判断两个集合的大小，小的接到大的下面</p>
+<p>路径压缩</p>
+<p>查找某个值的时候，直接将这个值接到根节点下面</p>
+<p>全部代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SetPractice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] Set;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> MAXN;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化容量为MAXN</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SetPractice</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MAXN=<span class="number">16</span>;</span><br><span class="line">        Set=<span class="keyword">new</span> <span class="keyword">int</span>[MAXN];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">        <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">        Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">            Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//集合并运算</span></span><br><span class="line">    <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按秩合并</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnionBysize</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(set1.length&lt;set2.length)</span><br><span class="line">            Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Set[set1[<span class="number">0</span>]]=set2[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//路径压缩</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindAndShorten</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Set[num]&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Set[num]=FindAndShorten(Set[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> set1[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set2[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set3[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        SetPractice setPractice=<span class="keyword">new</span> SetPractice();</span><br><span class="line">        setPractice.Put(set1);</span><br><span class="line">        setPractice.Put(set2);</span><br><span class="line">        setPractice.Put(set3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
+]]></content>
+      <tags>
+        <tag>集合</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>堆</title>
     <url>/2019-05-05-%E5%A0%86/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于堆的数据结构，虽然上课听了，但是还是不熟悉。所以今天以这一篇文章来督促自己学习“堆”</p>
@@ -3190,43 +3256,6 @@
       <tags>
         <tag>数据结构与算法</tag>
         <tag>堆</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>集合(Set)</title>
-    <url>/2019-05-05-%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>集合这个数据结构，需要了解一下，因为对于一些数据只能用集合来存储,没有特定的顺序，并且数据不重复。</p>
-<p>【这部分，我只找到一点材料，所以今天补充一下】</p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
-<p>A set is an abstract data type that can store certain values,without any particular order,and no repeated values.</p>
-<p>The Sets data structure is usually used to test whether elements belong to set of values.</p>
-</blockquote>
-<p>这个定义说明，集合经常用来验证<strong>某个值是否在这里面</strong>。</p>
-<h4 id="集合的表示"><a href="#集合的表示" class="headerlink" title="集合的表示"></a>集合的表示</h4><p>用一个数组表示，数组的index表示存储的值，数组存储的值表示 该集合的代表，如果就是集合的代表，则为-1</p>
-<p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">       <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">       Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">           Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h4><h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><p>沿当前节点往上查，当查到某个节点的值为-1时，就是其所在的集合</p>
-<p>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">       <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">       <span class="keyword">return</span> num;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="集合的并运算"><a href="#集合的并运算" class="headerlink" title="集合的并运算"></a>集合的并运算</h5><p>直接将另外一个集合接到当前集合下</p>
-<p>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//集合并运算</span></span><br><span class="line">   <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">       Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>改进版</strong></p>
-<p>按秩合并</p>
-<p>就是判断两个集合的大小，小的接到大的下面</p>
-<p>路径压缩</p>
-<p>查找某个值的时候，直接将这个值接到根节点下面</p>
-<p>全部代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SetPractice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] Set;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> MAXN;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化容量为MAXN</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SetPractice</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MAXN=<span class="number">16</span>;</span><br><span class="line">        Set=<span class="keyword">new</span> <span class="keyword">int</span>[MAXN];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">        <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">        Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">            Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//集合并运算</span></span><br><span class="line">    <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按秩合并</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnionBysize</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(set1.length&lt;set2.length)</span><br><span class="line">            Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Set[set1[<span class="number">0</span>]]=set2[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//路径压缩</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindAndShorten</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Set[num]&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Set[num]=FindAndShorten(Set[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> set1[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set2[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set3[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        SetPractice setPractice=<span class="keyword">new</span> SetPractice();</span><br><span class="line">        setPractice.Put(set1);</span><br><span class="line">        setPractice.Put(set2);</span><br><span class="line">        setPractice.Put(set3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
-]]></content>
-      <tags>
-        <tag>集合</tag>
-        <tag>数据结构与算法</tag>
       </tags>
   </entry>
   <entry>
