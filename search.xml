@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>算法练习</title>
-    <url>/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/</url>
+    <url>/3045170151.html</url>
     <content><![CDATA[<h2 id="2020-03-07"><a href="#2020-03-07" class="headerlink" title="2020-03-07"></a>2020-03-07</h2><p>每日一题-队列中的最大值 <a href="https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/" target="_blank" rel="noopener">题目来源</a></p>
 <blockquote>
 <p>请定义一个队列并实现函数 max_value 得到队列里的最大值，要求函数max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。</p>
@@ -89,7 +89,7 @@
   </entry>
   <entry>
     <title>程序编译、链接和装载</title>
-    <url>/2020-03-02-%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E8%A3%85%E8%BD%BD/</url>
+    <url>/1264663068.html</url>
     <content><![CDATA[<hr>
 <h2 id="编译、链接和装载"><a href="#编译、链接和装载" class="headerlink" title="编译、链接和装载"></a>编译、链接和装载</h2><h3 id="先安装必要的包"><a href="#先安装必要的包" class="headerlink" title="先安装必要的包"></a>先安装必要的包</h3><p>实验环境：Centos</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y groupinstall 'Development Tools'</span><br></pre></td></tr></table></figure>
@@ -245,7 +245,7 @@
   </entry>
   <entry>
     <title>Git的基本原理与多人协作常见场景</title>
-    <url>/2020-02-22-Git%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E4%B8%8E%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF/</url>
+    <url>/64817271.html</url>
     <content><![CDATA[<h2 id="Git的基本原理"><a href="#Git的基本原理" class="headerlink" title="Git的基本原理"></a>Git的基本原理</h2><p>Git分为<a href="https://www.liaoxuefeng.com/wiki/896043488029600/897271968352576" target="_blank" rel="noopener" title="Git的工作区和暂存区的基本概念">工作区和暂存区</a>的概念，学习Git首先要懂得这两个基本概念.我们<strong>本机</strong>的目录就是<strong>工作区</strong>，但是.git目录不算工作区，而是Git的版本库。</p>
 <p>Git的版本库里面有一个stage或者是index叫做<strong>暂存区</strong>，当我们执行<code>git add</code>就会将工作区的内容添加到暂存区里，然后我们执行<code>git commit</code>的时候就会将暂存区的内容全部提交到当前分支。</p>
 <p>并且<a href="https://blog.csdn.net/stpeace/article/details/84351160" target="_blank" rel="noopener" title="Git工作区和暂存区与分支的关系"><strong>工作区</strong>和<strong>暂存区</strong>是所有分支所共有</a>的，如果没有<code>git commit</code>就不会将其提交到某个分支。</p>
@@ -394,7 +394,7 @@
   </entry>
   <entry>
     <title>D3.js力导向图</title>
-    <url>/2020-02-04-D3.js%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/</url>
+    <url>/403680216.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>需要图形化neo4j的项目需求</p>
 <p>###力导向图</p>
@@ -477,7 +477,7 @@
   </entry>
   <entry>
     <title>恢复mysql数据库</title>
-    <url>/2020-02-04-%E6%81%A2%E5%A4%8Dmysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <url>/934426894.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天数据库一直被偷，然后必应如何恢复。发现自己的安全意识太弱。</p>
 <p>然后重装服务器系统，权限限制，密码增强。</p>
@@ -519,7 +519,7 @@
   </entry>
   <entry>
     <title>String真的懂了吗？</title>
-    <url>/2019-12-22-String%E7%9C%9F%E7%9A%84%E6%87%82%E4%BA%86%E5%90%97%EF%BC%9F/</url>
+    <url>/645459617.html</url>
     <content><![CDATA[<hr>
 <h2 id="闲聊"><a href="#闲聊" class="headerlink" title="闲聊"></a>闲聊</h2><p>先前记得是看过相关知识点，但是缺少联系，所以有点忘。这次重新激活相关节点。</p>
 <h3 id="JVM内存"><a href="#JVM内存" class="headerlink" title="JVM内存"></a>JVM内存</h3><p>要理解string,首先得理解JVM内存是怎么一回事。</p>
@@ -560,7 +560,7 @@
   </entry>
   <entry>
     <title>缓存是把双刃剑</title>
-    <url>/2019-12-15-%E7%BC%93%E5%AD%98%E6%98%AF%E6%8A%8A%E5%8F%8C%E5%88%83%E5%89%91/</url>
+    <url>/3009568822.html</url>
     <content><![CDATA[<hr>
 <h2 id="闲聊"><a href="#闲聊" class="headerlink" title="闲聊"></a>闲聊</h2><p>昨天重构项目的时候，发现自己用的缓存太过于暴力【直接暴力缓存】，所以补点缓存的知识。</p>
 <h3 id="缓存的本质"><a href="#缓存的本质" class="headerlink" title="缓存的本质"></a>缓存的本质</h3><p>缓存实际上就是为了减少某种资源的重复获取而带来的开销，通过<strong>数据副本</strong>来实现。</p>
@@ -635,7 +635,7 @@
   </entry>
   <entry>
     <title>Externalized Configuration文档翻译</title>
-    <url>/2019-10-18-Externalized-Configuration%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <url>/2734029370.html</url>
     <content><![CDATA[<hr>
 <h1 id="SpringApplication"><a href="#SpringApplication" class="headerlink" title="SpringApplication"></a>SpringApplication</h1><p>SpringApplication提供了一种遍历的方式来引导从main方法里启动的spring 应用。在许多情况下，你可以将其委派给SpringApplication.run方法，就像下面这样：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	SpringApplication.run(MySpringConfiguration<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -743,34 +743,8 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBootApplication文档翻译</title>
-    <url>/2019-10-13-SpringBootApplication%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
-<ul>
-<li>@EnableAutoConfiguration</li>
-<li>@ComponentScan</li>
-<li>@Configuration</li>
-</ul>
-<p>如下面这个例子</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
-<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
-<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
-<p>也可以讲远程的debugger绑定到你的应用程序。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
-<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Structuring Your Code文档翻译</title>
-    <url>/2019-10-13-Structuring-Your-Code%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <url>/2026129430.html</url>
     <content><![CDATA[<hr>
 <h1 id="结构化你的代码-组织你的代码"><a href="#结构化你的代码-组织你的代码" class="headerlink" title="结构化你的代码(组织你的代码)"></a>结构化你的代码(组织你的代码)</h1><p>springboot并不需要特别的代码样式才能工作，但是这里有一些很好的练习能够帮助。</p>
 <h2 id="使用默认的包"><a href="#使用默认的包" class="headerlink" title="使用默认的包"></a>使用默认的包</h2><p>当一个类不包含任何包的声明，它会被认为是默认的包。使用默认的包通常是不被鼓励的并且需要防范的。当springboot应用使用@ComponentScan @EntityScan 或者@SpringBootApplication注解时，会导致特别的问题，因为每一个jar里的类都会被读取。</p>
@@ -800,7 +774,7 @@
   </entry>
   <entry>
     <title>Installing Spring Boot文档翻译</title>
-    <url>/2019-10-13-Installing-Spring-Boot%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <url>/2531096468.html</url>
     <content><![CDATA[<hr>
 <p>#开始<br>如果你开始使用SpringBoot或者通常讲的Spring，通过阅读这一个部分。该部分回答了“是什么？”，“怎么做？”和“为什么？”的基础问题，在安装说明中包含了关于SpringBoot的介绍，我们会陪你构建你的第一个SpringBoot应用，并且讨论里面的核心原则。<br>##介绍SpringBoot<br>SpringBoot让构建一个可以运行的单机，生产级的spring应用。我们对spring平台和第三方库持opinionated(固执)的观点，所以你能够不用太麻烦的开始。大多数的spring boot应用需要非常少的spring配置。</p>
 <p>你可以使用springboot来创建java的应用程序，该程序可以通过java -jar来启动，或者是传统的war部署方式。我们也提供命令行工具来运行“spring scripts”.</p>
@@ -875,38 +849,98 @@
       </tags>
   </entry>
   <entry>
-    <title>Auto-configuration文档翻译</title>
-    <url>/2019-10-13-Auto-configuration%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <title>SpringBootApplication文档翻译</title>
+    <url>/1324367350.html</url>
     <content><![CDATA[<hr>
-<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
-<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
-<blockquote>
-<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
-</blockquote>
-<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
-<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
-<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
+<ul>
+<li>@EnableAutoConfiguration</li>
+<li>@ComponentScan</li>
+<li>@Configuration</li>
+</ul>
+<p>如下面这个例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
+<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
+<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
+<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
+<p>也可以讲远程的debugger绑定到你的应用程序。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
+<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
       </tags>
   </entry>
   <entry>
-    <title>Configuration Classes文档翻译</title>
-    <url>/2019-10-13-Configuration-Classes%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <title>Spring Beans and Dependency Injection文档翻译</title>
+    <url>/3052345267.html</url>
     <content><![CDATA[<hr>
-<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
-<blockquote>
-<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
-</blockquote>
-<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
-<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
+<h1 id="SpringBeans和依赖注入"><a href="#SpringBeans和依赖注入" class="headerlink" title="SpringBeans和依赖注入"></a>SpringBeans和依赖注入</h1><p>你可以使用任何标准spring框架的技术来定义你的bean和他们的注入依赖。为简单期间，我们通常使用@ComponentScan(来找到你的beans)使用@Autowired(来管理注入)。</p>
+<p>如果你是以先前所有的那种code layout来组织你的代码，将你的主要配置(main方法)放到root package.你可以添加@ComponentScan不需要任何参数，你的所有应用程序组件（@Component,@Service,@Repository,@Controller等等）都会被自动注册为spring Beans。</p>
+<p>以下例子展示了@Service Beans的两种方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html" target="_blank" rel="noopener">Spring Beans and Dependency Injection</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>依赖注入，在main方法上的类里添加@ComponentScan就会自动将所有应用的组件内注册为spring bean</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Developing Your First SpringBoot Application文档翻译</title>
+    <url>/1113545103.html</url>
+    <content><![CDATA[<hr>
+<h1 id="部署你的第一个SpringBoot应用"><a href="#部署你的第一个SpringBoot应用" class="headerlink" title="部署你的第一个SpringBoot应用"></a>部署你的第一个SpringBoot应用</h1><p>该部分会介绍如何部署一个简单的“hello world”的web应用程序，并且重点介绍SpringBoot的关键特性。因为大多数的IDE支持Maven,所以我们通过maven来构建项目。</p>
+<p>在我们开始之前，需要运行一下以下命令行，来确保你已经安装好了java和maven</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -version</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mvn -v</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建pom"><a href="#创建pom" class="headerlink" title="创建pom"></a>创建pom</h2><p>我们需要开始构建Maven的pom.xml文件，该pom.xml文件你是构建项目的配方，打开你最喜欢的文本编辑器，然后添加一下内容：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>myproject<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Additional lines to be added here... --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上清单可以给你一个构建方式，你可以通过运行mvn package来测试它(忽略jar will be empty的警告)</p>
+<h3 id="添加Classpath依赖"><a href="#添加Classpath依赖" class="headerlink" title="添加Classpath依赖"></a>添加Classpath依赖</h3><p>SpringBoot提供许多Starters让你添加jar到你的classpath,我们简单的应用程序已经使用了spring-boot-starter-parent在pom的parent的部分。spring-boot-starter-parent是一个特殊的starter，可以提供有用的maven默认设置。它也提供一个dependecy-management部分，你可以忽略依赖的version的标记。</p>
+<p>当你部署一个特别类型的应用，你可能需要用到其他Starters提供的依赖。因为我们部署一个web应用，我们添加了一个spring-boot-starter-web的依赖，在此之前，我们可以通过以下命令来查看我们目前已有的东西:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mvn dependency:tree</span></span><br></pre></td></tr></table></figure>
+
+<p>该命令可以打印出你项目的依赖，你可以看到spring-boot-starter-parent自己本身没有提供依赖。为了添加必要的依赖，编辑你的pom.xml文件，然后添加spring-boot-starter-web依赖在parent部分下面</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>此时，你在运行一下上面的命令，你可以看到许多添加的依赖，包括Tomcat web server和Spring Boot</p>
+<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h3><p>为了完成我们的应用，我们需要创建一个单独的java文件。默认情况下，maven会编译来自src/main/java的源文件，所以你需要创建一个文件夹结构，然后增加一个名为src/main/java/Example.java，该java包含以下代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">home</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Example<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然上面的代码不是特别多，但是暂停一下，我们一步一步来看一下这个重要的部分。</p>
+<h4 id="RestController和-RequestMapping注解"><a href="#RestController和-RequestMapping注解" class="headerlink" title="@RestController和@RequestMapping注解"></a>@RestController和@RequestMapping注解</h4><p>我们的Example的第一个注解是@RestConstroller。这个被称为构造型注解。它为人们阅读代码和spring提供提示，提示该类起到一个特殊的作用。在这个例子中，我们的类是一个web的@Controller，所以当spring处理来自web的请求会考虑它。</p>
+<p>@RequestMapping注解提供路由信息，它告诉spring任何/路径的Http请求都会匹配到Home这个方法。@RestController注解告诉spring直接返回String给客户端。</p>
+<h4 id="EnableAutoConfiguration注解"><a href="#EnableAutoConfiguration注解" class="headerlink" title="@EnableAutoConfiguration注解"></a>@EnableAutoConfiguration注解</h4><p>第二个类级的注解是@EnableAutoConfiguration，该注解告诉SpringBoot通过你添加的jar依赖去“猜”你要怎么配置你的Spring。因为spring-boot-starter-web添加Tomcat和Spring MVC，该自动配置就会假设你将要部署一个web应用并且相应的启动spring。</p>
+<h4 id="Main方法"><a href="#Main方法" class="headerlink" title="Main方法"></a>Main方法</h4><p>我们应用的最后一个部分就是Main方法，这只是一个遵循java约定的应用程序入口点。我们的主要方法通过调用run委托给springboot的springApplication。SpringApplication指引着我们的程序一次开始自动配置Tomcat web 服务器。我们需要将Example.class作为一个参数传入run方法，告诉SpringApplication哪一个是主要的Spring组件。args也传入，来暴露其他一些命令行参数。</p>
+<h3 id="运行Example"><a href="#运行Example" class="headerlink" title="运行Example"></a>运行Example</h3><p>这一点，你的应用程序应该可以运行。因为你使用了spring-boot-starter-parent，你有一个有用的run目标来启动该应用程序。在项目文件的根目录下输入mvn spring-boot:run </p>
+<p>然后在web浏览器里输入localhost:8080 可以看到输出结果。</p>
+<p>可以通过ctrl-c退出该应用。</p>
+<h3 id="构建一个可执行文件jar"><a href="#构建一个可执行文件jar" class="headerlink" title="构建一个可执行文件jar"></a>构建一个可执行文件jar</h3><p>我们通过构建一个完成的可执行文件，让其可以运行在生产环境上，来结束该例子。可执行jar(某些时候又被称为fat jars)包含了你的编译过的class还有你运行代码需要的jar依赖。</p>
+<p>为了构建jar，我们需要在我们的pom.xml添加spring-boot-maven-plugin。为此，在dependencies部分的下面添加以下代码：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>保存pom.xml然后运行 mvn package.</p>
+<p>然后在你的target文件夹下，你应该可以看到myproject-0.0.1-SNAPSHOT.jar,该文件大小应该在10m左右，如果你想要看看里面，可以使用jar tvf</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jar tvf target/myproject-0.0.1-.jar</span><br></pre></td></tr></table></figure>
+
+<p>你应该也能够看到一些相似的文件命名myproject-0.0.1-SNAPSHOT.jar.original。这个original jar文件是maven通过springboot构建的在它repackaged之前。</p>
+<p>通过使用 java -jar 来运行该应用程序，可以看到一样的结果。</p>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html" target="_blank" rel="noopener">developing your first springboot application</a></p>
+<h1 id="学到什么"><a href="#学到什么" class="headerlink" title="学到什么"></a>学到什么</h1><ol>
+<li>starter-parent不提供依赖</li>
+<li>restcontroller直接返回字符串</li>
+<li>getmapping提供路由信息，将路由跟方法绑定</li>
+<li>main方法是通过run转移到springbootapplication</li>
+<li>打成jar包需要在pom下添加plugins</li>
+</ol>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -914,7 +948,7 @@
   </entry>
   <entry>
     <title>Developer Tools文档翻译</title>
-    <url>/2019-10-13-Developer-Tools%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <url>/462033071.html</url>
     <content><![CDATA[<hr>
 <h1 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h1><p>SpringBoot包含一些额外的工具让应用开发的过程更加愉快，Spring-boot-devtools组件可以被加到任何项目里用来提供额外的开发时的特性。为了得到devtools的支持，需要添加一下到你的pom文件</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -985,8 +1019,25 @@
       </tags>
   </entry>
   <entry>
+    <title>Configuration Classes文档翻译</title>
+    <url>/316142548.html</url>
+    <content><![CDATA[<hr>
+<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
+<blockquote>
+<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
+</blockquote>
+<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
+<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Build Systems文档翻译</title>
-    <url>/2019-10-13-Build-Systems%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <url>/4044010014.html</url>
     <content><![CDATA[<hr>
 <h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
 <h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
@@ -1039,72 +1090,21 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring Beans and Dependency Injection文档翻译</title>
-    <url>/2019-10-13-Spring-Beans-and-Dependency-Injection%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
+    <title>Auto-configuration文档翻译</title>
+    <url>/1608351778.html</url>
     <content><![CDATA[<hr>
-<h1 id="SpringBeans和依赖注入"><a href="#SpringBeans和依赖注入" class="headerlink" title="SpringBeans和依赖注入"></a>SpringBeans和依赖注入</h1><p>你可以使用任何标准spring框架的技术来定义你的bean和他们的注入依赖。为简单期间，我们通常使用@ComponentScan(来找到你的beans)使用@Autowired(来管理注入)。</p>
-<p>如果你是以先前所有的那种code layout来组织你的代码，将你的主要配置(main方法)放到root package.你可以添加@ComponentScan不需要任何参数，你的所有应用程序组件（@Component,@Service,@Repository,@Controller等等）都会被自动注册为spring Beans。</p>
-<p>以下例子展示了@Service Beans的两种方式</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
+<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
+<blockquote>
+<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
+</blockquote>
+<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
+<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
+<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html" target="_blank" rel="noopener">Spring Beans and Dependency Injection</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>依赖注入，在main方法上的类里添加@ComponentScan就会自动将所有应用的组件内注册为spring bean</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Developing Your First SpringBoot Application文档翻译</title>
-    <url>/2019-10-13-Developing-Your-First-SpringBoot-Application%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/</url>
-    <content><![CDATA[<hr>
-<h1 id="部署你的第一个SpringBoot应用"><a href="#部署你的第一个SpringBoot应用" class="headerlink" title="部署你的第一个SpringBoot应用"></a>部署你的第一个SpringBoot应用</h1><p>该部分会介绍如何部署一个简单的“hello world”的web应用程序，并且重点介绍SpringBoot的关键特性。因为大多数的IDE支持Maven,所以我们通过maven来构建项目。</p>
-<p>在我们开始之前，需要运行一下以下命令行，来确保你已经安装好了java和maven</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -version</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mvn -v</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="创建pom"><a href="#创建pom" class="headerlink" title="创建pom"></a>创建pom</h2><p>我们需要开始构建Maven的pom.xml文件，该pom.xml文件你是构建项目的配方，打开你最喜欢的文本编辑器，然后添加一下内容：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>myproject<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Additional lines to be added here... --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>以上清单可以给你一个构建方式，你可以通过运行mvn package来测试它(忽略jar will be empty的警告)</p>
-<h3 id="添加Classpath依赖"><a href="#添加Classpath依赖" class="headerlink" title="添加Classpath依赖"></a>添加Classpath依赖</h3><p>SpringBoot提供许多Starters让你添加jar到你的classpath,我们简单的应用程序已经使用了spring-boot-starter-parent在pom的parent的部分。spring-boot-starter-parent是一个特殊的starter，可以提供有用的maven默认设置。它也提供一个dependecy-management部分，你可以忽略依赖的version的标记。</p>
-<p>当你部署一个特别类型的应用，你可能需要用到其他Starters提供的依赖。因为我们部署一个web应用，我们添加了一个spring-boot-starter-web的依赖，在此之前，我们可以通过以下命令来查看我们目前已有的东西:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mvn dependency:tree</span></span><br></pre></td></tr></table></figure>
-
-<p>该命令可以打印出你项目的依赖，你可以看到spring-boot-starter-parent自己本身没有提供依赖。为了添加必要的依赖，编辑你的pom.xml文件，然后添加spring-boot-starter-web依赖在parent部分下面</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>此时，你在运行一下上面的命令，你可以看到许多添加的依赖，包括Tomcat web server和Spring Boot</p>
-<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h3><p>为了完成我们的应用，我们需要创建一个单独的java文件。默认情况下，maven会编译来自src/main/java的源文件，所以你需要创建一个文件夹结构，然后增加一个名为src/main/java/Example.java，该java包含以下代码:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">home</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Example<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>虽然上面的代码不是特别多，但是暂停一下，我们一步一步来看一下这个重要的部分。</p>
-<h4 id="RestController和-RequestMapping注解"><a href="#RestController和-RequestMapping注解" class="headerlink" title="@RestController和@RequestMapping注解"></a>@RestController和@RequestMapping注解</h4><p>我们的Example的第一个注解是@RestConstroller。这个被称为构造型注解。它为人们阅读代码和spring提供提示，提示该类起到一个特殊的作用。在这个例子中，我们的类是一个web的@Controller，所以当spring处理来自web的请求会考虑它。</p>
-<p>@RequestMapping注解提供路由信息，它告诉spring任何/路径的Http请求都会匹配到Home这个方法。@RestController注解告诉spring直接返回String给客户端。</p>
-<h4 id="EnableAutoConfiguration注解"><a href="#EnableAutoConfiguration注解" class="headerlink" title="@EnableAutoConfiguration注解"></a>@EnableAutoConfiguration注解</h4><p>第二个类级的注解是@EnableAutoConfiguration，该注解告诉SpringBoot通过你添加的jar依赖去“猜”你要怎么配置你的Spring。因为spring-boot-starter-web添加Tomcat和Spring MVC，该自动配置就会假设你将要部署一个web应用并且相应的启动spring。</p>
-<h4 id="Main方法"><a href="#Main方法" class="headerlink" title="Main方法"></a>Main方法</h4><p>我们应用的最后一个部分就是Main方法，这只是一个遵循java约定的应用程序入口点。我们的主要方法通过调用run委托给springboot的springApplication。SpringApplication指引着我们的程序一次开始自动配置Tomcat web 服务器。我们需要将Example.class作为一个参数传入run方法，告诉SpringApplication哪一个是主要的Spring组件。args也传入，来暴露其他一些命令行参数。</p>
-<h3 id="运行Example"><a href="#运行Example" class="headerlink" title="运行Example"></a>运行Example</h3><p>这一点，你的应用程序应该可以运行。因为你使用了spring-boot-starter-parent，你有一个有用的run目标来启动该应用程序。在项目文件的根目录下输入mvn spring-boot:run </p>
-<p>然后在web浏览器里输入localhost:8080 可以看到输出结果。</p>
-<p>可以通过ctrl-c退出该应用。</p>
-<h3 id="构建一个可执行文件jar"><a href="#构建一个可执行文件jar" class="headerlink" title="构建一个可执行文件jar"></a>构建一个可执行文件jar</h3><p>我们通过构建一个完成的可执行文件，让其可以运行在生产环境上，来结束该例子。可执行jar(某些时候又被称为fat jars)包含了你的编译过的class还有你运行代码需要的jar依赖。</p>
-<p>为了构建jar，我们需要在我们的pom.xml添加spring-boot-maven-plugin。为此，在dependencies部分的下面添加以下代码：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>保存pom.xml然后运行 mvn package.</p>
-<p>然后在你的target文件夹下，你应该可以看到myproject-0.0.1-SNAPSHOT.jar,该文件大小应该在10m左右，如果你想要看看里面，可以使用jar tvf</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jar tvf target/myproject-0.0.1-.jar</span><br></pre></td></tr></table></figure>
-
-<p>你应该也能够看到一些相似的文件命名myproject-0.0.1-SNAPSHOT.jar.original。这个original jar文件是maven通过springboot构建的在它repackaged之前。</p>
-<p>通过使用 java -jar 来运行该应用程序，可以看到一样的结果。</p>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html" target="_blank" rel="noopener">developing your first springboot application</a></p>
-<h1 id="学到什么"><a href="#学到什么" class="headerlink" title="学到什么"></a>学到什么</h1><ol>
-<li>starter-parent不提供依赖</li>
-<li>restcontroller直接返回字符串</li>
-<li>getmapping提供路由信息，将路由跟方法绑定</li>
-<li>main方法是通过run转移到springbootapplication</li>
-<li>打成jar包需要在pom下添加plugins</li>
-</ol>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -1112,7 +1112,7 @@
   </entry>
   <entry>
     <title>Springboot与Redis</title>
-    <url>/2019-10-06-Springboot%E4%B8%8ERedis/</url>
+    <url>/3822139594.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>好吧，这事是这样的。今天早上打开redis，想想是不是可以给项目加个缓存呢？好吧说走就走。</p>
 <h3 id="理论先行"><a href="#理论先行" class="headerlink" title="理论先行"></a>理论先行</h3><blockquote>
@@ -1172,7 +1172,7 @@
   </entry>
   <entry>
     <title>在一次学习Mybatis</title>
-    <url>/2019-10-05-%E5%9C%A8%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0Mybatis/</url>
+    <url>/969194460.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天继续死磕Mybatis，学会用。任务如下</p>
 <ul>
@@ -1306,7 +1306,7 @@
   </entry>
   <entry>
     <title>初始AOP面向切面编程</title>
-    <url>/2019-10-05-%E5%88%9D%E5%A7%8BAOP%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/</url>
+    <url>/1756647627.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>无意间碰到AOP面向切面编程，想来先前碰到过，但是并没有细细来看，所以想着不如看一下。知道是个啥</p>
 <h3 id="先来个demo"><a href="#先来个demo" class="headerlink" title="先来个demo"></a>先来个demo</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BookService.java</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.MessageFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">BookService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lendOut</span><span class="params">(String bookId,String userId,Date date)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookServiceImpl</span> <span class="keyword">implements</span> <span class="title">BookService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">lendOut</span><span class="params">(String bookId, String userId, Date date)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; :The book &#123;1&#125; is lent to &#123;2&#125;"</span>,date,bookId,userId));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1332,7 +1332,7 @@
   </entry>
   <entry>
     <title>Mybatis Plus</title>
-    <url>/2019-10-04-Mybatis-Plus/</url>
+    <url>/2780498761.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点。</p>
 <h3 id="闲话"><a href="#闲话" class="headerlink" title="闲话"></a>闲话</h3><p>前面有跑过两个mybatis的demo，那个时候大致的一个影响就是，要自己写xml繁琐，然后如果通过注解来实现的话，就相当于之前的Jpa里面的sql全部自己写。(当然它有自己的语法)，今天想着配多数据源这个问题，顺带着继续学习下mybaits，然后无意间碰到了<a href="[https://mp.baomidou.com/guide/crud-interface.html#mapper-crud-%E6%8E%A5%E5%8F%A3](https://mp.baomidou.com/guide/crud-interface.html#mapper-crud-接口)">mybatis-plus</a>这个玩意，瞬间再一次解放生产力。下面是读一遍它的文档，大致有个印象以后，碰到什么问题好search</p>
@@ -1384,7 +1384,7 @@
   </entry>
   <entry>
     <title>初始Docker</title>
-    <url>/2019-10-04-%E5%88%9D%E5%A7%8BDocker/</url>
+    <url>/1285007893.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新东西。</p>
 <h4 id="Docker-Hello-world"><a href="#Docker-Hello-world" class="headerlink" title="Docker Hello world"></a>Docker Hello world</h4><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> ubunbtu:16.04 /bin/<span class="built_in">echo</span> <span class="string">"hello world</span></span></span><br></pre></td></tr></table></figure>
@@ -1433,7 +1433,7 @@
   </entry>
   <entry>
     <title>《精通Spring MVC4》读书笔记</title>
-    <url>/2019-09-23-%E3%80%8A%E7%B2%BE%E9%80%9ASpring%20MVC4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20/</url>
+    <url>/2716121434.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>开启我的阅读《精通Spring MVC4》之旅，将之前零零碎碎的知识点用一个项目串起来。</p>
 <h3 id="快速搭建Spring-Web项目"><a href="#快速搭建Spring-Web项目" class="headerlink" title="快速搭建Spring Web项目"></a>快速搭建Spring Web项目</h3><ol>
@@ -1548,7 +1548,7 @@
   </entry>
   <entry>
     <title>分页查询等</title>
-    <url>/2019-09-20-%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E7%AD%89/</url>
+    <url>/3005596272.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>复盘一下最近写的一些点。</p>
 <h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> xxx <span class="title">returnxxxx</span><span class="params">(@RequestParam String code,@RequestParam(value=<span class="string">"start"</span>,defaultValue=<span class="string">"0"</span>)</span>String start,@<span class="title">RequestParam</span><span class="params">(value=<span class="string">"size"</span>,defaultValue=<span class="string">"9"</span>)</span>String size)</span>&#123;</span><br><span class="line">    <span class="keyword">int</span> starts=Integer.parseInt(start);</span><br><span class="line">    <span class="keyword">int</span> sizes=Integer.parseInt(size);</span><br><span class="line">    </span><br><span class="line">    starts=starts&lt;<span class="number">0</span>?<span class="number">0</span>:starts;</span><br><span class="line">    Sort sort=<span class="keyword">new</span> Sort(Sort.Direction.ASC,<span class="string">"id"</span>);</span><br><span class="line">    Pageable pageable=<span class="keyword">new</span> PageRequest(starts,size,sort);</span><br><span class="line">    Page&lt;XXX&gt; pages=xxxx.findByCode(code,pageable);</span><br><span class="line">    <span class="keyword">return</span> xxxx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1593,7 +1593,7 @@
   </entry>
   <entry>
     <title>谈一谈服务端的推送技术</title>
-    <url>/2019-09-16-%E8%B0%88%E4%B8%80%E8%B0%88%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%8E%A8%E9%80%81%E6%8A%80%E6%9C%AF/</url>
+    <url>/2434758480.html</url>
     <content><![CDATA[<hr>
 <p>##正文</p>
 <p>先前接触推送，是从“wjaf”项目里碰到的。</p>
@@ -1615,7 +1615,7 @@
   </entry>
   <entry>
     <title>SpringBoot与WebSocket</title>
-    <url>/2019-09-09-SpringBoot%E4%B8%8EWebSocket/</url>
+    <url>/2945851745.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点，更新自己的技术库</p>
 <h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><p>简单说一下WebSocket，因为HTTP协议是“请求-应答”模式，所以要做到即时通信，不好弄。因为服务端不能主动向客户端发送信息。所以可以通过客户端向服务端不断去请求(轮询)，查看是否有新消息。但是如果请求的多了就容易造成堵塞。</p>
@@ -1651,7 +1651,7 @@
   </entry>
   <entry>
     <title>SpringBoot thumbnailator对图片进行压缩</title>
-    <url>/2019-09-04-SpringBoot-thumbnailator%E5%AF%B9%E5%9B%BE%E7%89%87%E8%BF%9B%E8%A1%8C%E5%8E%8B%E7%BC%A9/</url>
+    <url>/495753683.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新技术，更新自己的技术库</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;net.coobird&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;thumbnailator&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;0.4.8&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
@@ -1677,7 +1677,7 @@
   </entry>
   <entry>
     <title>SpringBoot和MongoDB的真正实践</title>
-    <url>/2019-09-02-SpringBoot%E5%92%8CMongoDB%E7%9A%84%E7%9C%9F%E6%AD%A3%E5%AE%9E%E8%B7%B5/</url>
+    <url>/1336508396.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要学一点新技术，更新自己的技术库</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="pom"><a href="#pom" class="headerlink" title="pom"></a>pom</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">			&lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">			&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">	&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
@@ -1723,7 +1723,7 @@
   </entry>
   <entry>
     <title>SpringBoot和MongoDB的爱恨情仇</title>
-    <url>/2019-09-01-SpringBoot%E5%92%8CMongoDB%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/</url>
+    <url>/4184438344.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习路径，先通过阅读官方文档，抄点代码。有个大致了解。然后结合SpringBoot</p>
 <h3 id="Pure-MongoDB"><a href="#Pure-MongoDB" class="headerlink" title="Pure MongoDB"></a>Pure MongoDB</h3><h4 id="Insert-Documents"><a href="#Insert-Documents" class="headerlink" title="Insert Documents"></a>Insert Documents</h4><ul>
@@ -1791,7 +1791,7 @@
   </entry>
   <entry>
     <title>SpringBoot 使用https</title>
-    <url>/2019-08-31-SpringBoot-%E4%BD%BF%E7%94%A8https/</url>
+    <url>/605738871.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新技术，更新自己的技术库。</p>
 <h3 id="springboot使用https"><a href="#springboot使用https" class="headerlink" title="springboot使用https"></a>springboot使用https</h3><ul>
@@ -1816,7 +1816,7 @@
   </entry>
   <entry>
     <title>java中ArrayList、LinkedList、Vector的区别</title>
-    <url>/2019-08-15-java%E4%B8%ADArrayList%E3%80%81LinkedList%E3%80%81Vector%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <url>/1160018501.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点。</p>
 <h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h3><p>List，是一些有序的元素集合，而Set就没有顺序。</p>
@@ -1860,7 +1860,7 @@
   </entry>
   <entry>
     <title>java中Integer与int的区别</title>
-    <url>/2019-08-14-java%E4%B8%ADInteger%E4%B8%8Eint%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <url>/2399757600.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新技术</p>
 <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在java里面，int是原始数据类型(primitive data) Integer是包装类。</p>
@@ -1898,7 +1898,7 @@
   </entry>
   <entry>
     <title>SpringBoot MVC自定义错误页面</title>
-    <url>/2019-08-13-SpringBoot-MVC%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2/</url>
+    <url>/3844469490.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新技术</p>
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>今天发现项目需要一个自定义的Error的页面，说来就来。</p>
@@ -1931,7 +1931,7 @@
   </entry>
   <entry>
     <title>SpringBoot的视图框架thymeleaf</title>
-    <url>/2019-08-12-SpringBoot%E7%9A%84%E8%A7%86%E5%9B%BE%E6%A1%86%E6%9E%B6thymeleaf/</url>
+    <url>/4239156299.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学习一点。</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
@@ -2026,7 +2026,7 @@
   </entry>
   <entry>
     <title>SpringBoot通过注解使用MyBatis</title>
-    <url>/2019-08-11-SpringBoot%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8MyBatis/</url>
+    <url>/260235536.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的东西。</p>
 <h3 id="通过注解使用MyBatis"><a href="#通过注解使用MyBatis" class="headerlink" title="通过注解使用MyBatis"></a>通过注解使用MyBatis</h3><p>先前一篇的文章，我们通过注解来使用MyBatis，但是跟先前的风格有点不一样，所以这一次我们直接使用注解，能够有一个较直观的对比。引入依赖什么的这里就不说了。</p>
@@ -2066,7 +2066,7 @@
   </entry>
   <entry>
     <title>SpringBoot与MyBatis</title>
-    <url>/2019-08-11-SpringBoot%E4%B8%8EMyBatis/</url>
+    <url>/2204185805.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的东西，完善自己的技术库。</p>
 <h3 id="认识MyBatis"><a href="#认识MyBatis" class="headerlink" title="认识MyBatis"></a>认识MyBatis</h3><ul>
@@ -2145,7 +2145,7 @@
   </entry>
   <entry>
     <title>SpringBoot JPA通过方法名来定义数据库查询</title>
-    <url>/2019-08-10-SpringBoot-JPA%E9%80%9A%E8%BF%87%E6%96%B9%E6%B3%95%E5%90%8D%E6%9D%A5%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
+    <url>/497525653.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的技术，更新自己的技术库。</p>
 <h3 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h3><p>主要介绍通过方法名来创建简单的查询，彻底解放部分生产力</p>
@@ -2181,7 +2181,7 @@
   </entry>
   <entry>
     <title>认识Spring Data JPA</title>
-    <url>/2019-08-09-%E8%AE%A4%E8%AF%86Spring-Data-JPA/</url>
+    <url>/1884068929.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学点新技术</p>
 <h3 id="认识Spring-Data-JPA"><a href="#认识Spring-Data-JPA" class="headerlink" title="认识Spring Data JPA"></a>认识Spring Data JPA</h3><p>主要是简化了sql的书写，部分简单的sql语法通过框架自动帮助生成</p>
@@ -2265,7 +2265,7 @@
   </entry>
   <entry>
     <title>SpringBoot使用Swagger2构建强大的RESTful API文档</title>
-    <url>/2019-08-08-SpringBoot%E4%BD%BF%E7%94%A8Swagger2%E6%9E%84%E5%BB%BA%E5%BC%BA%E5%A4%A7%E7%9A%84RESTful-API%E6%96%87%E6%A1%A3/</url>
+    <url>/3795878956.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学点新东西</p>
 <h3 id="使用理由"><a href="#使用理由" class="headerlink" title="使用理由"></a>使用理由</h3><ol>
@@ -2309,7 +2309,7 @@
   </entry>
   <entry>
     <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
-    <url>/2019-08-05-SpringBoot%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%B9%B6%E4%B8%94%E9%80%9A%E8%BF%87url%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90/</url>
+    <url>/1697153394.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
 <h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
@@ -2362,7 +2362,7 @@
   </entry>
   <entry>
     <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
-    <url>/2019-08-05-SpringBoot%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%B9%B6%E4%B8%94%E9%80%9A%E8%BF%87url%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <url>/1697153393.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
 <h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
@@ -2414,70 +2414,8 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot的配置文件解析</title>
-    <url>/2019-08-03-SpringBoot%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%20-%20%E5%89%AF%E6%9C%AC/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
-<p>位置 src/main/java/resources/application.properties</p>
-<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
-<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
-<p>打包后在target的文件夹下</p>
-<p>或者使用 </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
-
-<p>运行jar包</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
-<ul>
-<li>application-dev.properties:开发环境</li>
-<li>application-test.properties:测试环境</li>
-<li>application-prod.properties:生产环境</li>
-</ul>
-<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot开发Web应用</title>
-    <url>/2019-08-03-SpringBoot%E5%BC%80%E5%8F%91Web%E5%BA%94%E7%94%A8%20-%20%E5%89%AF%E6%9C%AC/</url>
-    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
-<p>在application.properties下添加</p>
-<p>spring.mvc.static-path-pattern=/static/**</p>
-<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
-<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>html文件建立在src/main/resources下的templates文件夹下</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在controller</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释</p>
-<ol>
-<li>Controller返回的是视图 index.html</li>
-<li>ModelMap</li>
-</ol>
-<blockquote>
-<p>Modal can supply attributes used for rendering views</p>
-<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
-</blockquote>
-<p>打开浏览器localhost:8080即可访问到</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot的Jpa操作数据库</title>
-    <url>/2019-08-03-SpringBoot%E7%9A%84Jpa%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <url>/3937530493.html</url>
     <content><![CDATA[<h3 id="配置jpa"><a href="#配置jpa" class="headerlink" title="配置jpa"></a>配置jpa</h3><p>在pom文件下引入依赖</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-stater-data-jpa&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
@@ -2517,8 +2455,39 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot的配置文件解析</title>
+    <url>/3020356367.html</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
+<p>位置 src/main/java/resources/application.properties</p>
+<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
+<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
+<p>打包后在target的文件夹下</p>
+<p>或者使用 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<p>运行jar包</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
+<ul>
+<li>application-dev.properties:开发环境</li>
+<li>application-test.properties:测试环境</li>
+<li>application-prod.properties:生产环境</li>
+</ul>
+<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot的JDBC操作数据库</title>
-    <url>/2019-08-03-SpringBoot%E7%9A%84JDBC%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <url>/81179857.html</url>
     <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
@@ -2539,8 +2508,39 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot开发Web应用</title>
+    <url>/764686384.html</url>
+    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
+<p>在application.properties下添加</p>
+<p>spring.mvc.static-path-pattern=/static/**</p>
+<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
+<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>html文件建立在src/main/resources下的templates文件夹下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<ol>
+<li>Controller返回的是视图 index.html</li>
+<li>ModelMap</li>
+</ol>
+<blockquote>
+<p>Modal can supply attributes used for rendering views</p>
+<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
+</blockquote>
+<p>打开浏览器localhost:8080即可访问到</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>构建第一个SpringBoot应用程序</title>
-    <url>/2019-08-02-%E6%9E%84%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AASpringBoot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <url>/2958751061.html</url>
     <content><![CDATA[<h3 id="SpringBoot是什么"><a href="#SpringBoot是什么" class="headerlink" title="SpringBoot是什么"></a>SpringBoot是什么</h3><p>简化各种配置，让你专注与你的业务逻辑。</p>
 <h3 id="使用start-spring-io构建项目"><a href="#使用start-spring-io构建项目" class="headerlink" title="使用start.spring,io构建项目"></a>使用start.spring,io构建项目</h3><p><a href="https://start.spring.io/" target="_blank" rel="noopener">构建项目</a></p>
 <p>下载后-&gt;解压-&gt;通过idea打开pom文件-&gt;以project的形式打开</p>
@@ -2596,7 +2596,7 @@
   </entry>
   <entry>
     <title>python异常与模块化</title>
-    <url>/2019-06-28-python%E5%BC%82%E5%B8%B8%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8C%96%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <url>/2483463584.html</url>
     <content><![CDATA[<p>###异常处理</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
 
@@ -2614,7 +2614,7 @@
   </entry>
   <entry>
     <title>Linux一些常见的命令行</title>
-    <url>/2019-06-28-Linux%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C/</url>
+    <url>/2560767953.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直以来对于命令行很恐惧，但是Linux是一个很常见的服务端系统，所以必须了解一点命令行，才能在上面部署好环境，本篇主要介绍一些简单的命令行，让自己上手，并且清楚一些东西。而后对于部署配置，参看一些教程也不会不知道自己在操作什么，让自己心里有个底。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">init 3 #切换到命令行界面</span><br><span class="line">exit #退出</span><br><span class="line"><span class="meta">#</span><span class="bash">切换到超级管理员</span></span><br><span class="line">su - root </span><br><span class="line"><span class="meta">clear#</span><span class="bash">清空shell</span></span><br></pre></td></tr></table></figure>
@@ -2661,7 +2661,7 @@
   </entry>
   <entry>
     <title>python自定义函数与面向对象</title>
-    <url>/2019-06-23-python%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+    <url>/2041354615.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python的最大特点就是dynamically typed就是动态类型，不像java需要定义数据类型</p>
 <h4 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h4><p>先从一段代码引入：</p>
@@ -2732,7 +2732,7 @@
   </entry>
   <entry>
     <title>python的字符串</title>
-    <url>/2019-06-23-python%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <url>/4045311999.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要对python的字符串操作进行探讨与分析</p>
 <h4 id="字符串基础"><a href="#字符串基础" class="headerlink" title="字符串基础"></a>字符串基础</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">'jason'</span></span><br><span class="line">city=<span class="string">'''shanghai'''</span></span><br><span class="line">text=<span class="string">"welcome to shanghai"</span></span><br><span class="line">print(name)</span><br><span class="line">print(city)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure>
@@ -2783,7 +2783,7 @@
   </entry>
   <entry>
     <title>python的列表、元组、字典、集合</title>
-    <url>/2019-06-23-python%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%81%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E3%80%81%E9%9B%86%E5%90%88/</url>
+    <url>/2329127915.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文对python的四种基本类型 列表、元组、字典、集合有个全貌的了解，并且分析其性能，不同的应用场景。</p>
 <h3 id="Overview-of-Python-Lists-and-Tuples"><a href="#Overview-of-Python-Lists-and-Tuples" class="headerlink" title="Overview of Python Lists and Tuples"></a>Overview of Python Lists and Tuples</h3><p>在python中经常被创建的数据类型就是列表(list)和元组(tuple)</p>
@@ -2852,40 +2852,8 @@
       </tags>
   </entry>
   <entry>
-    <title>图系列二</title>
-    <url>/2019-06-21-%E5%9B%BE%E7%B3%BB%E5%88%97%E4%BA%8C/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里主要是一些关于图(2)的算法，其的核心代码以及全部代码。</p>
-<p>使用语言C++</p>
-<h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><p>####Prim核心代码</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minKey</span><span class="params">(<span class="keyword">int</span> key[V],<span class="keyword">bool</span> MSTset[V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=INT_MAX,min_index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(MSTset[i]==<span class="literal">false</span>&amp;&amp;key[i]&lt;<span class="built_in">min</span>)&#123;</span><br><span class="line">            <span class="built_in">min</span>=key[i],min_index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min_index;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">primMST</span><span class="params">(<span class="keyword">int</span> gaph[V][V])</span></span>&#123;</span><br><span class="line">    ....</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> count=<span class="number">0</span>;count&lt;V<span class="number">-1</span>;count++)&#123;</span><br><span class="line">            <span class="keyword">int</span> u=minKey(key,MSTset);</span><br><span class="line">            MSTset[u]=<span class="literal">true</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(graph[u][i]&amp;&amp;MSTset[i]==<span class="literal">false</span>&amp;&amp;graph[u][i]&lt;key[i])&#123;</span><br><span class="line">                    key[i]=graph[u][i];</span><br><span class="line">                    parent[i]=u;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="prim全部代码"><a href="#prim全部代码" class="headerlink" title="prim全部代码"></a>prim全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printMST</span><span class="params">(<span class="keyword">int</span> parent[], <span class="keyword">int</span> graph[V][V])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Edge \tWeight\n"</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; V; i++)  </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;parent[i]&lt;&lt;<span class="string">" - "</span>&lt;&lt;i&lt;&lt;<span class="string">" \t"</span>&lt;&lt;graph[i][parent[i]]&lt;&lt;<span class="string">" \n"</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minKey</span><span class="params">(<span class="keyword">int</span> key[V],<span class="keyword">bool</span> MSTset[V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=INT_MAX,min_index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(MSTset[i]==<span class="literal">false</span>&amp;&amp;key[i]&lt;<span class="built_in">min</span>)&#123;</span><br><span class="line">            <span class="built_in">min</span>=key[i];</span><br><span class="line">            min_index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min_index;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">primMST</span><span class="params">(<span class="keyword">int</span> graph[V][V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> parent[V];</span><br><span class="line">    <span class="keyword">int</span> key[V];</span><br><span class="line">    <span class="keyword">bool</span> MSTset[V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        key[i]=INT_MAX;</span><br><span class="line">        MSTset[i]=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    key[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    parent[<span class="number">0</span>]=<span class="number">-1</span>; <span class="comment">//取根节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> count=<span class="number">0</span>;count&lt;V<span class="number">-1</span>;count++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u=minKey(key,MSTset);</span><br><span class="line"></span><br><span class="line">        MSTset[u]=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(graph[u][i]&amp;&amp;MSTset[i]==<span class="literal">false</span>&amp;&amp;graph[u][i]&lt;key[i])&#123;</span><br><span class="line">                key[i]=graph[u][i];</span><br><span class="line">                parent[i]=u;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    printMST(parent, graph);  </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> graph[V][V] = &#123; </span><br><span class="line">                       &#123; <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">0</span> &#125; </span><br><span class="line">                       &#125;;  </span><br><span class="line">  </span><br><span class="line">    primMST(graph);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="kruskul核心代码"><a href="#kruskul核心代码" class="headerlink" title="kruskul核心代码"></a>kruskul核心代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h3><h4 id="dijkstra核心代码"><a href="#dijkstra核心代码" class="headerlink" title="dijkstra核心代码"></a>dijkstra核心代码</h4><p>今天脑子有点昏，还是怎么了，把这个算法想成了多源的最短路径</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//跟prim算法有点像，其中不一样的地方就是在更新</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(graph[u][i]&amp;&amp;!sptSet[i]&amp;&amp;dist[u]!=INT_MAX&amp;&amp;graph[u][i]+dist[u]&lt;dist[i]&#123;</span><br><span class="line">        dist[i]=graph[u][i]+dist[u];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 9 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="keyword">int</span> dist[V],<span class="keyword">bool</span> sptSet[V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=INT_MAX,min_index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(sptSet[i]==<span class="literal">false</span>&amp;&amp;dist[i]&lt;<span class="built_in">min</span>)&#123;</span><br><span class="line">            <span class="built_in">min</span>=dist[i],min_index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min_index;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printSolution</span><span class="params">(<span class="keyword">int</span> dist[], <span class="keyword">int</span> n)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"Vertex   Distance from Source\n"</span>); </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; V; i++) </span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%d tt %d\n"</span>, i, dist[i]); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> graph[V][V],<span class="keyword">int</span> src)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dist[V];</span><br><span class="line">    <span class="keyword">bool</span> sptSet[V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        dist[i]=INT_MAX,sptSet[i]=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dist[src]=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> count=<span class="number">0</span>;count&lt;V<span class="number">-1</span>;count++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u=minDistance(dist,sptSet);</span><br><span class="line"></span><br><span class="line">        sptSet[u]=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(graph[u][i]&amp;&amp;!sptSet[i]&amp;&amp;dist[u]!=INT_MAX&amp;&amp;dist[u]+graph[u][i]&lt;dist[i])&#123;</span><br><span class="line">                dist[i]=dist[u]+graph[u][i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    printSolution(dist, V); </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> graph[V][V] = &#123;</span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">4</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">11</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">14</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">14</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">6</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">8</span>, <span class="number">11</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">7</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">0</span>&#125; </span><br><span class="line">                     &#125;; </span><br><span class="line">    dijkstra(graph,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="floyd核心代码"><a href="#floyd核心代码" class="headerlink" title="floyd核心代码"></a>floyd核心代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;V;k++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;V;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(dist[i][k]+dist[k][j]&lt;dist[i][j])</span><br><span class="line">                dist[i][j]=dist[i][k]+dist[k][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="floyd全部代码"><a href="#floyd全部代码" class="headerlink" title="floyd全部代码"></a>floyd全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 99999  </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printSolution</span><span class="params">(<span class="keyword">int</span> dist[][V])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"The following matrix shows the shortest distances"</span></span><br><span class="line">            <span class="string">" between every pair of vertices \n"</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; V; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; V; j++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span> (dist[i][j] == INF)  </span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;<span class="string">"INF"</span>&lt;&lt;<span class="string">"   "</span>;  </span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;dist[i][j]&lt;&lt;<span class="string">"  "</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">floyd</span><span class="params">(<span class="keyword">int</span> graph[V][V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dist[V][V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;V;j++)&#123;</span><br><span class="line">            dist[i][j]=graph[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;V;k++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;V;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(dist[i][k]+dist[k][j]&lt;dist[i][j])</span><br><span class="line">                 dist[i][j]=dist[i][k]+dist[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">     printSolution(dist);  </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">int</span> graph[V][V] = &#123; &#123;<span class="number">0</span>, <span class="number">5</span>, INF, <span class="number">10</span>&#125;,  </span><br><span class="line">                        &#123;INF, <span class="number">0</span>, <span class="number">3</span>, INF&#125;,  </span><br><span class="line">                        &#123;INF, INF, <span class="number">0</span>, <span class="number">1</span>&#125;,  </span><br><span class="line">                        &#123;INF, INF, INF, <span class="number">0</span>&#125;  </span><br><span class="line">                    &#125;;  </span><br><span class="line"></span><br><span class="line">    floyd(graph);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h3><h4 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h4><p>//原本的想法是通过度，用一个表存放度的表，然后更新这个表</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">topologicalSort:</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)</span><br><span class="line">    <span class="keyword">if</span>(!visited[i])</span><br><span class="line">        topologicalSortUtil(i,visited,<span class="built_in">stack</span>)</span><br><span class="line">        </span><br><span class="line">topologicalSortUtil:</span><br><span class="line">&#123;</span><br><span class="line">    visited[v]=<span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator i;</span><br><span class="line">    <span class="keyword">for</span>(i=adj[i].<span class="built_in">begin</span>();i!=adj.<span class="built_in">end</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!visited[*i])</span><br><span class="line">            topologicalSortUtil(*i,visited,<span class="built_in">stack</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>.push(v);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在核心代码里我们看不到度，但是其实用了栈和递归，通过这种方法的存储，使得v的邻接的点总是比v先入栈，然后利用栈的“先进后出”得到我们的拓扑排序序列</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="全部代码-1"><a href="#全部代码-1" class="headerlink" title="全部代码"></a>全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//topological</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Graph</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> V;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; *adj;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">topologicalSortUtil</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">bool</span> visited[],<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">stack</span>)</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Graph(<span class="keyword">int</span> V);</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">topologicalSort</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Graph::Graph(<span class="keyword">int</span> V)&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;V=V;</span><br><span class="line">    adj=<span class="keyword">new</span> <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;[V];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Graph::addEdge</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">    adj[v].push_back(w);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Graph::topologicalSortUtil</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">bool</span> visited[],<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">stack</span>)</span></span>&#123;</span><br><span class="line">    visited[v]=<span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=adj[v].<span class="built_in">begin</span>();i!=adj[v].<span class="built_in">end</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!visited[*i])</span><br><span class="line">            topologicalSortUtil(*i,visited,<span class="built_in">stack</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>.push(v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Graph::topologicalSort</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> *visited=<span class="keyword">new</span> <span class="keyword">bool</span>[V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        visited[i]=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">stack</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(visited[i]==<span class="literal">false</span>)</span><br><span class="line">            topologicalSortUtil(i,visited,<span class="built_in">stack</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">stack</span>.empty()==<span class="literal">false</span>)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">stack</span>.top()&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        <span class="built_in">stack</span>.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// Create a graph given in the above diagram </span></span><br><span class="line">    <span class="function">Graph <span class="title">g</span><span class="params">(<span class="number">6</span>)</span></span>; </span><br><span class="line">    g.addEdge(<span class="number">5</span>, <span class="number">2</span>); </span><br><span class="line">    g.addEdge(<span class="number">5</span>, <span class="number">0</span>); </span><br><span class="line">    g.addEdge(<span class="number">4</span>, <span class="number">0</span>); </span><br><span class="line">    g.addEdge(<span class="number">4</span>, <span class="number">1</span>); </span><br><span class="line">    g.addEdge(<span class="number">2</span>, <span class="number">3</span>); </span><br><span class="line">    g.addEdge(<span class="number">3</span>, <span class="number">1</span>); </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Following is a Topological Sort of the given graph \n"</span>; </span><br><span class="line">    g.topologicalSort(); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>数据结构与算法</tag>
-        <tag>图</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>攻克链表难关</title>
-    <url>/2019-06-21-%E6%94%BB%E5%85%8B%E9%93%BE%E8%A1%A8%E9%9A%BE%E5%85%B3/</url>
+    <url>/205465454.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>链表一直是我比较怕的东西，其实应该是我没有理解指针的定义。</p>
 <p>我需要从机器的角度思考，机器可不会存储“箭头”，机器存储的是“地址”。当我明白了这个的时候，我瞬间感觉自己好像有点恍然大悟。</p>
 <h4 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h4><p>#####思路</p>
@@ -2918,8 +2886,40 @@
       </tags>
   </entry>
   <entry>
+    <title>图系列二</title>
+    <url>/1458634763.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里主要是一些关于图(2)的算法，其的核心代码以及全部代码。</p>
+<p>使用语言C++</p>
+<h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><p>####Prim核心代码</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minKey</span><span class="params">(<span class="keyword">int</span> key[V],<span class="keyword">bool</span> MSTset[V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=INT_MAX,min_index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(MSTset[i]==<span class="literal">false</span>&amp;&amp;key[i]&lt;<span class="built_in">min</span>)&#123;</span><br><span class="line">            <span class="built_in">min</span>=key[i],min_index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min_index;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">primMST</span><span class="params">(<span class="keyword">int</span> gaph[V][V])</span></span>&#123;</span><br><span class="line">    ....</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> count=<span class="number">0</span>;count&lt;V<span class="number">-1</span>;count++)&#123;</span><br><span class="line">            <span class="keyword">int</span> u=minKey(key,MSTset);</span><br><span class="line">            MSTset[u]=<span class="literal">true</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(graph[u][i]&amp;&amp;MSTset[i]==<span class="literal">false</span>&amp;&amp;graph[u][i]&lt;key[i])&#123;</span><br><span class="line">                    key[i]=graph[u][i];</span><br><span class="line">                    parent[i]=u;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="prim全部代码"><a href="#prim全部代码" class="headerlink" title="prim全部代码"></a>prim全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printMST</span><span class="params">(<span class="keyword">int</span> parent[], <span class="keyword">int</span> graph[V][V])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Edge \tWeight\n"</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; V; i++)  </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;parent[i]&lt;&lt;<span class="string">" - "</span>&lt;&lt;i&lt;&lt;<span class="string">" \t"</span>&lt;&lt;graph[i][parent[i]]&lt;&lt;<span class="string">" \n"</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minKey</span><span class="params">(<span class="keyword">int</span> key[V],<span class="keyword">bool</span> MSTset[V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=INT_MAX,min_index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(MSTset[i]==<span class="literal">false</span>&amp;&amp;key[i]&lt;<span class="built_in">min</span>)&#123;</span><br><span class="line">            <span class="built_in">min</span>=key[i];</span><br><span class="line">            min_index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min_index;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">primMST</span><span class="params">(<span class="keyword">int</span> graph[V][V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> parent[V];</span><br><span class="line">    <span class="keyword">int</span> key[V];</span><br><span class="line">    <span class="keyword">bool</span> MSTset[V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        key[i]=INT_MAX;</span><br><span class="line">        MSTset[i]=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    key[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    parent[<span class="number">0</span>]=<span class="number">-1</span>; <span class="comment">//取根节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> count=<span class="number">0</span>;count&lt;V<span class="number">-1</span>;count++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u=minKey(key,MSTset);</span><br><span class="line"></span><br><span class="line">        MSTset[u]=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(graph[u][i]&amp;&amp;MSTset[i]==<span class="literal">false</span>&amp;&amp;graph[u][i]&lt;key[i])&#123;</span><br><span class="line">                key[i]=graph[u][i];</span><br><span class="line">                parent[i]=u;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    printMST(parent, graph);  </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> graph[V][V] = &#123; </span><br><span class="line">                       &#123; <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span> &#125;,  </span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">0</span> &#125; </span><br><span class="line">                       &#125;;  </span><br><span class="line">  </span><br><span class="line">    primMST(graph);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="kruskul核心代码"><a href="#kruskul核心代码" class="headerlink" title="kruskul核心代码"></a>kruskul核心代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h3><h4 id="dijkstra核心代码"><a href="#dijkstra核心代码" class="headerlink" title="dijkstra核心代码"></a>dijkstra核心代码</h4><p>今天脑子有点昏，还是怎么了，把这个算法想成了多源的最短路径</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//跟prim算法有点像，其中不一样的地方就是在更新</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(graph[u][i]&amp;&amp;!sptSet[i]&amp;&amp;dist[u]!=INT_MAX&amp;&amp;graph[u][i]+dist[u]&lt;dist[i]&#123;</span><br><span class="line">        dist[i]=graph[u][i]+dist[u];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 9 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="keyword">int</span> dist[V],<span class="keyword">bool</span> sptSet[V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=INT_MAX,min_index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(sptSet[i]==<span class="literal">false</span>&amp;&amp;dist[i]&lt;<span class="built_in">min</span>)&#123;</span><br><span class="line">            <span class="built_in">min</span>=dist[i],min_index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min_index;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printSolution</span><span class="params">(<span class="keyword">int</span> dist[], <span class="keyword">int</span> n)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"Vertex   Distance from Source\n"</span>); </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; V; i++) </span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%d tt %d\n"</span>, i, dist[i]); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> graph[V][V],<span class="keyword">int</span> src)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dist[V];</span><br><span class="line">    <span class="keyword">bool</span> sptSet[V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        dist[i]=INT_MAX,sptSet[i]=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dist[src]=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> count=<span class="number">0</span>;count&lt;V<span class="number">-1</span>;count++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u=minDistance(dist,sptSet);</span><br><span class="line"></span><br><span class="line">        sptSet[u]=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(graph[u][i]&amp;&amp;!sptSet[i]&amp;&amp;dist[u]!=INT_MAX&amp;&amp;dist[u]+graph[u][i]&lt;dist[i])&#123;</span><br><span class="line">                dist[i]=dist[u]+graph[u][i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    printSolution(dist, V); </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> graph[V][V] = &#123;</span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">4</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">11</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">14</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">14</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">6</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">8</span>, <span class="number">11</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">7</span>&#125;, </span><br><span class="line">                      &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">0</span>&#125; </span><br><span class="line">                     &#125;; </span><br><span class="line">    dijkstra(graph,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="floyd核心代码"><a href="#floyd核心代码" class="headerlink" title="floyd核心代码"></a>floyd核心代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;V;k++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;V;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(dist[i][k]+dist[k][j]&lt;dist[i][j])</span><br><span class="line">                dist[i][j]=dist[i][k]+dist[k][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="floyd全部代码"><a href="#floyd全部代码" class="headerlink" title="floyd全部代码"></a>floyd全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 99999  </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printSolution</span><span class="params">(<span class="keyword">int</span> dist[][V])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"The following matrix shows the shortest distances"</span></span><br><span class="line">            <span class="string">" between every pair of vertices \n"</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; V; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; V; j++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span> (dist[i][j] == INF)  </span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;<span class="string">"INF"</span>&lt;&lt;<span class="string">"   "</span>;  </span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;dist[i][j]&lt;&lt;<span class="string">"  "</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">floyd</span><span class="params">(<span class="keyword">int</span> graph[V][V])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dist[V][V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;V;j++)&#123;</span><br><span class="line">            dist[i][j]=graph[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;V;k++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;V;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(dist[i][k]+dist[k][j]&lt;dist[i][j])</span><br><span class="line">                 dist[i][j]=dist[i][k]+dist[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">     printSolution(dist);  </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">int</span> graph[V][V] = &#123; &#123;<span class="number">0</span>, <span class="number">5</span>, INF, <span class="number">10</span>&#125;,  </span><br><span class="line">                        &#123;INF, <span class="number">0</span>, <span class="number">3</span>, INF&#125;,  </span><br><span class="line">                        &#123;INF, INF, <span class="number">0</span>, <span class="number">1</span>&#125;,  </span><br><span class="line">                        &#123;INF, INF, INF, <span class="number">0</span>&#125;  </span><br><span class="line">                    &#125;;  </span><br><span class="line"></span><br><span class="line">    floyd(graph);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h3><h4 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h4><p>//原本的想法是通过度，用一个表存放度的表，然后更新这个表</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">topologicalSort:</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)</span><br><span class="line">    <span class="keyword">if</span>(!visited[i])</span><br><span class="line">        topologicalSortUtil(i,visited,<span class="built_in">stack</span>)</span><br><span class="line">        </span><br><span class="line">topologicalSortUtil:</span><br><span class="line">&#123;</span><br><span class="line">    visited[v]=<span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator i;</span><br><span class="line">    <span class="keyword">for</span>(i=adj[i].<span class="built_in">begin</span>();i!=adj.<span class="built_in">end</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!visited[*i])</span><br><span class="line">            topologicalSortUtil(*i,visited,<span class="built_in">stack</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>.push(v);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在核心代码里我们看不到度，但是其实用了栈和递归，通过这种方法的存储，使得v的邻接的点总是比v先入栈，然后利用栈的“先进后出”得到我们的拓扑排序序列</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="全部代码-1"><a href="#全部代码-1" class="headerlink" title="全部代码"></a>全部代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//topological</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Graph</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> V;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; *adj;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">topologicalSortUtil</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">bool</span> visited[],<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">stack</span>)</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Graph(<span class="keyword">int</span> V);</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">topologicalSort</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Graph::Graph(<span class="keyword">int</span> V)&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;V=V;</span><br><span class="line">    adj=<span class="keyword">new</span> <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;[V];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Graph::addEdge</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">    adj[v].push_back(w);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Graph::topologicalSortUtil</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">bool</span> visited[],<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">stack</span>)</span></span>&#123;</span><br><span class="line">    visited[v]=<span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=adj[v].<span class="built_in">begin</span>();i!=adj[v].<span class="built_in">end</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!visited[*i])</span><br><span class="line">            topologicalSortUtil(*i,visited,<span class="built_in">stack</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>.push(v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Graph::topologicalSort</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> *visited=<span class="keyword">new</span> <span class="keyword">bool</span>[V];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        visited[i]=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">stack</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;V;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(visited[i]==<span class="literal">false</span>)</span><br><span class="line">            topologicalSortUtil(i,visited,<span class="built_in">stack</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">stack</span>.empty()==<span class="literal">false</span>)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">stack</span>.top()&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        <span class="built_in">stack</span>.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// Create a graph given in the above diagram </span></span><br><span class="line">    <span class="function">Graph <span class="title">g</span><span class="params">(<span class="number">6</span>)</span></span>; </span><br><span class="line">    g.addEdge(<span class="number">5</span>, <span class="number">2</span>); </span><br><span class="line">    g.addEdge(<span class="number">5</span>, <span class="number">0</span>); </span><br><span class="line">    g.addEdge(<span class="number">4</span>, <span class="number">0</span>); </span><br><span class="line">    g.addEdge(<span class="number">4</span>, <span class="number">1</span>); </span><br><span class="line">    g.addEdge(<span class="number">2</span>, <span class="number">3</span>); </span><br><span class="line">    g.addEdge(<span class="number">3</span>, <span class="number">1</span>); </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Following is a Topological Sort of the given graph \n"</span>; </span><br><span class="line">    g.topologicalSort(); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>图</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>排序(Sort)</title>
-    <url>/2019-06-20-%E6%8E%92%E5%BA%8F/</url>
+    <url>/3705732943.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>将一些常见的排序算法，通过c++实现。</p>
 <h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><h4 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SelectSort</span><span class="params">(ElementType &amp;A[],<span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        k=i;</span><br><span class="line">        <span class="keyword">for</span>(j=i+<span class="number">1</span>;j&lt;N;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(A[j]&lt;A[k]) k=j;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(&amp;A[i],&amp;A[k]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -2968,7 +2968,7 @@
   </entry>
   <entry>
     <title>用工程的思维学习SpringBoot</title>
-    <url>/2019-05-12-%E7%94%A8%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%80%9D%E7%BB%B4%E5%AD%A6%E4%B9%A0SpringBoot/</url>
+    <url>/1567761082.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>虽然写过Spring Boot，但是只是作为一个代码的搬运工，很多东西都不懂，所以就只能<strong>扫盲</strong>，通过工程来学习的思维确实不错，不过[真的好的东西不懂]，只能慢慢学了。</p>
 <p>####actuator</p>
 <p>可以监控应用的健康信息、统计应用的瞬间信息、发现应用挂掉了，发现应用瞬间信息不正常都可以发送报警信息，也可以将信息拉倒监控系统的数据系统中。</p>
@@ -3042,7 +3042,7 @@
   </entry>
   <entry>
     <title>散列表(HashMap)</title>
-    <url>/2019-05-08-%E6%95%A3%E5%88%97%E8%A1%A8(HashMap)/</url>
+    <url>/3201554798.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近学习到了散列表，这个数据结构用的很经常，所以需要在这里整理下笔记。</p>
 <h4 id="散列表-Hash-Table"><a href="#散列表-Hash-Table" class="headerlink" title="散列表-Hash Table"></a>散列表-Hash Table</h4><p>散列表用的是<strong>数组</strong>支持按照<strong>下标随机访问</strong>数据的特征，可以说是一种数组的扩展。</p>
 <blockquote>
@@ -3167,8 +3167,45 @@
       </tags>
   </entry>
   <entry>
+    <title>集合(Set)</title>
+    <url>/2719220805.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>集合这个数据结构，需要了解一下，因为对于一些数据只能用集合来存储,没有特定的顺序，并且数据不重复。</p>
+<p>【这部分，我只找到一点材料，所以今天补充一下】</p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>A set is an abstract data type that can store certain values,without any particular order,and no repeated values.</p>
+<p>The Sets data structure is usually used to test whether elements belong to set of values.</p>
+</blockquote>
+<p>这个定义说明，集合经常用来验证<strong>某个值是否在这里面</strong>。</p>
+<h4 id="集合的表示"><a href="#集合的表示" class="headerlink" title="集合的表示"></a>集合的表示</h4><p>用一个数组表示，数组的index表示存储的值，数组存储的值表示 该集合的代表，如果就是集合的代表，则为-1</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">       <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">       Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">           Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h4><h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><p>沿当前节点往上查，当查到某个节点的值为-1时，就是其所在的集合</p>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">       <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">       <span class="keyword">return</span> num;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="集合的并运算"><a href="#集合的并运算" class="headerlink" title="集合的并运算"></a>集合的并运算</h5><p>直接将另外一个集合接到当前集合下</p>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//集合并运算</span></span><br><span class="line">   <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">       Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>改进版</strong></p>
+<p>按秩合并</p>
+<p>就是判断两个集合的大小，小的接到大的下面</p>
+<p>路径压缩</p>
+<p>查找某个值的时候，直接将这个值接到根节点下面</p>
+<p>全部代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SetPractice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] Set;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> MAXN;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化容量为MAXN</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SetPractice</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MAXN=<span class="number">16</span>;</span><br><span class="line">        Set=<span class="keyword">new</span> <span class="keyword">int</span>[MAXN];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">        <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">        Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">            Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//集合并运算</span></span><br><span class="line">    <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按秩合并</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnionBysize</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(set1.length&lt;set2.length)</span><br><span class="line">            Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Set[set1[<span class="number">0</span>]]=set2[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//路径压缩</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindAndShorten</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Set[num]&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Set[num]=FindAndShorten(Set[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> set1[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set2[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set3[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        SetPractice setPractice=<span class="keyword">new</span> SetPractice();</span><br><span class="line">        setPractice.Put(set1);</span><br><span class="line">        setPractice.Put(set2);</span><br><span class="line">        setPractice.Put(set3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
+]]></content>
+      <tags>
+        <tag>集合</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>堆</title>
-    <url>/2019-05-05-%E5%A0%86/</url>
+    <url>/4206121381.html</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于堆的数据结构，虽然上课听了，但是还是不熟悉。所以今天以这一篇文章来督促自己学习“堆”</p>
 <h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
 <p>A heap is a complete binary tree.Heaps can be of two types: Max-Heap and Min-Heap</p>
@@ -3242,45 +3279,8 @@
       </tags>
   </entry>
   <entry>
-    <title>集合(Set)</title>
-    <url>/2019-05-05-%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>集合这个数据结构，需要了解一下，因为对于一些数据只能用集合来存储,没有特定的顺序，并且数据不重复。</p>
-<p>【这部分，我只找到一点材料，所以今天补充一下】</p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
-<p>A set is an abstract data type that can store certain values,without any particular order,and no repeated values.</p>
-<p>The Sets data structure is usually used to test whether elements belong to set of values.</p>
-</blockquote>
-<p>这个定义说明，集合经常用来验证<strong>某个值是否在这里面</strong>。</p>
-<h4 id="集合的表示"><a href="#集合的表示" class="headerlink" title="集合的表示"></a>集合的表示</h4><p>用一个数组表示，数组的index表示存储的值，数组存储的值表示 该集合的代表，如果就是集合的代表，则为-1</p>
-<p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">       <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">       Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">           Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h4><h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><p>沿当前节点往上查，当查到某个节点的值为-1时，就是其所在的集合</p>
-<p>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">       <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">       <span class="keyword">return</span> num;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="集合的并运算"><a href="#集合的并运算" class="headerlink" title="集合的并运算"></a>集合的并运算</h5><p>直接将另外一个集合接到当前集合下</p>
-<p>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//集合并运算</span></span><br><span class="line">   <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">       Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>改进版</strong></p>
-<p>按秩合并</p>
-<p>就是判断两个集合的大小，小的接到大的下面</p>
-<p>路径压缩</p>
-<p>查找某个值的时候，直接将这个值接到根节点下面</p>
-<p>全部代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SetPractice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] Set;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> MAXN;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化容量为MAXN</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SetPractice</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MAXN=<span class="number">16</span>;</span><br><span class="line">        Set=<span class="keyword">new</span> <span class="keyword">int</span>[MAXN];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">        <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">        Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">            Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//集合并运算</span></span><br><span class="line">    <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按秩合并</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnionBysize</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(set1.length&lt;set2.length)</span><br><span class="line">            Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Set[set1[<span class="number">0</span>]]=set2[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//路径压缩</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindAndShorten</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Set[num]&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Set[num]=FindAndShorten(Set[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> set1[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set2[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set3[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        SetPractice setPractice=<span class="keyword">new</span> SetPractice();</span><br><span class="line">        setPractice.Put(set1);</span><br><span class="line">        setPractice.Put(set2);</span><br><span class="line">        setPractice.Put(set3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
-]]></content>
-      <tags>
-        <tag>集合</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>树</title>
-    <url>/2019-04-20-%E6%A0%91/</url>
+    <url>/2065787451.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为什么写这个系列，因为数据结构是计算机的基础课，而数据结构单单看是学不会的，所以需要练，并且这个系列中的每个专题都会不断更新。如有疑问欢迎提出</p>
 <h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><ul>
 <li><input checked="" disabled="" type="checkbox"> <p>2019-04-20首发日志</p>

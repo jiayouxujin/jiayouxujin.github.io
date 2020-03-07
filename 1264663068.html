@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ELF," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="编译、链接和装载先安装必要的包实验环境：Centos 1yum -y groupinstall &#39;Development Tools&#39;  解释上面的命令  yum 是安装的命令 -y 对所有问题回答yes groupinstall是一个强大的命令行，它将安装一个包下面的所有组，并不需要一个个安装 Development Tools如果你打算做一个software，这个包需要安装到你的系统上。里面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序编译、链接和装载">
+<meta property="og:url" content="http://blog.xuxiaojin.com/1264663068.html">
+<meta property="og:site_name" content="徐小晋的博客">
+<meta property="og:description" content="编译、链接和装载先安装必要的包实验环境：Centos 1yum -y groupinstall &#39;Development Tools&#39;  解释上面的命令  yum 是安装的命令 -y 对所有问题回答yes groupinstall是一个强大的命令行，它将安装一个包下面的所有组，并不需要一个个安装 Development Tools如果你打算做一个software，这个包需要安装到你的系统上。里面">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003020926_538.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003020933_60.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003020934_732.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021048_119.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021050_368.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021103_889.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021111_500.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021113_293.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021119_8.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021134_606.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021142_171.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021146_823.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021545_359.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021659_204.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021722_183.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021724_856.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021725_258.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021933_912.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021934_436.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003021936_259.png">
+<meta property="article:published_time" content="2020-03-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-07T15:10:38.782Z">
+<meta property="article:author" content="徐晋">
+<meta property="article:tag" content="ELF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202003020926_538.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.xuxiaojin.com/1264663068.html"/>
+
+
+
+
+
+  <title>程序编译、链接和装载 | 徐小晋的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91c59f68cca0da6fa05cfcb52fe0b3e8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐小晋的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习成长与思考</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/1264663068.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="徐晋">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐小晋的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">程序编译、链接和装载</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-02T00:00:00+08:00">
+                2020-03-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-07T23:10:38+08:00">
+                2020-03-07
+              </time>
+            
+
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/1264663068.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/1264663068.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h2 id="编译、链接和装载"><a href="#编译、链接和装载" class="headerlink" title="编译、链接和装载"></a>编译、链接和装载</h2><h3 id="先安装必要的包"><a href="#先安装必要的包" class="headerlink" title="先安装必要的包"></a>先安装必要的包</h3><p>实验环境：Centos</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y groupinstall 'Development Tools'</span><br></pre></td></tr></table></figure>
+
+<p>解释上面的命令</p>
+<blockquote>
+<p>yum 是安装的命令</p>
+<p>-y 对所有问题回答yes</p>
+<p><a href="https://www.unixmen.com/yum-groupinstall-a-quick-introduction/" target="_blank" rel="noopener" title="Groupinstall">groupinstall</a>是一个强大的命令行，它将安装一个包下面的所有组，并不需要一个个安装</p>
+<p><a href="https://tecadmin.net/install-development-tools-on-centos/" target="_blank" rel="noopener" title="Development Tools">Development Tools</a>如果你打算做一个software，这个包需要安装到你的系统上。里面包含很多很有用的工具,GCC,g++,make等</p>
+</blockquote>
+<p>例如需要安装一下的包，手动执行这么多命令比较麻烦，所以可以通过安装整个包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc</span><br><span class="line">yum install glibc</span><br><span class="line">yum install make</span><br></pre></td></tr></table></figure>
+
+<p>首先可以通过执行<code>yum grouplist</code>，查看对应下面有哪些包</p>
+<p><img src="http://cdn.xuxiaojin.com/202003020926_538.png" alt=""></p>
+<p>如果需要安装一些开发的库，只需要简单执行<code>yum groupinstall &quot;Development Tools&quot;</code></p>
+<h3 id="两个简单的程序"><a href="#两个简单的程序" class="headerlink" title="两个简单的程序"></a>两个简单的程序</h3><p>add_lib.c</p>
+<p><img src="http://cdn.xuxiaojin.com/202003020933_60.png" alt=""></p>
+<p>link_example.c</p>
+<p><img src="http://cdn.xuxiaojin.com/202003020934_732.png" alt=""></p>
+<p>现在对这两个文件进行编译,执行<code>gcc -g -c add_lib.c link_example.c</code></p>
+<blockquote>
+<p><a href="https://www.rapidtables.com/code/linux/gcc/gcc-g.html" target="_blank" rel="noopener" title="GCC -g">gcc -g</a>被GDB debugger生成debug信息</p>
+<p><a href="https://www.rapidtables.com/code/linux/gcc/gcc-g.html" target="_blank" rel="noopener" title="GCC -c">gcc -c</a>编译与汇编程序，但是没有链接</p>
+</blockquote>
+<p>通过上面语句，已经对程序进行编译了，可以通过<code>objdump</code>进行查看汇编代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d -M intel -S add_lib.o</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>objdump -d -M 表示将汇编代码display</p>
+<p>intel 表示以intel的语法展示(类似于格式)</p>
+<p>-S 可以将源代码一起展示</p>
+</blockquote>
+<p><img src="http://cdn.xuxiaojin.com/202003021048_119.png" alt=""></p>
+<p>可以看到这里的地址是0000…，如果查看<code>link_example.o</code>同样会得到是000..的地址，并且通过查看，发现这个并不是一个可以执行的文件</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021050_368.png" alt=""></p>
+<h3 id="这里介绍个命令"><a href="#这里介绍个命令" class="headerlink" title="这里介绍个命令"></a>这里介绍个命令</h3><p><a href="https://www.computerhope.com/unix/uchmod.htm" target="_blank" rel="noopener" title="chmod"><code>chmod</code></a>表示change mode.在操作系统中，一系列flags与每个文件相连接，定义着这些文件如何访问。通常这些flags被叫做文件权限或者访问。<code>chmod</code>限制这文件被访问的方式。</p>
+<p>录入要设置如下的权限：</p>
+<ul>
+<li>用户可以<code>read</code>、<code>write</code>、<code>execue</code></li>
+<li>用户所在group可以<code>read</code>、<code>execute</code></li>
+<li>其他人只能<code>read</code></li>
+</ul>
+<p>这个命令长这样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod u=rwx,g=rx,o=r myfile</span><br></pre></td></tr></table></figure>
+
+<p>这个命令也可以长这样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 754 myfile</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>4 表示<code>read</code></p>
+<p>2 表示<code>write</code></p>
+<p>1 表示<code>execute</code></p>
+<p>0 表示<code>没有权限</code></p>
+</blockquote>
+<p>那么如何查看一个文件的权限呢？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l file.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021103_889.png" alt=""></p>
+<blockquote>
+<p><code>-</code>第一个字符表示这个文件的类型(在linux系统里一起皆文件)，<code>-</code>表示通常的文件，<code>d</code>表示是个文件夹，<code>l</code>表示一个符号链接</p>
+<p><code>rw</code>表示这个文件的拥有者的权限</p>
+</blockquote>
+<p>在深入一下。如果是要求对一个文件夹下的所有文件进行赋权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 755 myfile</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-R 表示<code>递归</code>,对myfile文件夹下所包含的所有文件进行赋权限</p>
+</blockquote>
+<p>既然<code>add_lib.o</code>和<code>link_example.o</code>两个都不是可执行文件，那么有没有办法给他们改成可执行的文件?</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021111_500.png" alt=""></p>
+<p>现在执行<code>./link_example.o</code>发现无法执行</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021113_293.png" alt=""></p>
+<p>这是因为<code>.o</code>文件并不是一个可执行文件，而是<strong>目标文件</strong>，只有通过链接器把多个目标文件以及调用的各种函数库链接起来，才可以得到一个可执行文件。</p>
+<p>可以通过<code>gcc -o</code>生成对应的可执行文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o link_example add_lib.o link_example.o</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021119_8.png" alt=""></p>
+<p>这样的话，才把一个简单的c程序编译运行。</p>
+<p>上面的<strong>C语言代码-汇编代码-机器码</strong>由两部分组成</p>
+<ul>
+<li>第一部分 编译，汇编，链接生成一个可执行文件</li>
+<li>第二部分 通过装载器，将可执行文件装载到内存中,CPU通过读取指令和内存</li>
+</ul>
+<h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><p>接下来我们研究下ELF，在Linux下，可执行文件和目标文件所使用的都是一种叫做<a href="https://www.thegeekstuff.com/2012/09/objdump-examples/" target="_blank" rel="noopener" title="ELF"><code>ELF</code></a>的文件格式，中文是<strong>可执行与可链接文件格式</strong></p>
+<h3 id="File-Header文件头"><a href="#File-Header文件头" class="headerlink" title="File Header文件头"></a>File Header文件头</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -f link_example</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021134_606.png" alt=""></p>
+<p>文件头保留了文件的属性，对应的CPU等硬件平台，对应的操作系统等等，这里还可以看到代码的起始地址</p>
+<h3 id="text-Section-代码段"><a href="#text-Section-代码段" class="headerlink" title=".text Section 代码段"></a>.text Section 代码段</h3><p><img src="http://cdn.xuxiaojin.com/202003021142_171.png" alt=""></p>
+<p>程序编译出来的指令，可以看到程序的起始地址与文件头一样。</p>
+<h3 id="data-Section-数据段"><a href="#data-Section-数据段" class="headerlink" title=".data Section 数据段"></a>.data Section 数据段</h3><p><img src="http://cdn.xuxiaojin.com/202003021146_823.png" alt=""></p>
+<p>保留程序的全部变量和局部静态变量，记住如果是局部变量的话，并不会存在data，我们知道，临时变量其实是在程序运行时，创建的。</p>
+<h3 id="rel-text-Section重定位表"><a href="#rel-text-Section重定位表" class="headerlink" title=".rel.text Section重定位表"></a>.rel.text Section重定位表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -r link_example.o</span><br></pre></td></tr></table></figure>
+
+<p>保留的是当前文件里面，哪些跳转地址其实是我们不知道的。比如<code>link_example.o</code>里面，调用了add和printf两个函数，在链接发生之前，我们并不知道该跳转到哪里。</p>
+<h3 id="symtab-Section符号表"><a href="#symtab-Section符号表" class="headerlink" title=".symtab Section符号表"></a>.symtab Section符号表</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -s link_example.o</span><br></pre></td></tr></table></figure>
+
+<p>保留了当前文件里面定义的函数名称和对应地址的地址。</p>
+<h3 id="链接器执行过程"><a href="#链接器执行过程" class="headerlink" title="链接器执行过程"></a>链接器执行过程</h3><blockquote>
+<p>链接器会扫描所有输入的目标文件，将其符号表整合成<code>全局符号表</code>，然后在查看重定位表，将里面未知的地址通过全局符号表替换掉，进行修正。然后把所有目标文件的对应字段进行了一次合并。编程最终的可执行代码</p>
+</blockquote>
+<p>为什么同一份程序不可以同时在linux和window下一起执行？</p>
+<p>因为Linux的是ELF文件格式，Window是PE格式。Linux下的装载器只能解析ELF格式而不能解析PE格式</p>
+<h2 id="程序装载"><a href="#程序装载" class="headerlink" title="程序装载"></a>程序装载</h2><p>程序装载需要满足的两个要求</p>
+<ul>
+<li>可执行程序加载后占用的内存空间应该是连续的，因为在程序指令执行时，执行的顺序是一条条指令执行下去，这就是指令需要连续村粗</li>
+<li>需要同时加载多个程序，并且不能让程序自己规定在内存中加载的位置.</li>
+</ul>
+<p>那么要满足这两个做法，只要给地址做一个<strong>映射</strong>就可以。</p>
+<p>程序指令代码里的地址称为<strong>虚拟地址</strong></p>
+<p>实际在硬件中的地址称为<strong>物理内存地址</strong><br>有两种分割的方式</p>
+<h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>段指的是系统分配出来的那个连续的内存空间</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021545_359.png" alt=""></p>
+<p>但是会出现<strong>内存碎片</strong>问题，内存碎片指的是，就是内存被分割掉，要加载一个大的内存空间，但是这个时候任意一个段都无法满足这个内存空间，将这些段加起来就可以满足这个内存空间。</p>
+<p>解决这个问题的方法是<strong>内存交换</strong>，通过将内存上的程序放到硬盘上，在将其取出来，这个时候不是放到原来的位置，而是将内存碎片清除掉，然后就有足够大的内存空间了。</p>
+<p>但是这样也会面临一个问题，就是硬盘的读写速度太慢了，如果一次转移太多的内存的话，会使得整个机器显得卡顿。</p>
+<h3 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h3><p>刚刚上面<strong>内存分段</strong>出现的是当内存交换的时候，机器会显得卡顿。当时如果一次交换的内存比较小的话，这种卡顿的现象就会明显减少。所以提出了将内存进行<strong>分页</strong>，默认Linux的页大小是4KB</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021659_204.png" alt=""></p>
+<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>前面我们讲到了链接，是将多个目标文件进行合并，但是如果某个模块被多个程序调用，都需要合并的话，浪费了很多空间。并且本来我们的<strong>内存空间不够用</strong>在这么整下去的话，都不用运行了。</p>
+<p>生活中，我们会碰到共享单车的例子，那么实际上在计算机上，我们就是用一种新的链接方式，叫做<strong>动态链接</strong></p>
+<blockquote>
+<p>动态链接中链接的不是存储在硬盘上的目标文件代码，而是加载在内存中的共享库</p>
+</blockquote>
+<h3 id="地址无关"><a href="#地址无关" class="headerlink" title="地址无关"></a>地址无关</h3><p>动态链接最重要的就是要做到地址无关，就是无论加载在那个内存地址，都能够正常执行，使用<strong>相对地址</strong>就可以解决地址无关问题</p>
+<h3 id="PLT和GOT"><a href="#PLT和GOT" class="headerlink" title="PLT和GOT"></a>PLT和GOT</h3><p><code>lib.h</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021722_183.png" alt=""></p>
+<p><code>lib.c</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021724_856.png" alt=""></p>
+<p><code>main.c</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021725_258.png" alt=""></p>
+<p>然后将<code>lib.c</code>编译成一个动态的链接库即.so文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc lib.c -fPIC -shared -o lib.so</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-shared 表示创建一个共享库</p>
+<p>-o 把输入放到后面紧跟的文件 lib.so</p>
+<p>-fPIC 表示要将这个编译成一个地址无关代码</p>
+</blockquote>
+<p>然后通过gcc编译main动态链接了lib.so的可执行文件，接着通过objdump可以看到</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o main main.c ./lib.so</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021933_912.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021934_436.png" alt=""></p>
+<p>可以看到在main函数中调用函数是，对应的代码有一个关键字@plt,表示我们从PLT也就是<strong>程序链接表</strong>里面找到调用的函数，就是地址4004f0</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021936_259.png" alt=""></p>
+<p>在4004f0的位置，又进行了一次跳转，跳到<a href="http://bottomupcs.sourceforge.net/csbu/x3824.htm" target="_blank" rel="noopener" title="GOT"><strong>全局偏移表</strong></a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2>
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <!-- JS库 clipboard 拷贝内容到粘贴板-->
+<script src="https://cdn.bootcss.com/clipboard.js/2.0.1/clipboard.min.js"></script>
+
+<!-- JS库 sweetalert 显示提示信息-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<ul class="post-copyright">
+  <!-- 本文标题 -->
+  <li>
+    <strong>本文标题： </strong>
+    程序编译、链接和装载
+  </li>
+
+  <!-- 本文作者 -->
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>
+    XuxiaoJin
+  </li>
+
+  <!-- 创建时间 -->
+  <li>
+    <strong>创建于： </strong>
+    2020年03月02日 - 00时03分
+  </li>
+
+  <!-- 修改时间 -->
+  <li>
+    <strong>更新于： </strong>
+    2020年03月07日 - 23时03分
+  </li>
+
+  <!-- 引用链接 -->
+  <li class="post-copyright-link">
+    <strong>引用链接：</strong>
+    <a href="http://blog.xuxiaojin.com/1264663068.html" title="程序编译、链接和装载"
+      >http://blog.xuxiaojin.com/1264663068.html</a
+    >
+    <span class="copy-path" title="点击复制引用链接"
+      ><i
+        style="cursor: pointer"
+        class="fa fa-clipboard"
+        data-clipboard-text="[XuxiaoJin's Blog | 程序编译、链接和装载](http://blog.xuxiaojin.com/1264663068.html)"
+        aria-label="post.copy_success"
+      ></i
+    ></span>
+  </li>
+
+  <!-- 版权声明 -->
+  <li class="post-copyright-license">
+    <strong
+      >版权声明：
+    </strong>
+    本博客所有文章除特别声明外，均采用 CC BY-NC-SA 3.0 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+<script>
+  var clipboard = new ClipboardJS(".fa-clipboard");
+  clipboard.on("success", function(target) {
+    var message = document.createElement("div");
+    message.innerHTML =
+      '<i class="fa fa-check-circle message-icon"></i><span class="message-content">' +
+      target.trigger.getAttribute("aria-label") +
+      "</span>";
+    swal({
+      content: message,
+      className: "copy-success-message",
+      timer: 1000,
+      button: false
+    });
+  });
+</script>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ELF/" rel="tag"><i class="fa fa-tag"></i> ELF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/64817271.html" rel="next" title="Git的基本原理与多人协作常见场景">
+                <i class="fa fa-chevron-left"></i> Git的基本原理与多人协作常见场景
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/3045170151.html" rel="prev" title="算法练习">
+                算法练习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="徐晋" />
+            
+              <p class="site-author-name" itemprop="name">徐晋</p>
+              <p class="site-description motion-element" itemprop="description">君子知命不惧，自当日日自新</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jiayouxujin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1319039722@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-E-Mail"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译、链接和装载"><span class="nav-number">1.</span> <span class="nav-text">编译、链接和装载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先安装必要的包"><span class="nav-number">1.1.</span> <span class="nav-text">先安装必要的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个简单的程序"><span class="nav-number">1.2.</span> <span class="nav-text">两个简单的程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这里介绍个命令"><span class="nav-number">1.3.</span> <span class="nav-text">这里介绍个命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELF"><span class="nav-number">2.</span> <span class="nav-text">ELF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Header文件头"><span class="nav-number">2.1.</span> <span class="nav-text">File Header文件头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#text-Section-代码段"><span class="nav-number">2.2.</span> <span class="nav-text">.text Section 代码段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-Section-数据段"><span class="nav-number">2.3.</span> <span class="nav-text">.data Section 数据段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rel-text-Section重定位表"><span class="nav-number">2.4.</span> <span class="nav-text">.rel.text Section重定位表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#symtab-Section符号表"><span class="nav-number">2.5.</span> <span class="nav-text">.symtab Section符号表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接器执行过程"><span class="nav-number">2.6.</span> <span class="nav-text">链接器执行过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序装载"><span class="nav-number">3.</span> <span class="nav-text">程序装载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分段"><span class="nav-number">3.1.</span> <span class="nav-text">内存分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分页"><span class="nav-number">3.2.</span> <span class="nav-text">内存分页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态链接"><span class="nav-number">4.</span> <span class="nav-text">动态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#地址无关"><span class="nav-number">4.1.</span> <span class="nav-text">地址无关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PLT和GOT"><span class="nav-number">4.2.</span> <span class="nav-text">PLT和GOT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐晋</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">61.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+<div class="BbeiAn-info">
+    闽ICP备 -
+    <a target="_blank" href="http://www.miitbeian.gov.cn/"   rel="nofollow">19017538号-1</a> <!--a标签中增加nofollow属性，避免爬虫出站。-->| 
+  <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=19017538号-1" style="text-decoration:none;padding-left:30px;background:url(https://s1.ax1x.com/2018/09/29/ilmwIH.png) no-repeat left center" rel="nofollow">闽公网安备 19017538号-1</a>    
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fUrgV500Iub9AvoTuhS8YmA3-gzGzoHsz',
+        appKey: 'SfEEWyVk3uh3S1oWopriWznO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>
