@@ -2455,6 +2455,28 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot的JDBC操作数据库</title>
+    <url>/81179857.html</url>
+    <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接Mysql数据库"><a href="#连接Mysql数据库" class="headerlink" title="连接Mysql数据库"></a>连接Mysql数据库</h3><p>在pom文件下引入Mysql数据库依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;5.1.21&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在application.properties中配置数据源信息</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=****</span><br><span class="line">spring.datasource.driver-<span class="class"><span class="keyword">class</span>-<span class="title">name</span></span>=com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用JdbcTemplate操作数据库"><a href="#使用JdbcTemplate操作数据库" class="headerlink" title="使用JdbcTemplate操作数据库"></a>使用JdbcTemplate操作数据库</h3><p>建立新的类UserServiceImpl</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"insert into USER(NAME,AGE) values(?,?)"</span>,name,age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteByName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user where name=?"</span>,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate.queryForObject(<span class="string">"select count(1) from user"</span>,Integer<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot的配置文件解析</title>
     <url>/3020356367.html</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
@@ -2480,28 +2502,6 @@
 <li>application-prod.properties:生产环境</li>
 </ul>
 <p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot的JDBC操作数据库</title>
-    <url>/81179857.html</url>
-    <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="连接Mysql数据库"><a href="#连接Mysql数据库" class="headerlink" title="连接Mysql数据库"></a>连接Mysql数据库</h3><p>在pom文件下引入Mysql数据库依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;5.1.21&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在application.properties中配置数据源信息</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=****</span><br><span class="line">spring.datasource.driver-<span class="class"><span class="keyword">class</span>-<span class="title">name</span></span>=com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用JdbcTemplate操作数据库"><a href="#使用JdbcTemplate操作数据库" class="headerlink" title="使用JdbcTemplate操作数据库"></a>使用JdbcTemplate操作数据库</h3><p>建立新的类UserServiceImpl</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"insert into USER(NAME,AGE) values(?,?)"</span>,name,age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteByName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user where name=?"</span>,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate.queryForObject(<span class="string">"select count(1) from user"</span>,Integer<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -2660,77 +2660,6 @@
       </tags>
   </entry>
   <entry>
-    <title>python自定义函数与面向对象</title>
-    <url>/2041354615.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python的最大特点就是dynamically typed就是动态类型，不像java需要定义数据类型</p>
-<h4 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h4><p>先从一段代码引入：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
-
-<p>别急，我们先学习下py的函数，这个形式跟C以及java等语言有点不一样。跨度有点大，对于刚接触来说，我们需要对比一下。</p>
-<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><p>先来看一个例子</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(message)</span>:</span></span><br><span class="line">    print(<span class="string">'Got a messag: &#123;&#125;'</span>.format(message))</span><br><span class="line"></span><br><span class="line">my_func(<span class="string">'hello world'</span>)</span><br><span class="line"><span class="comment">#这里其实我有个地方不是很懂，不过大约能够知道什么意思，就是&#123;&#125;用来占位，记得在java中log常常这么用</span></span><br></pre></td></tr></table></figure>
-
-<p>大致形式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> 函数名<span class="params">(参数)</span>:</span></span><br><span class="line">    处理</span><br><span class="line">    <span class="keyword">return</span>/yeild</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>与其他语言不一样的是，def是可执行语句，即函数被调用前，都是不存在的，直到被调用的时候才会创建一个新的函数对象，并赋予其名字</p>
-</blockquote>
-<p>对于以上这段话不理解的我们需要对比以下代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">hello()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="comment">#报错，在主程序里，函数要先于调用前的定义</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">()</span>:</span></span><br><span class="line">    hello()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_func()</span><br><span class="line"><span class="comment">#正常运行，因为def是可执行语句，在调用的时候都不存在，但是我们必须保证调用前都已经声明定义了</span></span><br></pre></td></tr></table></figure>
-
-<p>注：我们先有个全局的概念，然后我们在看一下细节</p>
-<p>我们深入来看一个代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(l)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(l,list):</span><br><span class="line">        print(<span class="string">'what you input is not a list'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> len(l)==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'waht you input is empty'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    largest=l[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">if</span> item&gt;largest:</span><br><span class="line">            largest=item</span><br><span class="line">    print(<span class="string">'the largest item in l is &#123;&#125;'</span>.format(largest))</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">my_func([<span class="number">8</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>看到这个我真的哭了，这里的多态完全跟java不同</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_sum</span><span class="params">(a,b)</span>:</span></span><br><span class="line">    print(a+b)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_sum(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">my_sum([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">my_sum(<span class="string">'hello'</span>,<span class="string">'world'</span>)</span><br><span class="line"><span class="comment">#对于这种来什么就接受什么的函数，必要时需要在前面进行类型检查</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="函数变量的作用域"><a href="#函数变量的作用域" class="headerlink" title="函数变量的作用域"></a>函数变量的作用域</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">MAX_VALUE=<span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(value)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> MAX_VALUE</span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(value)</span>:</span></span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span></span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">test3()</span><br><span class="line">test2(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line">test1(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>分析一下：</p>
-<ol>
-<li>函数内部默认为局部变量，即当函数调用结束后(return)，该变量会被收回，并且不能够被访问</li>
-<li>Python的全局变量定义在主程序中</li>
-<li>函数可以调用全局变量，如果用更改全局变量的时候需要 global关键字，这里并不是重新创建一个新的变量，而是告诉Python 解释器，这里的变量就是之前定义的全局变量</li>
-<li>如果函数内部的变量名与主程序的变量名重名，那么局部变量将覆盖全局变量</li>
-</ol>
-<p>现在我们基本上了解了python的函数基本规则，我们回到类</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
-
-<p>在这里我们对比java的dog类如何去定义</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    Dog(String name,<span class="keyword">int</span> age)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">        <span class="keyword">this</span>.age=age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String...ags)</span></span>&#123;</span><br><span class="line">        Dog dog=<span class="keyword">new</span> Dog(<span class="string">"name"</span>,<span class="number">16</span>);</span><br><span class="line">        System.out.println(dog.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这两段代码执行的效果是一样的。</p>
-<p>区别：</p>
-<ol>
-<li><p>python不需要提前声明的类的属性，因为不要指明属性的数据类型</p>
-</li>
-<li><p>Python的构造函数不是以类名，虽然调用的时候是以类名，说明在声明定义该类的对象的时候，会自动调用Init函数</p>
-</li>
-<li><p>注意到python的每个函数里面都有一个变量self，但是在调用的时候又不需要传入该参数，你可以看到这个self的作用跟this的作用差不多，只不过在python中必须使用这个self,在每一个类的方法中，self总是指向当前的实例，在init函数中self指向的最新被创建的对象，在其他函数中，指向调用该方法的对象</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.__name=name</span><br><span class="line">        self.age=age</span><br><span class="line">        self.__sex=<span class="string">'boy'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">dog.__name=<span class="string">'Name'</span></span><br><span class="line">print(dog.__name)</span><br><span class="line">print(dog.getName())</span><br><span class="line">print(dog.__sex)</span><br></pre></td></tr></table></figure>
-
-<p>注：在一次被python的数据定义给坑了</p>
-<p>首先我们注意到java里面数据是由private属性的，那么在python中默认以两个下划线表示该属性为私有属性，不可被对象之间调用</p>
-<p>但是如果dog.__name记住这里的name属性不是该类的属性，而是你给dog这个变量重新定义的一个，与类里定义的不同</p>
-<p>接着我们深入了解面向对象里面的细节，先来看一下下面这段代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    MAX_AGE=<span class="number">16</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(cls,name)</span>:</span></span><br><span class="line">        cls.name=name</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_MAX_AGE</span><span class="params">(age)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> age&lt;Dog.MAX_AGE:</span><br><span class="line">            print(<span class="string">"the dog age is &#123;&#125;"</span>.format(age))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">'the maxage is &#123;&#125;'</span>.format(Dog.MAX_AGE))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'NAME'</span>,<span class="number">14</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.newName(<span class="string">'name'</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.get_MAX_AGE(<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>第一个MAX_AGE是类中定义的常量，可以通过self.MAX_AGE或者Entity.MAX_AGE调用</li>
-<li>注意到 @classmethod和@staticmethod 我们已经将类中的函数区别开来了，首先是classmethod类函数，能够动态访问或者修改对象的属性，其第一个参数一般为cls，最常用的功能是实现不用的init构造函数(好吧，上述代码不具有参考意义) ，@staticmehod是静态函数，可以用来做一些简单独立的任务，像什么测试等等，最后就是成员函数，是最正常的函数，不需要任何声明，第一个self代表当前对象的引用</li>
-</ol>
-<h4 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h4><p>这样，已经大致的会写python的类了，但是面向对象里面还有个重要的思想就是继承。不过这个留到后面来深入。当前我的目标就是对python基础有个全貌的了解。</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>python的字符串</title>
     <url>/4045311999.html</url>
     <content><![CDATA[<hr>
@@ -2846,6 +2775,77 @@
 <p>元组tuple，通过()表示，可以存储各种各样的数据类型，有顺序，其长度不可发生改变，可以任意访问，增加通过+会创建一个新的元组</p>
 <p>字典dict，通过{}表示，存储键值对，长度可以改变，可以通过hash的访问，任意删除，增加，修改</p>
 <p>集合set，通过{},相对于字典存储值，长度可变，访问不可通过索引，只能通过in，可以添加add(),可以删除remove()</p>
+]]></content>
+      <tags>
+        <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python自定义函数与面向对象</title>
+    <url>/2041354615.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python的最大特点就是dynamically typed就是动态类型，不像java需要定义数据类型</p>
+<h4 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h4><p>先从一段代码引入：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
+
+<p>别急，我们先学习下py的函数，这个形式跟C以及java等语言有点不一样。跨度有点大，对于刚接触来说，我们需要对比一下。</p>
+<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><p>先来看一个例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(message)</span>:</span></span><br><span class="line">    print(<span class="string">'Got a messag: &#123;&#125;'</span>.format(message))</span><br><span class="line"></span><br><span class="line">my_func(<span class="string">'hello world'</span>)</span><br><span class="line"><span class="comment">#这里其实我有个地方不是很懂，不过大约能够知道什么意思，就是&#123;&#125;用来占位，记得在java中log常常这么用</span></span><br></pre></td></tr></table></figure>
+
+<p>大致形式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> 函数名<span class="params">(参数)</span>:</span></span><br><span class="line">    处理</span><br><span class="line">    <span class="keyword">return</span>/yeild</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>与其他语言不一样的是，def是可执行语句，即函数被调用前，都是不存在的，直到被调用的时候才会创建一个新的函数对象，并赋予其名字</p>
+</blockquote>
+<p>对于以上这段话不理解的我们需要对比以下代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">hello()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="comment">#报错，在主程序里，函数要先于调用前的定义</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">()</span>:</span></span><br><span class="line">    hello()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_func()</span><br><span class="line"><span class="comment">#正常运行，因为def是可执行语句，在调用的时候都不存在，但是我们必须保证调用前都已经声明定义了</span></span><br></pre></td></tr></table></figure>
+
+<p>注：我们先有个全局的概念，然后我们在看一下细节</p>
+<p>我们深入来看一个代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(l)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(l,list):</span><br><span class="line">        print(<span class="string">'what you input is not a list'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> len(l)==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'waht you input is empty'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    largest=l[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">if</span> item&gt;largest:</span><br><span class="line">            largest=item</span><br><span class="line">    print(<span class="string">'the largest item in l is &#123;&#125;'</span>.format(largest))</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">my_func([<span class="number">8</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>看到这个我真的哭了，这里的多态完全跟java不同</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_sum</span><span class="params">(a,b)</span>:</span></span><br><span class="line">    print(a+b)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_sum(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">my_sum([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">my_sum(<span class="string">'hello'</span>,<span class="string">'world'</span>)</span><br><span class="line"><span class="comment">#对于这种来什么就接受什么的函数，必要时需要在前面进行类型检查</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="函数变量的作用域"><a href="#函数变量的作用域" class="headerlink" title="函数变量的作用域"></a>函数变量的作用域</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">MAX_VALUE=<span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(value)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> MAX_VALUE</span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(value)</span>:</span></span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span></span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">test3()</span><br><span class="line">test2(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line">test1(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>分析一下：</p>
+<ol>
+<li>函数内部默认为局部变量，即当函数调用结束后(return)，该变量会被收回，并且不能够被访问</li>
+<li>Python的全局变量定义在主程序中</li>
+<li>函数可以调用全局变量，如果用更改全局变量的时候需要 global关键字，这里并不是重新创建一个新的变量，而是告诉Python 解释器，这里的变量就是之前定义的全局变量</li>
+<li>如果函数内部的变量名与主程序的变量名重名，那么局部变量将覆盖全局变量</li>
+</ol>
+<p>现在我们基本上了解了python的函数基本规则，我们回到类</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
+
+<p>在这里我们对比java的dog类如何去定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    Dog(String name,<span class="keyword">int</span> age)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">        <span class="keyword">this</span>.age=age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String...ags)</span></span>&#123;</span><br><span class="line">        Dog dog=<span class="keyword">new</span> Dog(<span class="string">"name"</span>,<span class="number">16</span>);</span><br><span class="line">        System.out.println(dog.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两段代码执行的效果是一样的。</p>
+<p>区别：</p>
+<ol>
+<li><p>python不需要提前声明的类的属性，因为不要指明属性的数据类型</p>
+</li>
+<li><p>Python的构造函数不是以类名，虽然调用的时候是以类名，说明在声明定义该类的对象的时候，会自动调用Init函数</p>
+</li>
+<li><p>注意到python的每个函数里面都有一个变量self，但是在调用的时候又不需要传入该参数，你可以看到这个self的作用跟this的作用差不多，只不过在python中必须使用这个self,在每一个类的方法中，self总是指向当前的实例，在init函数中self指向的最新被创建的对象，在其他函数中，指向调用该方法的对象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.__name=name</span><br><span class="line">        self.age=age</span><br><span class="line">        self.__sex=<span class="string">'boy'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">dog.__name=<span class="string">'Name'</span></span><br><span class="line">print(dog.__name)</span><br><span class="line">print(dog.getName())</span><br><span class="line">print(dog.__sex)</span><br></pre></td></tr></table></figure>
+
+<p>注：在一次被python的数据定义给坑了</p>
+<p>首先我们注意到java里面数据是由private属性的，那么在python中默认以两个下划线表示该属性为私有属性，不可被对象之间调用</p>
+<p>但是如果dog.__name记住这里的name属性不是该类的属性，而是你给dog这个变量重新定义的一个，与类里定义的不同</p>
+<p>接着我们深入了解面向对象里面的细节，先来看一下下面这段代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    MAX_AGE=<span class="number">16</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(cls,name)</span>:</span></span><br><span class="line">        cls.name=name</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_MAX_AGE</span><span class="params">(age)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> age&lt;Dog.MAX_AGE:</span><br><span class="line">            print(<span class="string">"the dog age is &#123;&#125;"</span>.format(age))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">'the maxage is &#123;&#125;'</span>.format(Dog.MAX_AGE))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'NAME'</span>,<span class="number">14</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.newName(<span class="string">'name'</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.get_MAX_AGE(<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>第一个MAX_AGE是类中定义的常量，可以通过self.MAX_AGE或者Entity.MAX_AGE调用</li>
+<li>注意到 @classmethod和@staticmethod 我们已经将类中的函数区别开来了，首先是classmethod类函数，能够动态访问或者修改对象的属性，其第一个参数一般为cls，最常用的功能是实现不用的init构造函数(好吧，上述代码不具有参考意义) ，@staticmehod是静态函数，可以用来做一些简单独立的任务，像什么测试等等，最后就是成员函数，是最正常的函数，不需要任何声明，第一个self代表当前对象的引用</li>
+</ol>
+<h4 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h4><p>这样，已经大致的会写python的类了，但是面向对象里面还有个重要的思想就是继承。不过这个留到后面来深入。当前我的目标就是对python基础有个全貌的了解。</p>
+</li>
+</ol>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
