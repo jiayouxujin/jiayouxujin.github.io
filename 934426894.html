@@ -136,11 +136,22 @@
 <meta property="og:url" content="http://blog.xuxiaojin.com/934426894.html">
 <meta property="og:site_name" content="徐小晋的博客">
 <meta property="og:description" content="前言前几天数据库一直被偷，然后必应如何恢复。发现自己的安全意识太弱。 然后重装服务器系统，权限限制，密码增强。 并且学一下备份数据，还有就是binlog恢复数据 MYSQL安全相关信息MYSQL将用户的相关信息(认证信息，权限信息)都存储在了mysql.user的这个系统表中，在这个系统表中可以通过增删改查操作，来定义和管理用户的认证信息，权限列表等。 授权机制1grant all privil">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130851_378.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130852_553.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130853_970.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130855_979.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130855_338.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130858_965.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130901_874.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130910_807.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130940_602.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003130941_2.png">
 <meta property="article:published_time" content="2020-02-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-07T15:10:38.774Z">
+<meta property="article:modified_time" content="2020-03-13T08:16:24.669Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202003130851_378.png">
 
 
 
@@ -393,8 +404,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-07T23:10:38+08:00">
-                2020-03-07
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-13T16:16:24+08:00">
+                2020-03-13
               </time>
             
 
@@ -432,7 +443,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  490
+                  704
                 </span>
               
 
@@ -448,7 +459,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -501,8 +512,33 @@
 
 <h4 id="从备份文件恢复数据库"><a href="#从备份文件恢复数据库" class="headerlink" title="从备份文件恢复数据库"></a>从备份文件恢复数据库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql [databasename]&lt;[backup file name]</span><br><span class="line">mysql -uroot -p databasename -f &lt;test.sql</span><br><span class="line"></span><br><span class="line">-f指中间发生错误，可以skip过去，继续执行下面语句</span><br></pre></td></tr></table></figure>
 
-
-
+<h3 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h3><p>因为全量备份，占用的磁盘空间非常大，每次备份的时候都需要拷贝大量数据，在备份的过程中需要占用服务器大量的CPU、磁盘IO。</p>
+<p><strong>增量备份</strong>其实也不是全新的词，其实就是将binlog里面的SQL语句进行备份.</p>
+<h4 id="删库逃跑实战"><a href="#删库逃跑实战" class="headerlink" title="删库逃跑实战"></a>删库逃跑实战</h4><p>首先进行备份</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130851_378.png" alt=""></p>
+<p>然后对数据进行修改</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130852_553.png" alt=""></p>
+<p>删库</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130853_970.png" alt=""></p>
+<p>首先恢复全量备份</p>
+<p>【这一步做的不规范，其实要进行一次flush logs;刷新Log，这样的后面改的就不会影响log】</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130855_979.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003130855_338.png" alt=""></p>
+<p>现在通过binlog进行恢复</p>
+<ol>
+<li>首先查看binlog所在的位置</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202003130858_965.png" alt=""></p>
+<ol start="2">
+<li>增量恢复(增量备份其实是binlog做的)</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202003130901_874.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003130910_807.png" alt=""></p>
+<p>查看binlog的话，大概看到在8:52:29的位置，后面出现了<code>删库</code>。</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130940_602.png" alt=""></p>
+<p><strong>注意</strong>：时间用””</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130941_2.png" alt=""></p>
+<p>恢复成功！！</p>
 
       
     </div>
@@ -550,7 +586,7 @@
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月07日 - 23时03分
+    2020年03月13日 - 16时03分
   </li>
 
   <!-- 引用链接 -->
@@ -722,7 +758,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -735,7 +771,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -784,7 +820,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MYSQL安全"><span class="nav-number">1.1.</span> <span class="nav-text">MYSQL安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关信息"><span class="nav-number">1.1.1.</span> <span class="nav-text">相关信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#授权机制"><span class="nav-number">1.1.2.</span> <span class="nav-text">授权机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过binlog恢复数据库数据"><span class="nav-number">1.2.</span> <span class="nav-text">通过binlog恢复数据库数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本操作"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看binlog文件内容"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看binlog文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mysqlbinlog"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">mysqlbinlog</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysqldump数据备份"><span class="nav-number">1.3.</span> <span class="nav-text">Mysqldump数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#只备份表结构"><span class="nav-number">1.3.1.</span> <span class="nav-text">只备份表结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从备份文件恢复数据库"><span class="nav-number">1.3.2.</span> <span class="nav-text">从备份文件恢复数据库</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MYSQL安全"><span class="nav-number">1.1.</span> <span class="nav-text">MYSQL安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关信息"><span class="nav-number">1.1.1.</span> <span class="nav-text">相关信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#授权机制"><span class="nav-number">1.1.2.</span> <span class="nav-text">授权机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过binlog恢复数据库数据"><span class="nav-number">1.2.</span> <span class="nav-text">通过binlog恢复数据库数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本操作"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看binlog文件内容"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看binlog文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mysqlbinlog"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">mysqlbinlog</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysqldump数据备份"><span class="nav-number">1.3.</span> <span class="nav-text">Mysqldump数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#只备份表结构"><span class="nav-number">1.3.1.</span> <span class="nav-text">只备份表结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从备份文件恢复数据库"><span class="nav-number">1.3.2.</span> <span class="nav-text">从备份文件恢复数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增量备份"><span class="nav-number">1.4.</span> <span class="nav-text">增量备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#删库逃跑实战"><span class="nav-number">1.4.1.</span> <span class="nav-text">删库逃跑实战</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -825,7 +861,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">63.7k</span>
+    <span title="Site words total count">66.9k</span>
   
 </div>
 
