@@ -339,7 +339,48 @@
 <li><code>tar</code>首先需要懂得Linux中对文件有两步操作，1.打包成文件2.进行压缩，<code>tar cf</code>进行的是打包成文件，<code>tar czf</code>把文件进行打包并且使用gzip算法进行压缩，<code>tar cjf</code>把文件进行打包并且使用bzip2进行压缩。</li>
 <li><code>tar xf</code>对打包的文件进行解包，并且通过-C 可以将其移到想要的地方。如果是gzip算法压缩的后缀是.gz那么可以通过<code>tar xzf</code>，如果是bzip2算法进行压缩的，可以通过<code>tar xjf</code></li>
 </ul>
-<h3 id="用户和权限管理"><a href="#用户和权限管理" class="headerlink" title="用户和权限管理"></a>用户和权限管理</h3>]]></content>
+<h3 id="用户和权限管理"><a href="#用户和权限管理" class="headerlink" title="用户和权限管理"></a>用户和权限管理</h3><p><code>su - user1</code>临时切换用户，-会把文件夹定位到对应用户的家目录</p>
+<p><code>visudo</code>可以给某个用户赋予权限，如果不知道某个命令在哪里，通过执行<code>:!which 命令</code></p>
+<h3 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h3><ul>
+<li>文件类型：<code>-</code>普通文件,<code>d</code>目录文件，<code>b</code>块特殊文件,<code>c</code>字符特殊文件</li>
+<li>字符权限r4,w2,x1</li>
+<li><code>ls -ld</code>查看文件夹的权限，<code>ls -ld</code>查看文件的权限</li>
+<li><code>chmod</code>修改权限,<code>chmod 777 filename</code>,，<code>chown</code>修改文件所属</li>
+</ul>
+<h2 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h2><h3 id="网络状态查看"><a href="#网络状态查看" class="headerlink" title="网络状态查看"></a>网络状态查看</h3><ul>
+<li><p>net-tools</p>
+<ul>
+<li><p>ifconfig</p>
+<ul>
+<li>eth0第一个网卡的名称</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202003291508_946.png" alt=""></p>
+<p><strong>inet是网卡的Ip地址，ehter网卡的mac地址</strong></p>
+<ul>
+<li>网络接口命名修改</li>
+</ul>
+</li>
+<li><p>route</p>
+<ul>
+<li>查看网关<code>route -n</code></li>
+</ul>
+</li>
+<li><p>netstat</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络故障排除命令"><a href="#网络故障排除命令" class="headerlink" title="网络故障排除命令"></a>网络故障排除命令</h3><ul>
+<li><code>ping</code>检测当前主机和目标主机是否畅通</li>
+<li><code>traceroute</code>辅助ping,如果目标主机畅通，但是还是不能用，可以检测中间路由，traceroute -w 1 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></li>
+<li><code>mtr</code>数据包是否丢失</li>
+<li><code>nslookup</code>域名对应的ip</li>
+<li><code>telnet</code>检查端口的连接状态 <code>telnet www.baidu.com 80</code></li>
+<li><code>tcpdump</code>细致数据包</li>
+<li><code>netstat -ntpl</code>可以查看当前主机上，对外开放的端口</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202003291529_218.png" alt=""></p>
+]]></content>
       <tags>
         <tag>Linux</tag>
       </tags>
@@ -784,6 +825,73 @@
       </tags>
   </entry>
   <entry>
+    <title>恢复mysql数据库</title>
+    <url>/934426894.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天数据库一直被偷，然后必应如何恢复。发现自己的安全意识太弱。</p>
+<p>然后重装服务器系统，权限限制，密码增强。</p>
+<p>并且学一下备份数据，还有就是binlog恢复数据</p>
+<h3 id="MYSQL安全"><a href="#MYSQL安全" class="headerlink" title="MYSQL安全"></a>MYSQL安全</h3><h4 id="相关信息"><a href="#相关信息" class="headerlink" title="相关信息"></a>相关信息</h4><p>MYSQL将用户的相关信息(认证信息，权限信息)都存储在了mysql.user的这个系统表中，在这个系统表中可以通过增删改查操作，来定义和管理用户的认证信息，权限列表等。</p>
+<h4 id="授权机制"><a href="#授权机制" class="headerlink" title="授权机制"></a>授权机制</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">privileges</span> <span class="keyword">on</span> db.table <span class="keyword">to</span> <span class="keyword">user</span>@<span class="string">"127.0.0.1"</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">"password"</span></span><br></pre></td></tr></table></figure>
+
+<p>主体是通过用户名,ip和密码这三个部分信息组合起来进行标记的</p>
+<p>客体是数据库和表</p>
+<h3 id="通过binlog恢复数据库数据"><a href="#通过binlog恢复数据库数据" class="headerlink" title="通过binlog恢复数据库数据"></a>通过binlog恢复数据库数据</h3><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%log_bin%'</span>;  //查看binlog是否打开</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">logs</span>; //查看所有binlog日志文件列表</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">status</span>; //查看最后一个操作事件pos结束点的值</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">logs</span>; //刷新日志，此刻开始产生一个新编号的binlog文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看binlog文件内容"><a href="#查看binlog文件内容" class="headerlink" title="查看binlog文件内容"></a>查看binlog文件内容</h4><h5 id="mysqlbinlog"><a href="#mysqlbinlog" class="headerlink" title="mysqlbinlog"></a>mysqlbinlog</h5><p>首先进入mysql，设置binlog的格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">set global binlog_format&#x3D;&#39;ROW&#39;</span><br></pre></td></tr></table></figure>
+
+<p>然后进入<code>var/lib/mysql</code></p>
+<p>通过mysqlbinlog查看数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqlbinlog --base64-output&#x3D;&quot;decode-row&quot; binlog.000016 --stop-datetime&#x3D;&#39;时间&#39;</span><br></pre></td></tr></table></figure>
+
+<p>这个时间跟北京时间大概差6个小时</p>
+<p>恢复的时候</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -u root -p -f &lt;....sql</span><br></pre></td></tr></table></figure>
+
+<p>-f表示碰到错误跳过继续执行</p>
+<h3 id="Mysqldump数据备份"><a href="#Mysqldump数据备份" class="headerlink" title="Mysqldump数据备份"></a>Mysqldump数据备份</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysqldump -u root -p  [databasename] &gt;[dump file]</span><br></pre></td></tr></table></figure>
+
+<p>上述命令将制定的数据库备份到dump文件中，包含生成数据库结构哦，和插入数据的insert语句</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysqldump -u root -p test -F  &gt; test.sql</span><br><span class="line"></span><br><span class="line">-F刷新日志</span><br></pre></td></tr></table></figure>
+
+<h4 id="只备份表结构"><a href="#只备份表结构" class="headerlink" title="只备份表结构"></a>只备份表结构</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysqldump --no-data --databases mydatabase1 mydatabase2 &gt;test.dump</span><br></pre></td></tr></table></figure>
+
+<h4 id="从备份文件恢复数据库"><a href="#从备份文件恢复数据库" class="headerlink" title="从备份文件恢复数据库"></a>从备份文件恢复数据库</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql [databasename]&lt;[backup file name]</span><br><span class="line">mysql -uroot -p databasename -f &lt;test.sql</span><br><span class="line"></span><br><span class="line">-f指中间发生错误，可以skip过去，继续执行下面语句</span><br></pre></td></tr></table></figure>
+
+<h3 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h3><p>因为全量备份，占用的磁盘空间非常大，每次备份的时候都需要拷贝大量数据，在备份的过程中需要占用服务器大量的CPU、磁盘IO。</p>
+<p><strong>增量备份</strong>其实也不是全新的词，其实就是将binlog里面的SQL语句进行备份.</p>
+<h4 id="删库逃跑实战"><a href="#删库逃跑实战" class="headerlink" title="删库逃跑实战"></a>删库逃跑实战</h4><p>首先进行备份</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130851_378.png" alt=""></p>
+<p>然后对数据进行修改</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130852_553.png" alt=""></p>
+<p>删库</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130853_970.png" alt=""></p>
+<p>首先恢复全量备份</p>
+<p>【这一步做的不规范，其实要进行一次flush logs;刷新Log，这样的后面改的就不会影响log】</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130855_979.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003130855_338.png" alt=""></p>
+<p>现在通过binlog进行恢复</p>
+<ol>
+<li>首先查看binlog所在的位置</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202003130858_965.png" alt=""></p>
+<ol start="2">
+<li>增量恢复(增量备份其实是binlog做的)</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202003130901_874.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003130910_807.png" alt=""></p>
+<p>查看binlog的话，大概看到在8:52:29的位置，后面出现了<code>删库</code>。</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130940_602.png" alt=""></p>
+<p><strong>注意</strong>：时间用””</p>
+<p><img src="http://cdn.xuxiaojin.com/202003130941_2.png" alt=""></p>
+<p>恢复成功！！</p>
+]]></content>
+      <tags>
+        <tag>Mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>D3.js力导向图</title>
     <url>/403680216.html</url>
     <content><![CDATA[<hr>
@@ -864,73 +972,6 @@
 ]]></content>
       <tags>
         <tag>D3.js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>恢复mysql数据库</title>
-    <url>/934426894.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天数据库一直被偷，然后必应如何恢复。发现自己的安全意识太弱。</p>
-<p>然后重装服务器系统，权限限制，密码增强。</p>
-<p>并且学一下备份数据，还有就是binlog恢复数据</p>
-<h3 id="MYSQL安全"><a href="#MYSQL安全" class="headerlink" title="MYSQL安全"></a>MYSQL安全</h3><h4 id="相关信息"><a href="#相关信息" class="headerlink" title="相关信息"></a>相关信息</h4><p>MYSQL将用户的相关信息(认证信息，权限信息)都存储在了mysql.user的这个系统表中，在这个系统表中可以通过增删改查操作，来定义和管理用户的认证信息，权限列表等。</p>
-<h4 id="授权机制"><a href="#授权机制" class="headerlink" title="授权机制"></a>授权机制</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">privileges</span> <span class="keyword">on</span> db.table <span class="keyword">to</span> <span class="keyword">user</span>@<span class="string">"127.0.0.1"</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">"password"</span></span><br></pre></td></tr></table></figure>
-
-<p>主体是通过用户名,ip和密码这三个部分信息组合起来进行标记的</p>
-<p>客体是数据库和表</p>
-<h3 id="通过binlog恢复数据库数据"><a href="#通过binlog恢复数据库数据" class="headerlink" title="通过binlog恢复数据库数据"></a>通过binlog恢复数据库数据</h3><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%log_bin%'</span>;  //查看binlog是否打开</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">logs</span>; //查看所有binlog日志文件列表</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">status</span>; //查看最后一个操作事件pos结束点的值</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">logs</span>; //刷新日志，此刻开始产生一个新编号的binlog文件</span><br></pre></td></tr></table></figure>
-
-<h4 id="查看binlog文件内容"><a href="#查看binlog文件内容" class="headerlink" title="查看binlog文件内容"></a>查看binlog文件内容</h4><h5 id="mysqlbinlog"><a href="#mysqlbinlog" class="headerlink" title="mysqlbinlog"></a>mysqlbinlog</h5><p>首先进入mysql，设置binlog的格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">set global binlog_format&#x3D;&#39;ROW&#39;</span><br></pre></td></tr></table></figure>
-
-<p>然后进入<code>var/lib/mysql</code></p>
-<p>通过mysqlbinlog查看数据</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqlbinlog --base64-output&#x3D;&quot;decode-row&quot; binlog.000016 --stop-datetime&#x3D;&#39;时间&#39;</span><br></pre></td></tr></table></figure>
-
-<p>这个时间跟北京时间大概差6个小时</p>
-<p>恢复的时候</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -u root -p -f &lt;....sql</span><br></pre></td></tr></table></figure>
-
-<p>-f表示碰到错误跳过继续执行</p>
-<h3 id="Mysqldump数据备份"><a href="#Mysqldump数据备份" class="headerlink" title="Mysqldump数据备份"></a>Mysqldump数据备份</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysqldump -u root -p  [databasename] &gt;[dump file]</span><br></pre></td></tr></table></figure>
-
-<p>上述命令将制定的数据库备份到dump文件中，包含生成数据库结构哦，和插入数据的insert语句</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysqldump -u root -p test -F  &gt; test.sql</span><br><span class="line"></span><br><span class="line">-F刷新日志</span><br></pre></td></tr></table></figure>
-
-<h4 id="只备份表结构"><a href="#只备份表结构" class="headerlink" title="只备份表结构"></a>只备份表结构</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysqldump --no-data --databases mydatabase1 mydatabase2 &gt;test.dump</span><br></pre></td></tr></table></figure>
-
-<h4 id="从备份文件恢复数据库"><a href="#从备份文件恢复数据库" class="headerlink" title="从备份文件恢复数据库"></a>从备份文件恢复数据库</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql [databasename]&lt;[backup file name]</span><br><span class="line">mysql -uroot -p databasename -f &lt;test.sql</span><br><span class="line"></span><br><span class="line">-f指中间发生错误，可以skip过去，继续执行下面语句</span><br></pre></td></tr></table></figure>
-
-<h3 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h3><p>因为全量备份，占用的磁盘空间非常大，每次备份的时候都需要拷贝大量数据，在备份的过程中需要占用服务器大量的CPU、磁盘IO。</p>
-<p><strong>增量备份</strong>其实也不是全新的词，其实就是将binlog里面的SQL语句进行备份.</p>
-<h4 id="删库逃跑实战"><a href="#删库逃跑实战" class="headerlink" title="删库逃跑实战"></a>删库逃跑实战</h4><p>首先进行备份</p>
-<p><img src="http://cdn.xuxiaojin.com/202003130851_378.png" alt=""></p>
-<p>然后对数据进行修改</p>
-<p><img src="http://cdn.xuxiaojin.com/202003130852_553.png" alt=""></p>
-<p>删库</p>
-<p><img src="http://cdn.xuxiaojin.com/202003130853_970.png" alt=""></p>
-<p>首先恢复全量备份</p>
-<p>【这一步做的不规范，其实要进行一次flush logs;刷新Log，这样的后面改的就不会影响log】</p>
-<p><img src="http://cdn.xuxiaojin.com/202003130855_979.png" alt=""></p>
-<p><img src="http://cdn.xuxiaojin.com/202003130855_338.png" alt=""></p>
-<p>现在通过binlog进行恢复</p>
-<ol>
-<li>首先查看binlog所在的位置</li>
-</ol>
-<p><img src="http://cdn.xuxiaojin.com/202003130858_965.png" alt=""></p>
-<ol start="2">
-<li>增量恢复(增量备份其实是binlog做的)</li>
-</ol>
-<p><img src="http://cdn.xuxiaojin.com/202003130901_874.png" alt=""></p>
-<p><img src="http://cdn.xuxiaojin.com/202003130910_807.png" alt=""></p>
-<p>查看binlog的话，大概看到在8:52:29的位置，后面出现了<code>删库</code>。</p>
-<p><img src="http://cdn.xuxiaojin.com/202003130940_602.png" alt=""></p>
-<p><strong>注意</strong>：时间用””</p>
-<p><img src="http://cdn.xuxiaojin.com/202003130941_2.png" alt=""></p>
-<p>恢复成功！！</p>
-]]></content>
-      <tags>
-        <tag>Mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -1159,27 +1200,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Auto-configuration文档翻译</title>
-    <url>/1608351778.html</url>
-    <content><![CDATA[<hr>
-<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
-<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
-<blockquote>
-<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
-</blockquote>
-<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
-<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
-<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Beans and Dependency Injection文档翻译</title>
     <url>/3052345267.html</url>
     <content><![CDATA[<hr>
@@ -1198,30 +1218,26 @@
       </tags>
   </entry>
   <entry>
-    <title>Structuring Your Code文档翻译</title>
-    <url>/2026129430.html</url>
+    <title>SpringBootApplication文档翻译</title>
+    <url>/1324367350.html</url>
     <content><![CDATA[<hr>
-<h1 id="结构化你的代码-组织你的代码"><a href="#结构化你的代码-组织你的代码" class="headerlink" title="结构化你的代码(组织你的代码)"></a>结构化你的代码(组织你的代码)</h1><p>springboot并不需要特别的代码样式才能工作，但是这里有一些很好的练习能够帮助。</p>
-<h2 id="使用默认的包"><a href="#使用默认的包" class="headerlink" title="使用默认的包"></a>使用默认的包</h2><p>当一个类不包含任何包的声明，它会被认为是默认的包。使用默认的包通常是不被鼓励的并且需要防范的。当springboot应用使用@ComponentScan @EntityScan 或者@SpringBootApplication注解时，会导致特别的问题，因为每一个jar里的类都会被读取。</p>
-<blockquote>
-<p>我们建议你遵循java中建议的包命名约定 例如 com.example.project</p>
-</blockquote>
-<h2 id="找到主要的应用程序类"><a href="#找到主要的应用程序类" class="headerlink" title="找到主要的应用程序类"></a>找到主要的应用程序类</h2><p>我们真诚的建议你在有一个root package找到自己主要的应用程序类，@SpringBootApplication注解通常会被放到你的主类，并且隐式的定义了某些项的搜索类。例如，如果你正在编写一个jpa应用，通过@SpringBootApplication注解的类会被找到被@Entity注解的类。使用根包也会允许组件扫描只应用在你的文件。</p>
-<blockquote>
-<p>如果你不想使用@SpringBootApplication注解，@EnableAutoConfiguration和@ComponentScan注解可以用来替代，完成相同的行为</p>
-</blockquote>
-<p>下面显示一种通常的样式：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com</span><br><span class="line"> +- example</span><br><span class="line">     +- myapplication</span><br><span class="line">         +- Application.java</span><br><span class="line">         |</span><br><span class="line">         +- customer</span><br><span class="line">         |   +- Customer.java</span><br><span class="line">         |   +- CustomerController.java</span><br><span class="line">         |   +- CustomerService.java</span><br><span class="line">         |   +- CustomerRepository.java</span><br><span class="line">         |</span><br><span class="line">         +- order</span><br><span class="line">             +- Order.java</span><br><span class="line">             +- OrderController.java</span><br><span class="line">             +- OrderService.java</span><br><span class="line">             +- OrderRepository.java</span><br></pre></td></tr></table></figure>
+<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
+<ul>
+<li>@EnableAutoConfiguration</li>
+<li>@ComponentScan</li>
+<li>@Configuration</li>
+</ul>
+<p>如下面这个例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>Application.java会实现main方法，还有@SpringBootApplication.如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
+<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
+<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
+<p>也可以讲远程的debugger绑定到你的应用程序。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
 
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html" target="_blank" rel="noopener">Structuring Your Code</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><ol>
-<li>springbootapplication会自动扫描相关组件</li>
-<li>最好是要有包的区分，强烈建议</li>
-<li>官方给的那种形式其实用的比较少吧！还是现在用的形式好，不过官方这种突然想想也挺好的，改起来特别容易，不用来回找，像小程序那样。</li>
-</ol>
+<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
+<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -1298,6 +1314,111 @@
 <p>一旦你完成了整合，别忘记把该组件移除掉</p>
 </blockquote>
 <p>以上翻译自：<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-installing-spring-boot.html" target="_blank" rel="noopener">Installing Spring Boot</a></p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Auto-configuration文档翻译</title>
+    <url>/1608351778.html</url>
+    <content><![CDATA[<hr>
+<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
+<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
+<blockquote>
+<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
+</blockquote>
+<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
+<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
+<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Developing Your First SpringBoot Application文档翻译</title>
+    <url>/1113545103.html</url>
+    <content><![CDATA[<hr>
+<h1 id="部署你的第一个SpringBoot应用"><a href="#部署你的第一个SpringBoot应用" class="headerlink" title="部署你的第一个SpringBoot应用"></a>部署你的第一个SpringBoot应用</h1><p>该部分会介绍如何部署一个简单的“hello world”的web应用程序，并且重点介绍SpringBoot的关键特性。因为大多数的IDE支持Maven,所以我们通过maven来构建项目。</p>
+<p>在我们开始之前，需要运行一下以下命令行，来确保你已经安装好了java和maven</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -version</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mvn -v</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建pom"><a href="#创建pom" class="headerlink" title="创建pom"></a>创建pom</h2><p>我们需要开始构建Maven的pom.xml文件，该pom.xml文件你是构建项目的配方，打开你最喜欢的文本编辑器，然后添加一下内容：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>myproject<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Additional lines to be added here... --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上清单可以给你一个构建方式，你可以通过运行mvn package来测试它(忽略jar will be empty的警告)</p>
+<h3 id="添加Classpath依赖"><a href="#添加Classpath依赖" class="headerlink" title="添加Classpath依赖"></a>添加Classpath依赖</h3><p>SpringBoot提供许多Starters让你添加jar到你的classpath,我们简单的应用程序已经使用了spring-boot-starter-parent在pom的parent的部分。spring-boot-starter-parent是一个特殊的starter，可以提供有用的maven默认设置。它也提供一个dependecy-management部分，你可以忽略依赖的version的标记。</p>
+<p>当你部署一个特别类型的应用，你可能需要用到其他Starters提供的依赖。因为我们部署一个web应用，我们添加了一个spring-boot-starter-web的依赖，在此之前，我们可以通过以下命令来查看我们目前已有的东西:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mvn dependency:tree</span></span><br></pre></td></tr></table></figure>
+
+<p>该命令可以打印出你项目的依赖，你可以看到spring-boot-starter-parent自己本身没有提供依赖。为了添加必要的依赖，编辑你的pom.xml文件，然后添加spring-boot-starter-web依赖在parent部分下面</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>此时，你在运行一下上面的命令，你可以看到许多添加的依赖，包括Tomcat web server和Spring Boot</p>
+<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h3><p>为了完成我们的应用，我们需要创建一个单独的java文件。默认情况下，maven会编译来自src/main/java的源文件，所以你需要创建一个文件夹结构，然后增加一个名为src/main/java/Example.java，该java包含以下代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">home</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Example<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然上面的代码不是特别多，但是暂停一下，我们一步一步来看一下这个重要的部分。</p>
+<h4 id="RestController和-RequestMapping注解"><a href="#RestController和-RequestMapping注解" class="headerlink" title="@RestController和@RequestMapping注解"></a>@RestController和@RequestMapping注解</h4><p>我们的Example的第一个注解是@RestConstroller。这个被称为构造型注解。它为人们阅读代码和spring提供提示，提示该类起到一个特殊的作用。在这个例子中，我们的类是一个web的@Controller，所以当spring处理来自web的请求会考虑它。</p>
+<p>@RequestMapping注解提供路由信息，它告诉spring任何/路径的Http请求都会匹配到Home这个方法。@RestController注解告诉spring直接返回String给客户端。</p>
+<h4 id="EnableAutoConfiguration注解"><a href="#EnableAutoConfiguration注解" class="headerlink" title="@EnableAutoConfiguration注解"></a>@EnableAutoConfiguration注解</h4><p>第二个类级的注解是@EnableAutoConfiguration，该注解告诉SpringBoot通过你添加的jar依赖去“猜”你要怎么配置你的Spring。因为spring-boot-starter-web添加Tomcat和Spring MVC，该自动配置就会假设你将要部署一个web应用并且相应的启动spring。</p>
+<h4 id="Main方法"><a href="#Main方法" class="headerlink" title="Main方法"></a>Main方法</h4><p>我们应用的最后一个部分就是Main方法，这只是一个遵循java约定的应用程序入口点。我们的主要方法通过调用run委托给springboot的springApplication。SpringApplication指引着我们的程序一次开始自动配置Tomcat web 服务器。我们需要将Example.class作为一个参数传入run方法，告诉SpringApplication哪一个是主要的Spring组件。args也传入，来暴露其他一些命令行参数。</p>
+<h3 id="运行Example"><a href="#运行Example" class="headerlink" title="运行Example"></a>运行Example</h3><p>这一点，你的应用程序应该可以运行。因为你使用了spring-boot-starter-parent，你有一个有用的run目标来启动该应用程序。在项目文件的根目录下输入mvn spring-boot:run </p>
+<p>然后在web浏览器里输入localhost:8080 可以看到输出结果。</p>
+<p>可以通过ctrl-c退出该应用。</p>
+<h3 id="构建一个可执行文件jar"><a href="#构建一个可执行文件jar" class="headerlink" title="构建一个可执行文件jar"></a>构建一个可执行文件jar</h3><p>我们通过构建一个完成的可执行文件，让其可以运行在生产环境上，来结束该例子。可执行jar(某些时候又被称为fat jars)包含了你的编译过的class还有你运行代码需要的jar依赖。</p>
+<p>为了构建jar，我们需要在我们的pom.xml添加spring-boot-maven-plugin。为此，在dependencies部分的下面添加以下代码：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>保存pom.xml然后运行 mvn package.</p>
+<p>然后在你的target文件夹下，你应该可以看到myproject-0.0.1-SNAPSHOT.jar,该文件大小应该在10m左右，如果你想要看看里面，可以使用jar tvf</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jar tvf target/myproject-0.0.1-.jar</span><br></pre></td></tr></table></figure>
+
+<p>你应该也能够看到一些相似的文件命名myproject-0.0.1-SNAPSHOT.jar.original。这个original jar文件是maven通过springboot构建的在它repackaged之前。</p>
+<p>通过使用 java -jar 来运行该应用程序，可以看到一样的结果。</p>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html" target="_blank" rel="noopener">developing your first springboot application</a></p>
+<h1 id="学到什么"><a href="#学到什么" class="headerlink" title="学到什么"></a>学到什么</h1><ol>
+<li>starter-parent不提供依赖</li>
+<li>restcontroller直接返回字符串</li>
+<li>getmapping提供路由信息，将路由跟方法绑定</li>
+<li>main方法是通过run转移到springbootapplication</li>
+<li>打成jar包需要在pom下添加plugins</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Structuring Your Code文档翻译</title>
+    <url>/2026129430.html</url>
+    <content><![CDATA[<hr>
+<h1 id="结构化你的代码-组织你的代码"><a href="#结构化你的代码-组织你的代码" class="headerlink" title="结构化你的代码(组织你的代码)"></a>结构化你的代码(组织你的代码)</h1><p>springboot并不需要特别的代码样式才能工作，但是这里有一些很好的练习能够帮助。</p>
+<h2 id="使用默认的包"><a href="#使用默认的包" class="headerlink" title="使用默认的包"></a>使用默认的包</h2><p>当一个类不包含任何包的声明，它会被认为是默认的包。使用默认的包通常是不被鼓励的并且需要防范的。当springboot应用使用@ComponentScan @EntityScan 或者@SpringBootApplication注解时，会导致特别的问题，因为每一个jar里的类都会被读取。</p>
+<blockquote>
+<p>我们建议你遵循java中建议的包命名约定 例如 com.example.project</p>
+</blockquote>
+<h2 id="找到主要的应用程序类"><a href="#找到主要的应用程序类" class="headerlink" title="找到主要的应用程序类"></a>找到主要的应用程序类</h2><p>我们真诚的建议你在有一个root package找到自己主要的应用程序类，@SpringBootApplication注解通常会被放到你的主类，并且隐式的定义了某些项的搜索类。例如，如果你正在编写一个jpa应用，通过@SpringBootApplication注解的类会被找到被@Entity注解的类。使用根包也会允许组件扫描只应用在你的文件。</p>
+<blockquote>
+<p>如果你不想使用@SpringBootApplication注解，@EnableAutoConfiguration和@ComponentScan注解可以用来替代，完成相同的行为</p>
+</blockquote>
+<p>下面显示一种通常的样式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com</span><br><span class="line"> +- example</span><br><span class="line">     +- myapplication</span><br><span class="line">         +- Application.java</span><br><span class="line">         |</span><br><span class="line">         +- customer</span><br><span class="line">         |   +- Customer.java</span><br><span class="line">         |   +- CustomerController.java</span><br><span class="line">         |   +- CustomerService.java</span><br><span class="line">         |   +- CustomerRepository.java</span><br><span class="line">         |</span><br><span class="line">         +- order</span><br><span class="line">             +- Order.java</span><br><span class="line">             +- OrderController.java</span><br><span class="line">             +- OrderService.java</span><br><span class="line">             +- OrderRepository.java</span><br></pre></td></tr></table></figure>
+
+<p>Application.java会实现main方法，还有@SpringBootApplication.如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html" target="_blank" rel="noopener">Structuring Your Code</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><ol>
+<li>springbootapplication会自动扫描相关组件</li>
+<li>最好是要有包的区分，强烈建议</li>
+<li>官方给的那种形式其实用的比较少吧！还是现在用的形式好，不过官方这种突然想想也挺好的，改起来特别容易，不用来回找，像小程序那样。</li>
+</ol>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -1393,60 +1514,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Developing Your First SpringBoot Application文档翻译</title>
-    <url>/1113545103.html</url>
-    <content><![CDATA[<hr>
-<h1 id="部署你的第一个SpringBoot应用"><a href="#部署你的第一个SpringBoot应用" class="headerlink" title="部署你的第一个SpringBoot应用"></a>部署你的第一个SpringBoot应用</h1><p>该部分会介绍如何部署一个简单的“hello world”的web应用程序，并且重点介绍SpringBoot的关键特性。因为大多数的IDE支持Maven,所以我们通过maven来构建项目。</p>
-<p>在我们开始之前，需要运行一下以下命令行，来确保你已经安装好了java和maven</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -version</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mvn -v</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="创建pom"><a href="#创建pom" class="headerlink" title="创建pom"></a>创建pom</h2><p>我们需要开始构建Maven的pom.xml文件，该pom.xml文件你是构建项目的配方，打开你最喜欢的文本编辑器，然后添加一下内容：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>myproject<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Additional lines to be added here... --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>以上清单可以给你一个构建方式，你可以通过运行mvn package来测试它(忽略jar will be empty的警告)</p>
-<h3 id="添加Classpath依赖"><a href="#添加Classpath依赖" class="headerlink" title="添加Classpath依赖"></a>添加Classpath依赖</h3><p>SpringBoot提供许多Starters让你添加jar到你的classpath,我们简单的应用程序已经使用了spring-boot-starter-parent在pom的parent的部分。spring-boot-starter-parent是一个特殊的starter，可以提供有用的maven默认设置。它也提供一个dependecy-management部分，你可以忽略依赖的version的标记。</p>
-<p>当你部署一个特别类型的应用，你可能需要用到其他Starters提供的依赖。因为我们部署一个web应用，我们添加了一个spring-boot-starter-web的依赖，在此之前，我们可以通过以下命令来查看我们目前已有的东西:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mvn dependency:tree</span></span><br></pre></td></tr></table></figure>
-
-<p>该命令可以打印出你项目的依赖，你可以看到spring-boot-starter-parent自己本身没有提供依赖。为了添加必要的依赖，编辑你的pom.xml文件，然后添加spring-boot-starter-web依赖在parent部分下面</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>此时，你在运行一下上面的命令，你可以看到许多添加的依赖，包括Tomcat web server和Spring Boot</p>
-<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h3><p>为了完成我们的应用，我们需要创建一个单独的java文件。默认情况下，maven会编译来自src/main/java的源文件，所以你需要创建一个文件夹结构，然后增加一个名为src/main/java/Example.java，该java包含以下代码:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">home</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Example<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>虽然上面的代码不是特别多，但是暂停一下，我们一步一步来看一下这个重要的部分。</p>
-<h4 id="RestController和-RequestMapping注解"><a href="#RestController和-RequestMapping注解" class="headerlink" title="@RestController和@RequestMapping注解"></a>@RestController和@RequestMapping注解</h4><p>我们的Example的第一个注解是@RestConstroller。这个被称为构造型注解。它为人们阅读代码和spring提供提示，提示该类起到一个特殊的作用。在这个例子中，我们的类是一个web的@Controller，所以当spring处理来自web的请求会考虑它。</p>
-<p>@RequestMapping注解提供路由信息，它告诉spring任何/路径的Http请求都会匹配到Home这个方法。@RestController注解告诉spring直接返回String给客户端。</p>
-<h4 id="EnableAutoConfiguration注解"><a href="#EnableAutoConfiguration注解" class="headerlink" title="@EnableAutoConfiguration注解"></a>@EnableAutoConfiguration注解</h4><p>第二个类级的注解是@EnableAutoConfiguration，该注解告诉SpringBoot通过你添加的jar依赖去“猜”你要怎么配置你的Spring。因为spring-boot-starter-web添加Tomcat和Spring MVC，该自动配置就会假设你将要部署一个web应用并且相应的启动spring。</p>
-<h4 id="Main方法"><a href="#Main方法" class="headerlink" title="Main方法"></a>Main方法</h4><p>我们应用的最后一个部分就是Main方法，这只是一个遵循java约定的应用程序入口点。我们的主要方法通过调用run委托给springboot的springApplication。SpringApplication指引着我们的程序一次开始自动配置Tomcat web 服务器。我们需要将Example.class作为一个参数传入run方法，告诉SpringApplication哪一个是主要的Spring组件。args也传入，来暴露其他一些命令行参数。</p>
-<h3 id="运行Example"><a href="#运行Example" class="headerlink" title="运行Example"></a>运行Example</h3><p>这一点，你的应用程序应该可以运行。因为你使用了spring-boot-starter-parent，你有一个有用的run目标来启动该应用程序。在项目文件的根目录下输入mvn spring-boot:run </p>
-<p>然后在web浏览器里输入localhost:8080 可以看到输出结果。</p>
-<p>可以通过ctrl-c退出该应用。</p>
-<h3 id="构建一个可执行文件jar"><a href="#构建一个可执行文件jar" class="headerlink" title="构建一个可执行文件jar"></a>构建一个可执行文件jar</h3><p>我们通过构建一个完成的可执行文件，让其可以运行在生产环境上，来结束该例子。可执行jar(某些时候又被称为fat jars)包含了你的编译过的class还有你运行代码需要的jar依赖。</p>
-<p>为了构建jar，我们需要在我们的pom.xml添加spring-boot-maven-plugin。为此，在dependencies部分的下面添加以下代码：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>保存pom.xml然后运行 mvn package.</p>
-<p>然后在你的target文件夹下，你应该可以看到myproject-0.0.1-SNAPSHOT.jar,该文件大小应该在10m左右，如果你想要看看里面，可以使用jar tvf</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jar tvf target/myproject-0.0.1-.jar</span><br></pre></td></tr></table></figure>
-
-<p>你应该也能够看到一些相似的文件命名myproject-0.0.1-SNAPSHOT.jar.original。这个original jar文件是maven通过springboot构建的在它repackaged之前。</p>
-<p>通过使用 java -jar 来运行该应用程序，可以看到一样的结果。</p>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html" target="_blank" rel="noopener">developing your first springboot application</a></p>
-<h1 id="学到什么"><a href="#学到什么" class="headerlink" title="学到什么"></a>学到什么</h1><ol>
-<li>starter-parent不提供依赖</li>
-<li>restcontroller直接返回字符串</li>
-<li>getmapping提供路由信息，将路由跟方法绑定</li>
-<li>main方法是通过run转移到springbootapplication</li>
-<li>打成jar包需要在pom下添加plugins</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Build Systems文档翻译</title>
     <url>/4044010014.html</url>
     <content><![CDATA[<hr>
@@ -1495,32 +1562,6 @@
 <li>以后依赖不写版本，通过springboot的依赖管理</li>
 <li>观察自己引入的依赖是以什么开头</li>
 </ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBootApplication文档翻译</title>
-    <url>/1324367350.html</url>
-    <content><![CDATA[<hr>
-<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
-<ul>
-<li>@EnableAutoConfiguration</li>
-<li>@ComponentScan</li>
-<li>@Configuration</li>
-</ul>
-<p>如下面这个例子</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
-<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
-<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
-<p>也可以讲远程的debugger绑定到你的应用程序。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
-<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -2725,59 +2766,6 @@
   </entry>
   <entry>
     <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
-    <url>/1697153393.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
-<h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#max file size</span><br><span class="line">spring.servlet.multipart.max-file-size=<span class="number">10</span>MB</span><br><span class="line">#max request size</span><br><span class="line">spring.servlet.multipart.max-request-size=<span class="number">10</span>MB</span><br><span class="line">#files storage location</span><br><span class="line">#the linux storage.location=/root/test</span><br><span class="line">storage.location=D:<span class="comment">//test/</span></span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<p>因为springboot自动允许multipart/form-data 请求</p>
-<p>storage.location表示存储的rootLocation</p>
-<h3 id="使配置可以使用"><a href="#使配置可以使用" class="headerlink" title="使配置可以使用"></a>使配置可以使用</h3><p>因为我们在application.properties里面定义了storage location，所以我们需要定义一下POJO类并且通过@ConfigurationProperties注解来自动绑定这个配置</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//StorageProperties.java</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"storage"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String location;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLocation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> location;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocation</span><span class="params">(String location)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.location = location;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意到prefix=”storage”，当application启动的时候，绑定以storage前缀的属性。</p>
-<p>并且需要在Application.java中添加注解@EnableConfigurationProperties(StorageProperties.class)</p>
-<h3 id="Storage-Service"><a href="#Storage-Service" class="headerlink" title="Storage Service"></a>Storage Service</h3><h4 id="StorageService"><a href="#StorageService" class="headerlink" title="StorageService"></a>StorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Stream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">store</span><span class="params">(MultipartFile file,String type)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Path <span class="title">load</span><span class="params">(String filename)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个是可以用得到的方法，所以接下来就是实现这些方法</p>
-<h4 id="FileSystemStorageService"><a href="#FileSystemStorageService" class="headerlink" title="FileSystemStorageService"></a>FileSystemStorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemStorageService</span> <span class="keyword">implements</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Path rootLocation;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemStorageService</span><span class="params">(StorageProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.rootLocation = Paths.get(properties.getLocation());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Files.createDirectories(rootLocation);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Could not initialize storage location"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">store</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">        String filename = StringUtils.cleanPath(file.getOriginalFilename());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store empty file "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (filename.contains(<span class="string">".."</span>)) &#123;</span><br><span class="line">                <span class="comment">// This is a security check</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(</span><br><span class="line">                        <span class="string">"Cannot store file with relative path outside current directory "</span></span><br><span class="line">                                + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> (InputStream inputStream = file.getInputStream()) &#123;</span><br><span class="line">                Files.copy(inputStream, <span class="keyword">this</span>.rootLocation.resolve(filename),</span><br><span class="line">                        StandardCopyOption.REPLACE_EXISTING);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store file "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> filename;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> Files.walk(<span class="keyword">this</span>.rootLocation, <span class="number">1</span>)</span><br><span class="line">                    .filter(path -&gt; !path.equals(<span class="keyword">this</span>.rootLocation))</span><br><span class="line">                    .map(<span class="keyword">this</span>.rootLocation::relativize);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to read stored files"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Path <span class="title">load</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rootLocation.resolve(filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Path file = load(filename);</span><br><span class="line">            Resource resource = <span class="keyword">new</span> UrlResource(file.toUri());</span><br><span class="line">            <span class="keyword">if</span> (resource.exists() || resource.isReadable()) &#123;</span><br><span class="line">                <span class="keyword">return</span> resource;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(</span><br><span class="line">                        <span class="string">"Could not read file: "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(<span class="string">"Could not read file: "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        FileSystemUtils.deleteRecursively(rootLocation.toFile());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<ol>
-<li>@PostConstuct注解，保证init()方法被调用当该bean被完全初始化</li>
-</ol>
-<h4 id="StorageException"><a href="#StorageException" class="headerlink" title="StorageException"></a>StorageException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="FileNotFoundException"><a href="#FileNotFoundException" class="headerlink" title="FileNotFoundException"></a>FileNotFoundException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.NOT_FOUND)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileNotFoundException</span> <span class="keyword">extends</span> <span class="title">StorageException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<ol>
-<li>@ResponseStatus(HttpStatus.NOT_FOUND)该注解确保springboot返回的一个404的Http状态码</li>
-</ol>
-<p>以上可以实现上传文件，但是今天的项目需求是需要将图片等文件上传到服务器里面，就是上传到外部文件夹，并且通过url访问</p>
-<h4 id="SpringBoot访问绝对路径下的静态资源"><a href="#SpringBoot访问绝对路径下的静态资源" class="headerlink" title="SpringBoot访问绝对路径下的静态资源"></a>SpringBoot访问绝对路径下的静态资源</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfiguration</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/image/**"</span>).addResourceLocations(<span class="string">"file:D://test/images/"</span>);</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/download/**"</span>).addResourceLocations(<span class="string">"file:D://test/files/"</span>);</span><br><span class="line">        <span class="keyword">super</span>.addResourceHandlers(registry);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<ol>
-<li>可以通过<a href="http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件" target="_blank" rel="noopener">http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件</a></li>
-</ol>
-<h4 id="其他收获"><a href="#其他收获" class="headerlink" title="其他收获"></a>其他收获</h4><ol>
-<li>通过postman发送表单 选择body里面的form-data然后添加key-value</li>
-<li>处理@RequestBody 该注解无法通过url和form来传递参数，只能通过json串 选择body里面的raw 然后选择JSON格式 提交的格式为</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"key"</span>:<span class="string">"value"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://attacomsian.com/blog/uploading-files-spring-boot" target="_blank" rel="noopener">file upload</a></p>
-<p><a href="https://blog.csdn.net/jy02268879/article/details/82830789" target="_blank" rel="noopener">postman</a></p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
     <url>/1697153394.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
@@ -2830,62 +2818,53 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot开发Web应用</title>
-    <url>/764686384.html</url>
-    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
-<p>在application.properties下添加</p>
-<p>spring.mvc.static-path-pattern=/static/**</p>
-<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
-<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+    <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
+    <url>/1697153393.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
+<h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#max file size</span><br><span class="line">spring.servlet.multipart.max-file-size=<span class="number">10</span>MB</span><br><span class="line">#max request size</span><br><span class="line">spring.servlet.multipart.max-request-size=<span class="number">10</span>MB</span><br><span class="line">#files storage location</span><br><span class="line">#the linux storage.location=/root/test</span><br><span class="line">storage.location=D:<span class="comment">//test/</span></span><br></pre></td></tr></table></figure>
 
-<p>html文件建立在src/main/resources下的templates文件夹下</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>解释：</p>
+<p>因为springboot自动允许multipart/form-data 请求</p>
+<p>storage.location表示存储的rootLocation</p>
+<h3 id="使配置可以使用"><a href="#使配置可以使用" class="headerlink" title="使配置可以使用"></a>使配置可以使用</h3><p>因为我们在application.properties里面定义了storage location，所以我们需要定义一下POJO类并且通过@ConfigurationProperties注解来自动绑定这个配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//StorageProperties.java</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"storage"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String location;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLocation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> location;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocation</span><span class="params">(String location)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.location = location;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在controller</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到prefix=”storage”，当application启动的时候，绑定以storage前缀的属性。</p>
+<p>并且需要在Application.java中添加注解@EnableConfigurationProperties(StorageProperties.class)</p>
+<h3 id="Storage-Service"><a href="#Storage-Service" class="headerlink" title="Storage Service"></a>Storage Service</h3><h4 id="StorageService"><a href="#StorageService" class="headerlink" title="StorageService"></a>StorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Stream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">store</span><span class="params">(MultipartFile file,String type)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Path <span class="title">load</span><span class="params">(String filename)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>解释</p>
+<p>这个是可以用得到的方法，所以接下来就是实现这些方法</p>
+<h4 id="FileSystemStorageService"><a href="#FileSystemStorageService" class="headerlink" title="FileSystemStorageService"></a>FileSystemStorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemStorageService</span> <span class="keyword">implements</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Path rootLocation;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemStorageService</span><span class="params">(StorageProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.rootLocation = Paths.get(properties.getLocation());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Files.createDirectories(rootLocation);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Could not initialize storage location"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">store</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">        String filename = StringUtils.cleanPath(file.getOriginalFilename());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store empty file "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (filename.contains(<span class="string">".."</span>)) &#123;</span><br><span class="line">                <span class="comment">// This is a security check</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(</span><br><span class="line">                        <span class="string">"Cannot store file with relative path outside current directory "</span></span><br><span class="line">                                + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> (InputStream inputStream = file.getInputStream()) &#123;</span><br><span class="line">                Files.copy(inputStream, <span class="keyword">this</span>.rootLocation.resolve(filename),</span><br><span class="line">                        StandardCopyOption.REPLACE_EXISTING);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store file "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> filename;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> Files.walk(<span class="keyword">this</span>.rootLocation, <span class="number">1</span>)</span><br><span class="line">                    .filter(path -&gt; !path.equals(<span class="keyword">this</span>.rootLocation))</span><br><span class="line">                    .map(<span class="keyword">this</span>.rootLocation::relativize);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to read stored files"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Path <span class="title">load</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rootLocation.resolve(filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Path file = load(filename);</span><br><span class="line">            Resource resource = <span class="keyword">new</span> UrlResource(file.toUri());</span><br><span class="line">            <span class="keyword">if</span> (resource.exists() || resource.isReadable()) &#123;</span><br><span class="line">                <span class="keyword">return</span> resource;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(</span><br><span class="line">                        <span class="string">"Could not read file: "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(<span class="string">"Could not read file: "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        FileSystemUtils.deleteRecursively(rootLocation.toFile());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
 <ol>
-<li>Controller返回的是视图 index.html</li>
-<li>ModelMap</li>
+<li>@PostConstuct注解，保证init()方法被调用当该bean被完全初始化</li>
 </ol>
-<blockquote>
-<p>Modal can supply attributes used for rendering views</p>
-<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
-</blockquote>
-<p>打开浏览器localhost:8080即可访问到</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot的配置文件解析</title>
-    <url>/3020356367.html</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
-<p>位置 src/main/java/resources/application.properties</p>
-<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
+<h4 id="StorageException"><a href="#StorageException" class="headerlink" title="StorageException"></a>StorageException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="FileNotFoundException"><a href="#FileNotFoundException" class="headerlink" title="FileNotFoundException"></a>FileNotFoundException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.NOT_FOUND)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileNotFoundException</span> <span class="keyword">extends</span> <span class="title">StorageException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
-<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
-<p>打包后在target的文件夹下</p>
-<p>或者使用 </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+<p>解释：</p>
+<ol>
+<li>@ResponseStatus(HttpStatus.NOT_FOUND)该注解确保springboot返回的一个404的Http状态码</li>
+</ol>
+<p>以上可以实现上传文件，但是今天的项目需求是需要将图片等文件上传到服务器里面，就是上传到外部文件夹，并且通过url访问</p>
+<h4 id="SpringBoot访问绝对路径下的静态资源"><a href="#SpringBoot访问绝对路径下的静态资源" class="headerlink" title="SpringBoot访问绝对路径下的静态资源"></a>SpringBoot访问绝对路径下的静态资源</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfiguration</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/image/**"</span>).addResourceLocations(<span class="string">"file:D://test/images/"</span>);</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/download/**"</span>).addResourceLocations(<span class="string">"file:D://test/files/"</span>);</span><br><span class="line">        <span class="keyword">super</span>.addResourceHandlers(registry);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>运行jar包</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+<p>解释：</p>
+<ol>
+<li>可以通过<a href="http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件" target="_blank" rel="noopener">http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件</a></li>
+</ol>
+<h4 id="其他收获"><a href="#其他收获" class="headerlink" title="其他收获"></a>其他收获</h4><ol>
+<li>通过postman发送表单 选择body里面的form-data然后添加key-value</li>
+<li>处理@RequestBody 该注解无法通过url和form来传递参数，只能通过json串 选择body里面的raw 然后选择JSON格式 提交的格式为</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"key"</span>:<span class="string">"value"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
-<ul>
-<li>application-dev.properties:开发环境</li>
-<li>application-test.properties:测试环境</li>
-<li>application-prod.properties:生产环境</li>
-</ul>
-<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://attacomsian.com/blog/uploading-files-spring-boot" target="_blank" rel="noopener">file upload</a></p>
+<p><a href="https://blog.csdn.net/jy02268879/article/details/82830789" target="_blank" rel="noopener">postman</a></p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -2933,6 +2912,37 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot开发Web应用</title>
+    <url>/764686384.html</url>
+    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
+<p>在application.properties下添加</p>
+<p>spring.mvc.static-path-pattern=/static/**</p>
+<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
+<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>html文件建立在src/main/resources下的templates文件夹下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<ol>
+<li>Controller返回的是视图 index.html</li>
+<li>ModelMap</li>
+</ol>
+<blockquote>
+<p>Modal can supply attributes used for rendering views</p>
+<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
+</blockquote>
+<p>打开浏览器localhost:8080即可访问到</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot的JDBC操作数据库</title>
     <url>/81179857.html</url>
     <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
@@ -2949,6 +2959,37 @@
 
 
 
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot的配置文件解析</title>
+    <url>/3020356367.html</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
+<p>位置 src/main/java/resources/application.properties</p>
+<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
+<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
+<p>打包后在target的文件夹下</p>
+<p>或者使用 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<p>运行jar包</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
+<ul>
+<li>application-dev.properties:开发环境</li>
+<li>application-test.properties:测试环境</li>
+<li>application-prod.properties:生产环境</li>
+</ul>
+<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -3011,24 +3052,6 @@
       </tags>
   </entry>
   <entry>
-    <title>python异常与模块化</title>
-    <url>/2483463584.html</url>
-    <content><![CDATA[<p>###异常处理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>还有一种常见形式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
-
-<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
-<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux一些常见的命令行</title>
     <url>/2560767953.html</url>
     <content><![CDATA[<hr>
@@ -3076,71 +3099,18 @@
       </tags>
   </entry>
   <entry>
-    <title>python自定义函数与面向对象</title>
-    <url>/2041354615.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python的最大特点就是dynamically typed就是动态类型，不像java需要定义数据类型</p>
-<h4 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h4><p>先从一段代码引入：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
+    <title>python异常与模块化</title>
+    <url>/2483463584.html</url>
+    <content><![CDATA[<p>###异常处理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
 
-<p>别急，我们先学习下py的函数，这个形式跟C以及java等语言有点不一样。跨度有点大，对于刚接触来说，我们需要对比一下。</p>
-<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><p>先来看一个例子</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(message)</span>:</span></span><br><span class="line">    print(<span class="string">'Got a messag: &#123;&#125;'</span>.format(message))</span><br><span class="line"></span><br><span class="line">my_func(<span class="string">'hello world'</span>)</span><br><span class="line"><span class="comment">#这里其实我有个地方不是很懂，不过大约能够知道什么意思，就是&#123;&#125;用来占位，记得在java中log常常这么用</span></span><br></pre></td></tr></table></figure>
+<p>还有一种常见形式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
 
-<p>大致形式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> 函数名<span class="params">(参数)</span>:</span></span><br><span class="line">    处理</span><br><span class="line">    <span class="keyword">return</span>/yeild</span><br></pre></td></tr></table></figure>
+<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>与其他语言不一样的是，def是可执行语句，即函数被调用前，都是不存在的，直到被调用的时候才会创建一个新的函数对象，并赋予其名字</p>
-</blockquote>
-<p>对于以上这段话不理解的我们需要对比以下代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">hello()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="comment">#报错，在主程序里，函数要先于调用前的定义</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">()</span>:</span></span><br><span class="line">    hello()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_func()</span><br><span class="line"><span class="comment">#正常运行，因为def是可执行语句，在调用的时候都不存在，但是我们必须保证调用前都已经声明定义了</span></span><br></pre></td></tr></table></figure>
-
-<p>注：我们先有个全局的概念，然后我们在看一下细节</p>
-<p>我们深入来看一个代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(l)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(l,list):</span><br><span class="line">        print(<span class="string">'what you input is not a list'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> len(l)==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'waht you input is empty'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    largest=l[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">if</span> item&gt;largest:</span><br><span class="line">            largest=item</span><br><span class="line">    print(<span class="string">'the largest item in l is &#123;&#125;'</span>.format(largest))</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">my_func([<span class="number">8</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>看到这个我真的哭了，这里的多态完全跟java不同</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_sum</span><span class="params">(a,b)</span>:</span></span><br><span class="line">    print(a+b)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_sum(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">my_sum([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">my_sum(<span class="string">'hello'</span>,<span class="string">'world'</span>)</span><br><span class="line"><span class="comment">#对于这种来什么就接受什么的函数，必要时需要在前面进行类型检查</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="函数变量的作用域"><a href="#函数变量的作用域" class="headerlink" title="函数变量的作用域"></a>函数变量的作用域</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">MAX_VALUE=<span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(value)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> MAX_VALUE</span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(value)</span>:</span></span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span></span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">test3()</span><br><span class="line">test2(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line">test1(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>分析一下：</p>
-<ol>
-<li>函数内部默认为局部变量，即当函数调用结束后(return)，该变量会被收回，并且不能够被访问</li>
-<li>Python的全局变量定义在主程序中</li>
-<li>函数可以调用全局变量，如果用更改全局变量的时候需要 global关键字，这里并不是重新创建一个新的变量，而是告诉Python 解释器，这里的变量就是之前定义的全局变量</li>
-<li>如果函数内部的变量名与主程序的变量名重名，那么局部变量将覆盖全局变量</li>
-</ol>
-<p>现在我们基本上了解了python的函数基本规则，我们回到类</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
-
-<p>在这里我们对比java的dog类如何去定义</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    Dog(String name,<span class="keyword">int</span> age)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">        <span class="keyword">this</span>.age=age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String...ags)</span></span>&#123;</span><br><span class="line">        Dog dog=<span class="keyword">new</span> Dog(<span class="string">"name"</span>,<span class="number">16</span>);</span><br><span class="line">        System.out.println(dog.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这两段代码执行的效果是一样的。</p>
-<p>区别：</p>
-<ol>
-<li><p>python不需要提前声明的类的属性，因为不要指明属性的数据类型</p>
-</li>
-<li><p>Python的构造函数不是以类名，虽然调用的时候是以类名，说明在声明定义该类的对象的时候，会自动调用Init函数</p>
-</li>
-<li><p>注意到python的每个函数里面都有一个变量self，但是在调用的时候又不需要传入该参数，你可以看到这个self的作用跟this的作用差不多，只不过在python中必须使用这个self,在每一个类的方法中，self总是指向当前的实例，在init函数中self指向的最新被创建的对象，在其他函数中，指向调用该方法的对象</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.__name=name</span><br><span class="line">        self.age=age</span><br><span class="line">        self.__sex=<span class="string">'boy'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">dog.__name=<span class="string">'Name'</span></span><br><span class="line">print(dog.__name)</span><br><span class="line">print(dog.getName())</span><br><span class="line">print(dog.__sex)</span><br></pre></td></tr></table></figure>
-
-<p>注：在一次被python的数据定义给坑了</p>
-<p>首先我们注意到java里面数据是由private属性的，那么在python中默认以两个下划线表示该属性为私有属性，不可被对象之间调用</p>
-<p>但是如果dog.__name记住这里的name属性不是该类的属性，而是你给dog这个变量重新定义的一个，与类里定义的不同</p>
-<p>接着我们深入了解面向对象里面的细节，先来看一下下面这段代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    MAX_AGE=<span class="number">16</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(cls,name)</span>:</span></span><br><span class="line">        cls.name=name</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_MAX_AGE</span><span class="params">(age)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> age&lt;Dog.MAX_AGE:</span><br><span class="line">            print(<span class="string">"the dog age is &#123;&#125;"</span>.format(age))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">'the maxage is &#123;&#125;'</span>.format(Dog.MAX_AGE))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'NAME'</span>,<span class="number">14</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.newName(<span class="string">'name'</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.get_MAX_AGE(<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>第一个MAX_AGE是类中定义的常量，可以通过self.MAX_AGE或者Entity.MAX_AGE调用</li>
-<li>注意到 @classmethod和@staticmethod 我们已经将类中的函数区别开来了，首先是classmethod类函数，能够动态访问或者修改对象的属性，其第一个参数一般为cls，最常用的功能是实现不用的init构造函数(好吧，上述代码不具有参考意义) ，@staticmehod是静态函数，可以用来做一些简单独立的任务，像什么测试等等，最后就是成员函数，是最正常的函数，不需要任何声明，第一个self代表当前对象的引用</li>
-</ol>
-<h4 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h4><p>这样，已经大致的会写python的类了，但是面向对象里面还有个重要的思想就是继承。不过这个留到后面来深入。当前我的目标就是对python基础有个全貌的了解。</p>
-</li>
-</ol>
+<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
+<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
@@ -3262,6 +3232,77 @@
 <p>元组tuple，通过()表示，可以存储各种各样的数据类型，有顺序，其长度不可发生改变，可以任意访问，增加通过+会创建一个新的元组</p>
 <p>字典dict，通过{}表示，存储键值对，长度可以改变，可以通过hash的访问，任意删除，增加，修改</p>
 <p>集合set，通过{},相对于字典存储值，长度可变，访问不可通过索引，只能通过in，可以添加add(),可以删除remove()</p>
+]]></content>
+      <tags>
+        <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python自定义函数与面向对象</title>
+    <url>/2041354615.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python的最大特点就是dynamically typed就是动态类型，不像java需要定义数据类型</p>
+<h4 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h4><p>先从一段代码引入：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
+
+<p>别急，我们先学习下py的函数，这个形式跟C以及java等语言有点不一样。跨度有点大，对于刚接触来说，我们需要对比一下。</p>
+<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><p>先来看一个例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(message)</span>:</span></span><br><span class="line">    print(<span class="string">'Got a messag: &#123;&#125;'</span>.format(message))</span><br><span class="line"></span><br><span class="line">my_func(<span class="string">'hello world'</span>)</span><br><span class="line"><span class="comment">#这里其实我有个地方不是很懂，不过大约能够知道什么意思，就是&#123;&#125;用来占位，记得在java中log常常这么用</span></span><br></pre></td></tr></table></figure>
+
+<p>大致形式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> 函数名<span class="params">(参数)</span>:</span></span><br><span class="line">    处理</span><br><span class="line">    <span class="keyword">return</span>/yeild</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>与其他语言不一样的是，def是可执行语句，即函数被调用前，都是不存在的，直到被调用的时候才会创建一个新的函数对象，并赋予其名字</p>
+</blockquote>
+<p>对于以上这段话不理解的我们需要对比以下代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">hello()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="comment">#报错，在主程序里，函数要先于调用前的定义</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">()</span>:</span></span><br><span class="line">    hello()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'hello'</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_func()</span><br><span class="line"><span class="comment">#正常运行，因为def是可执行语句，在调用的时候都不存在，但是我们必须保证调用前都已经声明定义了</span></span><br></pre></td></tr></table></figure>
+
+<p>注：我们先有个全局的概念，然后我们在看一下细节</p>
+<p>我们深入来看一个代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(l)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(l,list):</span><br><span class="line">        print(<span class="string">'what you input is not a list'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> len(l)==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'waht you input is empty'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    largest=l[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">if</span> item&gt;largest:</span><br><span class="line">            largest=item</span><br><span class="line">    print(<span class="string">'the largest item in l is &#123;&#125;'</span>.format(largest))</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">my_func([<span class="number">8</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>看到这个我真的哭了，这里的多态完全跟java不同</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_sum</span><span class="params">(a,b)</span>:</span></span><br><span class="line">    print(a+b)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">my_sum(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">my_sum([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">my_sum(<span class="string">'hello'</span>,<span class="string">'world'</span>)</span><br><span class="line"><span class="comment">#对于这种来什么就接受什么的函数，必要时需要在前面进行类型检查</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="函数变量的作用域"><a href="#函数变量的作用域" class="headerlink" title="函数变量的作用域"></a>函数变量的作用域</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">MAX_VALUE=<span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(value)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> MAX_VALUE</span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(value)</span>:</span></span><br><span class="line">    MAX_VALUE=value</span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span></span><br><span class="line">    print(MAX_VALUE)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">test3()</span><br><span class="line">test2(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line">test1(<span class="number">1</span>)</span><br><span class="line">test3()</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>分析一下：</p>
+<ol>
+<li>函数内部默认为局部变量，即当函数调用结束后(return)，该变量会被收回，并且不能够被访问</li>
+<li>Python的全局变量定义在主程序中</li>
+<li>函数可以调用全局变量，如果用更改全局变量的时候需要 global关键字，这里并不是重新创建一个新的变量，而是告诉Python 解释器，这里的变量就是之前定义的全局变量</li>
+<li>如果函数内部的变量名与主程序的变量名重名，那么局部变量将覆盖全局变量</li>
+</ol>
+<p>现在我们基本上了解了python的函数基本规则，我们回到类</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">print(dog.getName())</span><br></pre></td></tr></table></figure>
+
+<p>在这里我们对比java的dog类如何去定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    Dog(String name,<span class="keyword">int</span> age)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">        <span class="keyword">this</span>.age=age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String...ags)</span></span>&#123;</span><br><span class="line">        Dog dog=<span class="keyword">new</span> Dog(<span class="string">"name"</span>,<span class="number">16</span>);</span><br><span class="line">        System.out.println(dog.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两段代码执行的效果是一样的。</p>
+<p>区别：</p>
+<ol>
+<li><p>python不需要提前声明的类的属性，因为不要指明属性的数据类型</p>
+</li>
+<li><p>Python的构造函数不是以类名，虽然调用的时候是以类名，说明在声明定义该类的对象的时候，会自动调用Init函数</p>
+</li>
+<li><p>注意到python的每个函数里面都有一个变量self，但是在调用的时候又不需要传入该参数，你可以看到这个self的作用跟this的作用差不多，只不过在python中必须使用这个self,在每一个类的方法中，self总是指向当前的实例，在init函数中self指向的最新被创建的对象，在其他函数中，指向调用该方法的对象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.__name=name</span><br><span class="line">        self.age=age</span><br><span class="line">        self.__sex=<span class="string">'boy'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'name'</span>,<span class="number">16</span>)</span><br><span class="line">dog.__name=<span class="string">'Name'</span></span><br><span class="line">print(dog.__name)</span><br><span class="line">print(dog.getName())</span><br><span class="line">print(dog.__sex)</span><br></pre></td></tr></table></figure>
+
+<p>注：在一次被python的数据定义给坑了</p>
+<p>首先我们注意到java里面数据是由private属性的，那么在python中默认以两个下划线表示该属性为私有属性，不可被对象之间调用</p>
+<p>但是如果dog.__name记住这里的name属性不是该类的属性，而是你给dog这个变量重新定义的一个，与类里定义的不同</p>
+<p>接着我们深入了解面向对象里面的细节，先来看一下下面这段代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">()</span>:</span></span><br><span class="line">    MAX_AGE=<span class="number">16</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">newName</span><span class="params">(cls,name)</span>:</span></span><br><span class="line">        cls.name=name</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_MAX_AGE</span><span class="params">(age)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> age&lt;Dog.MAX_AGE:</span><br><span class="line">            print(<span class="string">"the dog age is &#123;&#125;"</span>.format(age))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">'the maxage is &#123;&#125;'</span>.format(Dog.MAX_AGE))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'NAME'</span>,<span class="number">14</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.newName(<span class="string">'name'</span>)</span><br><span class="line">print(dog.getName())</span><br><span class="line">dog.get_MAX_AGE(<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>第一个MAX_AGE是类中定义的常量，可以通过self.MAX_AGE或者Entity.MAX_AGE调用</li>
+<li>注意到 @classmethod和@staticmethod 我们已经将类中的函数区别开来了，首先是classmethod类函数，能够动态访问或者修改对象的属性，其第一个参数一般为cls，最常用的功能是实现不用的init构造函数(好吧，上述代码不具有参考意义) ，@staticmehod是静态函数，可以用来做一些简单独立的任务，像什么测试等等，最后就是成员函数，是最正常的函数，不需要任何声明，第一个self代表当前对象的引用</li>
+</ol>
+<h4 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h4><p>这样，已经大致的会写python的类了，但是面向对象里面还有个重要的思想就是继承。不过这个留到后面来深入。当前我的目标就是对python基础有个全貌的了解。</p>
+</li>
+</ol>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
@@ -3653,8 +3694,8 @@
 <p>####求一组动态数据集合的最大 Top K</p>
 ]]></content>
       <tags>
-        <tag>堆</tag>
         <tag>数据结构与算法</tag>
+        <tag>堆</tag>
       </tags>
   </entry>
   <entry>
@@ -3690,8 +3731,8 @@
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
 ]]></content>
       <tags>
-        <tag>数据结构与算法</tag>
         <tag>集合</tag>
+        <tag>数据结构与算法</tag>
       </tags>
   </entry>
   <entry>

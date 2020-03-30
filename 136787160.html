@@ -144,8 +144,10 @@
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003092146_789.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003092146_549.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003092158_548.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003291508_946.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202003291529_218.png">
 <meta property="article:published_time" content="2020-03-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-09T14:52:34.264Z">
+<meta property="article:modified_time" content="2020-03-29T16:13:29.166Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -402,8 +404,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-09T22:52:34+08:00">
-                2020-03-09
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-30T00:13:29+08:00">
+                2020-03-30
               </time>
             
 
@@ -441,7 +443,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  620
+                  906
                 </span>
               
 
@@ -457,7 +459,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -523,7 +525,48 @@
 <li><code>tar</code>首先需要懂得Linux中对文件有两步操作，1.打包成文件2.进行压缩，<code>tar cf</code>进行的是打包成文件，<code>tar czf</code>把文件进行打包并且使用gzip算法进行压缩，<code>tar cjf</code>把文件进行打包并且使用bzip2进行压缩。</li>
 <li><code>tar xf</code>对打包的文件进行解包，并且通过-C 可以将其移到想要的地方。如果是gzip算法压缩的后缀是.gz那么可以通过<code>tar xzf</code>，如果是bzip2算法进行压缩的，可以通过<code>tar xjf</code></li>
 </ul>
-<h3 id="用户和权限管理"><a href="#用户和权限管理" class="headerlink" title="用户和权限管理"></a>用户和权限管理</h3>
+<h3 id="用户和权限管理"><a href="#用户和权限管理" class="headerlink" title="用户和权限管理"></a>用户和权限管理</h3><p><code>su - user1</code>临时切换用户，-会把文件夹定位到对应用户的家目录</p>
+<p><code>visudo</code>可以给某个用户赋予权限，如果不知道某个命令在哪里，通过执行<code>:!which 命令</code></p>
+<h3 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h3><ul>
+<li>文件类型：<code>-</code>普通文件,<code>d</code>目录文件，<code>b</code>块特殊文件,<code>c</code>字符特殊文件</li>
+<li>字符权限r4,w2,x1</li>
+<li><code>ls -ld</code>查看文件夹的权限，<code>ls -ld</code>查看文件的权限</li>
+<li><code>chmod</code>修改权限,<code>chmod 777 filename</code>,，<code>chown</code>修改文件所属</li>
+</ul>
+<h2 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h2><h3 id="网络状态查看"><a href="#网络状态查看" class="headerlink" title="网络状态查看"></a>网络状态查看</h3><ul>
+<li><p>net-tools</p>
+<ul>
+<li><p>ifconfig</p>
+<ul>
+<li>eth0第一个网卡的名称</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202003291508_946.png" alt=""></p>
+<p><strong>inet是网卡的Ip地址，ehter网卡的mac地址</strong></p>
+<ul>
+<li>网络接口命名修改</li>
+</ul>
+</li>
+<li><p>route</p>
+<ul>
+<li>查看网关<code>route -n</code></li>
+</ul>
+</li>
+<li><p>netstat</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络故障排除命令"><a href="#网络故障排除命令" class="headerlink" title="网络故障排除命令"></a>网络故障排除命令</h3><ul>
+<li><code>ping</code>检测当前主机和目标主机是否畅通</li>
+<li><code>traceroute</code>辅助ping,如果目标主机畅通，但是还是不能用，可以检测中间路由，traceroute -w 1 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></li>
+<li><code>mtr</code>数据包是否丢失</li>
+<li><code>nslookup</code>域名对应的ip</li>
+<li><code>telnet</code>检查端口的连接状态 <code>telnet www.baidu.com 80</code></li>
+<li><code>tcpdump</code>细致数据包</li>
+<li><code>netstat -ntpl</code>可以查看当前主机上，对外开放的端口</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202003291529_218.png" alt=""></p>
+
       
     </div>
     
@@ -570,7 +613,7 @@
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月09日 - 22时03分
+    2020年03月30日 - 00时03分
   </li>
 
   <!-- 引用链接 -->
@@ -804,7 +847,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统操作"><span class="nav-number">1.</span> <span class="nav-text">系统操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帮助命令"><span class="nav-number">1.1.</span> <span class="nav-text">帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">1.2.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户和权限管理"><span class="nav-number">1.3.</span> <span class="nav-text">用户和权限管理</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统操作"><span class="nav-number">1.</span> <span class="nav-text">系统操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帮助命令"><span class="nav-number">1.1.</span> <span class="nav-text">帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">1.2.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户和权限管理"><span class="nav-number">1.3.</span> <span class="nav-text">用户和权限管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件权限"><span class="nav-number">1.4.</span> <span class="nav-text">文件权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络管理"><span class="nav-number">2.</span> <span class="nav-text">网络管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络状态查看"><span class="nav-number">2.1.</span> <span class="nav-text">网络状态查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络故障排除命令"><span class="nav-number">2.2.</span> <span class="nav-text">网络故障排除命令</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -845,7 +888,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">68.7k</span>
+    <span title="Site words total count">69k</span>
   
 </div>
 
