@@ -146,8 +146,11 @@
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003092158_548.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003291508_946.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202003291529_218.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004031353_987.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004031359_869.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004031407_774.png">
 <meta property="article:published_time" content="2020-03-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-29T16:13:29.166Z">
+<meta property="article:modified_time" content="2020-04-03T12:16:01.206Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -404,8 +407,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-30T00:13:29+08:00">
-                2020-03-30
+              <time title="更新于" itemprop="dateModified" datetime="2020-04-03T20:16:01+08:00">
+                2020-04-03
               </time>
             
 
@@ -443,7 +446,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  906
+                  1.2k
                 </span>
               
 
@@ -459,7 +462,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -566,6 +569,60 @@
 <li><code>netstat -ntpl</code>可以查看当前主机上，对外开放的端口</li>
 </ul>
 <p><img src="http://cdn.xuxiaojin.com/202003291529_218.png" alt=""></p>
+<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><ul>
+<li>CentOS、RedHat使用的<code>yum</code>包管理器，软件安装包格式为rpm</li>
+<li>Debian、Ubuntu使用的<code>apt</code>包管理器，软件安装包格式为deb</li>
+</ul>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p><a href="https://developer.aliyun.com/mirror/centos?spm=a2c6h.13651102.0.0.3e221b11kTrvIx" target="_blank" rel="noopener">更改yum源</a></p>
+<ul>
+<li>yum install</li>
+<li>yum list</li>
+<li>yum remove</li>
+<li>yum update</li>
+</ul>
+<p><strong>源代码安装</strong></p>
+<ul>
+<li>wget</li>
+<li>tar -zxf</li>
+<li>cd direction</li>
+<li>./configure 自动配置内核版本 –prefix安装的位置</li>
+<li>make -j2 表示我要用两个逻辑cpu进行编译</li>
+<li>make install</li>
+</ul>
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><h3 id="进程概念"><a href="#进程概念" class="headerlink" title="进程概念"></a>进程概念</h3><p>管理程序开始到终止的整个生命周期</p>
+<h3 id="查看命令"><a href="#查看命令" class="headerlink" title="查看命令"></a>查看命令</h3><ul>
+<li>ps(进程状态)</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202004031353_987.png" alt=""></p>
+<p>当前shell运行的进程</p>
+<p><code>ps -eLf|more</code>基础用法就是这几个</p>
+<ul>
+<li>pstree(进程树形结构)</li>
+<li>top</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202004031359_869.png" alt=""></p>
+<blockquote>
+<p>20days表示最近开机运行的天数</p>
+<p>load average：分别表示1分钟5分钟10分钟</p>
+</blockquote>
+<h3 id="进程间的通信"><a href="#进程间的通信" class="headerlink" title="进程间的通信"></a>进程间的通信</h3><p>信号是进程间通信的方式之一，常用的方法是终端用户输入<code>中断命令</code>，通过信号机制停止一个程序的运行</p>
+<ul>
+<li>kill -l</li>
+</ul>
+<p><img src="http://cdn.xuxiaojin.com/202004031407_774.png" alt=""></p>
+<ul>
+<li>kill -9 PID 不受影响关掉进程</li>
+</ul>
+<h3 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h3><ul>
+<li>使用nohup 与&amp;  后台挂起，忽略hanup挂起信号【这个不是守护进程】</li>
+</ul>
+<blockquote>
+<p>ps -el |grep tail</p>
+</blockquote>
+<h2 id="服务管理工具systemctl"><a href="#服务管理工具systemctl" class="headerlink" title="服务管理工具systemctl"></a>服务管理工具systemctl</h2><ul>
+<li>systemctl start|stop|restart|status 服务名字</li>
+</ul>
+<h2 id="shell脚本"><a href="#shell脚本" class="headerlink" title="shell脚本"></a>shell脚本</h2><p><code>shell</code>是命令解释器，用于解释用户对操作系统的操作</p>
 
       
     </div>
@@ -613,7 +670,7 @@
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月30日 - 00时03分
+    2020年04月03日 - 20时04分
   </li>
 
   <!-- 引用链接 -->
@@ -785,7 +842,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -847,7 +904,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统操作"><span class="nav-number">1.</span> <span class="nav-text">系统操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帮助命令"><span class="nav-number">1.1.</span> <span class="nav-text">帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">1.2.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户和权限管理"><span class="nav-number">1.3.</span> <span class="nav-text">用户和权限管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件权限"><span class="nav-number">1.4.</span> <span class="nav-text">文件权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络管理"><span class="nav-number">2.</span> <span class="nav-text">网络管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络状态查看"><span class="nav-number">2.1.</span> <span class="nav-text">网络状态查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络故障排除命令"><span class="nav-number">2.2.</span> <span class="nav-text">网络故障排除命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统操作"><span class="nav-number">1.</span> <span class="nav-text">系统操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帮助命令"><span class="nav-number">1.1.</span> <span class="nav-text">帮助命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">1.2.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户和权限管理"><span class="nav-number">1.3.</span> <span class="nav-text">用户和权限管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件权限"><span class="nav-number">1.4.</span> <span class="nav-text">文件权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络管理"><span class="nav-number">2.</span> <span class="nav-text">网络管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络状态查看"><span class="nav-number">2.1.</span> <span class="nav-text">网络状态查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络故障排除命令"><span class="nav-number">2.2.</span> <span class="nav-text">网络故障排除命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件包管理"><span class="nav-number">3.</span> <span class="nav-text">软件包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">3.1.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程管理"><span class="nav-number">4.</span> <span class="nav-text">进程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程概念"><span class="nav-number">4.1.</span> <span class="nav-text">进程概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看命令"><span class="nav-number">4.2.</span> <span class="nav-text">查看命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间的通信"><span class="nav-number">4.3.</span> <span class="nav-text">进程间的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#守护进程"><span class="nav-number">4.4.</span> <span class="nav-text">守护进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务管理工具systemctl"><span class="nav-number">5.</span> <span class="nav-text">服务管理工具systemctl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell脚本"><span class="nav-number">6.</span> <span class="nav-text">shell脚本</span></a></li></ol></div>
             
 
           </div>
@@ -888,7 +945,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">69k</span>
+    <span title="Site words total count">70.6k</span>
   
 </div>
 
