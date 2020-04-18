@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/9.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SQL查询语句是如何执行的连接器1mysql -h ip -P port -u root -p  查看当前连接的状态  连接包括长连接和短连接,长连接是指在建立成功连接后，如果有持续的请求，则就一直使用这个连接。短连接则在每次执行完很少的几次查询后就断开连接。 因为建立连接的过程是很复杂的，比较消耗性能。所以要尽量减少建立连接的动作，就是尽量使用长连接。 使用长连接会导致内存涨的比较快。 ###分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql实战笔记">
+<meta property="og:url" content="http://blog.xuxiaojin.com/422085835.html">
+<meta property="og:site_name" content="徐小晋的博客">
+<meta property="og:description" content="SQL查询语句是如何执行的连接器1mysql -h ip -P port -u root -p  查看当前连接的状态  连接包括长连接和短连接,长连接是指在建立成功连接后，如果有持续的请求，则就一直使用这个连接。短连接则在每次执行完很少的几次查询后就断开连接。 因为建立连接的过程是很复杂的，比较消耗性能。所以要尽量减少建立连接的动作，就是尽量使用长连接。 使用长连接会导致内存涨的比较快。 ###分">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004162042_967.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004162217_756.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004162218_312.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004180810_150.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004181735_315.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004181737_743.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004182114_30.png">
+<meta property="article:published_time" content="2020-04-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-18T15:24:14.463Z">
+<meta property="article:author" content="徐晋">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202004162042_967.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.xuxiaojin.com/422085835.html"/>
+
+
+
+
+
+  <title>Mysql实战笔记 | 徐小晋的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91c59f68cca0da6fa05cfcb52fe0b3e8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐小晋的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习成长与思考</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/422085835.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="徐晋">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐小晋的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mysql实战笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-16T00:00:00+08:00">
+                2020-04-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-04-18T23:24:14+08:00">
+                2020-04-18
+              </time>
+            
+
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/422085835.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/422085835.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SQL查询语句是如何执行的"><a href="#SQL查询语句是如何执行的" class="headerlink" title="SQL查询语句是如何执行的"></a>SQL查询语句是如何执行的</h2><h3 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h ip -P port -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>查看当前连接的状态</p>
+<p><img src="http://cdn.xuxiaojin.com/202004162042_967.png" alt=""></p>
+<p>连接包括<strong>长连接</strong>和<strong>短连接</strong>,长连接是指在建立成功连接后，如果有持续的请求，则就一直使用这个连接。短连接则在每次执行完很少的几次查询后就断开连接。</p>
+<p>因为建立连接的过程是很复杂的，比较消耗性能。所以要尽量减少建立连接的动作，就是尽量使用<code>长连接</code>。</p>
+<p>使用长连接会导致内存涨的比较快。</p>
+<p>###分析器</p>
+<p>这个跟编译原理的有点像，就是对输入的语句进行词法分析，识别当前语句需要做什么？然后根据语法规则判断是否满足语法。如果语句不对在这个时候会报错。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>一条sql查询语句的执行过程是：先建立连接，但cp三次握手成功后，建立成功，之后会进行查询缓存，查看该查询时候有执行过【但是在Mysql8.0之后这个缓存的特性就被取消掉了，因为实在太鸡肋了，如果更新某个表之后，该表的全部缓存就全部清除了】。然后就是分析器，分析输入的语句是要执行什么内容，根据语法规则查看是否有语法错误。接着是进入到优化器，因为某一条语句的执行顺序可能有多种，mysql会进行筛选出某种顺序。最后是执行器，先检查是否有权限，如果有则根据该表的存储引擎进行执行该语句。</p>
+<h3 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/68319" target="_blank" rel="noopener">基础架构：一条SQL查询语句是如何执行的？</a></p>
+<h2 id="SQL更新语句是如何执行的"><a href="#SQL更新语句是如何执行的" class="headerlink" title="SQL更新语句是如何执行的"></a>SQL更新语句是如何执行的</h2><h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a>redo log</h3><p>redo log具有crash-safe的功能，在系统宕机后，提交的数据仍然不会丢失。在更新数据的时候，会现将其记录到redo log里，然后在写到内存上。最后在空闲的时候，写到硬盘上，然后把redo log上的记录擦掉。如果redo log满了的话，则会停下来，将数据写到硬盘上，然后擦掉redo log上的记录。</p>
+<h3 id="bin-log"><a href="#bin-log" class="headerlink" title="bin log"></a>bin log</h3><p>redo log是InnoDB特有的，bin log是一开始的时候myisam中没有一个日志文件，作为插件放到server层中，所有存储引擎都可以用的<code>归档日志</code></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>redo log</th>
+<th>bin log</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在哪里</td>
+<td>InnoDB特有，其他存储引擎所没有</td>
+<td>在server层，所有存储引擎都可以使用</td>
+</tr>
+<tr>
+<td>日志格式</td>
+<td>物理日志，在这个页上作了什么改动，不会记录更新之后的状态</td>
+<td>逻辑日志，记录某个语句的原始逻辑，在某个ID上更新。有两种格式statement格式记录的是sql语句，row格式记录的是行的内容，记录两条，更新前后</td>
+</tr>
+<tr>
+<td>日志大小</td>
+<td>循环写，会用完，在擦掉</td>
+<td>追加写，不会覆盖前面的日志</td>
+</tr>
+</tbody></table>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>对某个更新语句进行如下操作：前置步骤跟查询语句很像，在执行器中，首先通过存储引擎查找该行数据，如果在内存中，则直接返回给执行器。如果不在，则从硬盘中取到内存中去，在返回给执行器。然后执行器拿到该数据，进行更新，调用存储引擎的接口写到内存中去，更新redo log，并且redo log变为prepare的状态，告知执行器执行完成了，可以提交事务。执行器生成该语句的bin log，并且把<strong>bin log写到硬盘上</strong>。执行器调用存储引擎的提交事务的接口，redo log状态变为commit</p>
+<h3 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h3><p>前面我们提到redo log有prepare和commit的两种状态，这个就是<strong>两阶段提交</strong>。有什么作用呢？保证两个日志的逻辑一致。</p>
+<p>在prepare和commit 中间的redo log 和bin log要么都完成，要么都不完成。</p>
+<blockquote>
+<p>如果先写redo log，在写bin log的时候发生crash，不使用两阶段的话，就会出现通过bin log恢复数据的时候数据发生不一致。</p>
+<p>先写bin log,后写redo log发生crash的时候，则数据就不会更新，但是会把更新的记录写到bin log，如果使用bin log恢复数据，也会出现数据不一致的情况。</p>
+</blockquote>
+<h3 id="两个参数"><a href="#两个参数" class="headerlink" title="两个参数"></a>两个参数</h3><p><img src="http://cdn.xuxiaojin.com/202004162217_756.png" alt=""></p>
+<p><code>innodb_flush_log_at_trx_commit</code>表示每次事务的redo log都会<code>直接</code>持久化到磁盘，这样可以保证异常重启之后数据不会丢失。</p>
+<p><img src="http://cdn.xuxiaojin.com/202004162218_312.png" alt=""></p>
+<p><code>sync_binlog</code>表示每次事务的bin log都会持久化到磁盘，也可以保证重启后，数据不会丢失。</p>
+<h3 id="原文链接-1"><a href="#原文链接-1" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/68633" target="_blank" rel="noopener">日志系统：一条SQL更新语句是如何执行的？</a></p>
+<h2 id="事务隔离"><a href="#事务隔离" class="headerlink" title="事务隔离"></a>事务隔离</h2><h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><blockquote>
+<p>读未提交：可以查看到还未提交的数据</p>
+<p>读提交：只能看到已经提交的数据</p>
+<p>可重复读：在事务过程中看到的数据是一样的</p>
+<p>串行化：通过加锁，来保证读写冲突</p>
+</blockquote>
+<p><img src="http://cdn.xuxiaojin.com/202004180810_150.png" alt=""></p>
+<p>通过查看可以知道这是一个可重复读级别的事务隔离。可重复读的一个应用场景就是在<strong>数据校对逻辑</strong>。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在实现事务隔离的时候，靠的是<strong>视图</strong>，可重复读在启动的过程中就是创建一个视图，并且在整个事务期间，都以该视图为准。读提交是在SQL语句执行的时候进行创建的。读未提交是直接返回记录上的新值。串行化是通过加锁来避免并行访问。</p>
+<p>因为不同时刻启动的事务会有不同的read-view，所以同一条记录在数据库中就会存在多个版本，这就是MVCC多版本并发控制。这些回滚日志，会在没有用的时候删除掉。所以尽量不要用长事务，占用的空间比较大。</p>
+<p>可以在<code>infomation_schema</code>库中查询事务。</p>
+<h3 id="原文链接-2"><a href="#原文链接-2" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/68963" target="_blank" rel="noopener">03 | 事务隔离：为什么你改了我还看不见？</a></p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h3><p><code>哈希</code>结构适用于等值查询，不使用于区间查询</p>
+<p><code>有序数组</code>在等值和区间查询都很好，不过对于数据的插入比较消耗性能，所以适用于静态数据</p>
+<h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><p>根据叶子节点的内容，索引类型分为主键索引和非主键索引。</p>
+<p>主键索引的叶子节点是整行的数据，也叫做聚簇索引</p>
+<p>非主键索引的叶子节点内容主键的内容，也叫做非聚簇索引。</p>
+<p>基于非主键索引进行查询的话，找到主键后会回到主键索引树里面去查找，这个情况称为回表，所以要尽量使用<code>主键索引</code>。</p>
+<h3 id="在业务场景下尽量使用自增主键"><a href="#在业务场景下尽量使用自增主键" class="headerlink" title="在业务场景下尽量使用自增主键"></a>在业务场景下尽量使用自增主键</h3><ol>
+<li>自增主键每次插入都是追加的，不会出现数据的挪动</li>
+<li>空间存储上，非主键索引如果使用业务字段的话，可能导致叶子节点的存储空间比较大。</li>
+</ol>
+<h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3><p>覆盖索引是一个常见的性能优化手段。在查询时，只需要返回非主键的叶子节点，即主键信息。就可以大大减少回表操作。</p>
+<h3 id="最左前缀原则"><a href="#最左前缀原则" class="headerlink" title="最左前缀原则"></a>最左前缀原则</h3><p>在使用索引进行查询的时候，我们可以通过<code>最左前缀原则</code>，例如有个以名字的索引，我们可以通过like ‘%徐%’,使用该索引。利用该原则，我们只要合理安排联合主键的顺序，就能够减少维护索引。</p>
+<h3 id="索引下推原则"><a href="#索引下推原则" class="headerlink" title="索引下推原则"></a>索引下推原则</h3><p>在索引遍历的过程中，会对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表的次数。</p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>索引是一个很好的数据库调优的工具，但是自己一直接触的数据不是很大，所以一直忽略这个问题，我发现自己的业务上其实有很多地方可以使用索引来进行调优。</p>
+<p>几个原则要注意：要使用自增主键，尽可能使用主键查询。要利用覆盖索引，最左前缀索引，索引下推原则合理的设计索引的字段，减少数据库回表的次数。设计索引的时候要记得简单想一下回表的次数是不是比较大。</p>
+<h3 id="原文链接-3"><a href="#原文链接-3" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/69236" target="_blank" rel="noopener">深入浅出索引</a></p>
+<h2 id="全局锁和表锁"><a href="#全局锁和表锁" class="headerlink" title="全局锁和表锁"></a>全局锁和表锁</h2><h3 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h3><p>全局锁就是对整个数据库进行加锁，一般的应用场景是做<code>全库逻辑备份</code>，以前的做法就是通过FTWRL<code>flush tables with read lock</code>这种做法，使得数据库只能读，这个是比较危险的。因为意味着业务停摆。但是在做逻辑备份的时候，这个数据库如果不保证只读的话可能会出现数据不一致的问题。</p>
+<p>在InnoDB中可以使用<code>可重复读</code>这个事务隔离级别，来避免在备份过程中出现数据不一致，并且保证整个过程中，业务还是可以运行的。这就是MVCC多版本并发控制。mysql官方自带的<code>mysqldump</code>使用参数-single-transaction的时候就会启动一个事务，来确保拿到一致性视图。</p>
+<p>但是在不支持事务的引擎中，FTWRL还是很有必要的。</p>
+<h3 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h3><p>就是对表进行加锁，可以通过<code>lock table read/write</code>，要注意的是在锁表的时候，不仅对其他线程有限制作用，对自己的线程也有限制的作用。</p>
+<p>另一类表锁是MDL，在访问一个表的时候会被自动加上，为了保证在读取数据的正确性。业务上可能出现给某个表加上一个字段，导致整个数据库的崩溃。</p>
+<p>因为MDL不会在语句执行完后就释放，而是事务提交后才释放，每个读锁都需要申请到MDL读锁，如果此时MDL读锁被写锁阻塞，将导致后面所有请求都将阻塞。</p>
+<p>安全的给小表添加字段是增加一个等待记住。nowait/wait n</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tabl_name <span class="keyword">nowait</span> <span class="keyword">add</span> <span class="keyword">column</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tabl_name <span class="keyword">wait</span> n <span class="keyword">add</span> <span class="keyword">column</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>在InnoDB中，使用全局备份的话，用上可重复读的隔离级别。</p>
+<p>表锁的话，如果有比其更细的锁，则一般不会使用，所以表锁的应用场景不大。但是要小心在线上给表增加字段，一定要添加一个<code>等待机制</code></p>
+<h3 id="原文链接-4"><a href="#原文链接-4" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/69862" target="_blank" rel="noopener">全局锁和表锁 ：给表加个字段怎么有这么多阻碍？</a></p>
+<h2 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h2><p><code>行锁</code>是InnoDB特有的。比如两个事务，事务A更新某一条记录，事务B也要更新某一条记录，只有在事务A更新完后，事务B才能更新。</p>
+<h3 id="两阶段锁"><a href="#两阶段锁" class="headerlink" title="两阶段锁"></a>两阶段锁</h3><p>跟前面的redo log和bin log有点像，我们这个两阶段锁就是表示：在事务中，行锁只有在需要的时候才添加上去，但是并不是不需要就马上释放，而是在事务结束后才释放的。</p>
+<p>以上的描述就导致了一个设计原则：要把最可能造成冲突的锁往后放。</p>
+<h3 id="死锁和死锁检测"><a href="#死锁和死锁检测" class="headerlink" title="死锁和死锁检测"></a>死锁和死锁检测</h3><p>面对在数据库上发生死锁我们有两种方法，一种是等待超时。但是这个默认的时间是无法接受的。一种是死锁检测，会检测死锁是否发生，如果发生会回滚某个事务，让其它事务可以继续运行。但是死锁检测在热点数据的更新上，将会发生CPU跑满的现象，因为死锁检测比较消耗性能。</p>
+<p>所以解决热点问题的话，可以在进入行锁线程上的数量做一个排队。</p>
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><p>在执行线上数据操作的时候，要小心两阶段原则是否使得业务受到影响，就是一次性锁住的行不要太多。要尽量分批操作。</p>
+<h3 id="原文链接-5"><a href="#原文链接-5" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/70215" target="_blank" rel="noopener">行锁功过：怎么减少行锁对性能的影响？</a></p>
+<h2 id="事务隔离-1"><a href="#事务隔离-1" class="headerlink" title="事务隔离"></a>事务隔离</h2><h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><p>一致性视图，在Mysql中有两种视图，一种就是创建的view，还有一种就是为了保证一致性而创建的视图。</p>
+<p>一致性视图其实还是比较好理解的，为了保证事务隔离中的可重复读和读提交。</p>
+<p>记住一个row trx_id这就是前面提到的MVCC，每一行的记录都会存在多个版本。所以当前事务可以看到的版本就是三个原则</p>
+<ol>
+<li>版本为提交，不可见</li>
+<li>版本已提交，但是在视图创建后提交的，不可见</li>
+<li>版本已提交，是在视图创建前提交的，可见</li>
+</ol>
+<p>除此之外，还有一个<code>当前读</code>的概念，就是在update的时候会读取当前数据的最新值，不会存在版本问题，只有在查看数据的时候才有上面的三种原则。</p>
+<p>###原文链接</p>
+<p><a href="https://time.geekbang.org/column/article/70562" target="_blank" rel="noopener">事务到底是隔离的还是不隔离的？</a></p>
+<h2 id="普通索引和唯一索引"><a href="#普通索引和唯一索引" class="headerlink" title="普通索引和唯一索引"></a>普通索引和唯一索引</h2><p>普通索引与唯一索引的一个区别就是在插入时，唯一索引会检查是否满足唯一性，而这个检查就会到这一些性能上的问题。</p>
+<h3 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h3><p>查询过程是这样的，如果是唯一索引找到后直接回表就行，而普通索引找到后回表，还会继续找到第一个不符合条件的数据。如果该字段在业务上是唯一的话，那么这两种类型的索引在查询上都没有较大的差别。</p>
+<h3 id="更新过程"><a href="#更新过程" class="headerlink" title="更新过程"></a>更新过程</h3><p>这里要提到一个<code>change buffer</code>，在更新的过程中，如果该数据页在内存中则直接更新，如果不在的话，会先将数据更新到change buffer，在后面读取到内存中在进行merge，或者通过mysql自带的线程更新到硬盘中去，即大的提高了更新的效率。</p>
+<p>现在来看这两种索引，会面临两种场景</p>
+<p>如果都在内存中：那么唯一索引和普通索引都会直接更新</p>
+<p>如果在硬盘中：唯一索引因为要做唯一性检验，所以需要从硬盘中取出来，然后更新，不会使用change buffer。普通索引会直接更新到change buffer。所以普通索引在更新的时候比唯一索引要好。</p>
+<h3 id="change-buffer的应用场景"><a href="#change-buffer的应用场景" class="headerlink" title="change buffer的应用场景"></a>change buffer的应用场景</h3><p>如果一个数据在更新后马上就会读取到，那么就应该关掉change buffer，因为这个时候会多一个change buffer的写过程。</p>
+<p>不过虽然这么说，但是change buffer在大表中性能还是比较可靠的。</p>
+<h3 id="change-buffer和redo-log"><a href="#change-buffer和redo-log" class="headerlink" title="change buffer和redo log"></a>change buffer和redo log</h3><p>在前面我们提到，如果一条sql更新语句，会将数据先记录到redo log中，这个跟change buffer有什么关系？<br>实际上redo log记录的是物理日志，就是指做了什么变化，如果当前该更新语句，是写到change buffer，那么redo log就会记录更新change buffer.</p>
+<h3 id="总结-6"><a href="#总结-6" class="headerlink" title="总结"></a>总结</h3><p>如果业务上允许的话，尽量建议使用普通索引，因为change buffer会比较大的提高整体的性能。</p>
+<h3 id="原文链接-6"><a href="#原文链接-6" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/70848" target="_blank" rel="noopener">普通索引和唯一索引，应该怎么选择？</a></p>
+<h2 id="索引的选择"><a href="#索引的选择" class="headerlink" title="索引的选择"></a>索引的选择</h2><h3 id="总结-7"><a href="#总结-7" class="headerlink" title="总结"></a>总结</h3><p>查询某条语句的性能:<code>explain</code></p>
+<p>有时候mysql的优化器会选择错索引，这个时候就可以通过force index或者limit来引诱优化器选择正确的索引。</p>
+<p>还有就是执行<code>analyze table tal_name</code>可以重新统计索引信息，可以通过<code>show index from tab_name</code>查看索引信息。</p>
+<p>查看性能可以通过explain或者使用慢日志可以查看一些不符合预期的执行sql语句。</p>
+<h3 id="原文链接-7"><a href="#原文链接-7" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/71173" target="_blank" rel="noopener">MySQL为什么有时候会选错索引？</a></p>
+<h2 id="给字符串添加索引"><a href="#给字符串添加索引" class="headerlink" title="给字符串添加索引"></a>给字符串添加索引</h2><h3 id="总结-8"><a href="#总结-8" class="headerlink" title="总结"></a>总结</h3><p>直接创建完整的字符串索引，占据的空间比较大，所以一般是不可取的。一般是通过截取一些，创建前缀索引。但是使用前缀索引也会出现一些问题，增加回表的次数，无法使用覆盖索引。</p>
+<p>所以一般选择截取的长度是区分度比较大，可以通过`count(distance，)</p>
+<p>###原文链接</p>
+<p><a href="https://time.geekbang.org/column/article/71492" target="_blank" rel="noopener">怎么给字符串字段加索引？</a></p>
+<h2 id="flush-脏页"><a href="#flush-脏页" class="headerlink" title="flush 脏页"></a>flush 脏页</h2><h3 id="SQL突然变慢"><a href="#SQL突然变慢" class="headerlink" title="SQL突然变慢"></a>SQL突然变慢</h3><p>有什么自己就会有这种感觉，一般请求的执行速度都很快。但是突然某一条数据的执行速度很慢。这是因为此时正在进行刷脏页的操作。因为平时都会把记录记在redo log，所以当把数据写到硬盘上的时候，就会有性能上的需要。</p>
+<p>有四种场景会需要进行刷脏页的操作</p>
+<ol>
+<li>redo log写满的时候，这个时候需要清除redo log，把数据写到硬盘上，然后才能继续更新</li>
+<li>内存满了，内存里面淘汰的数据页是脏页，即跟硬盘里面的数据不一样，需要更新成一致的。所以需要控制脏页比例，来避免这个问题</li>
+<li>数据库空闲的时候，会自动刷脏页</li>
+<li>数据库停机前，手动进行刷脏页</li>
+</ol>
+<h3 id="刷脏页机制"><a href="#刷脏页机制" class="headerlink" title="刷脏页机制"></a>刷脏页机制</h3><p>mysql的刷脏页的控制策略</p>
+<ol>
+<li>首先要告诉mysql的IO能力，建议设置成硬盘的IOPS。硬盘的IOPS可以通过fio工具测试</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202004181735_315.png" alt=""></p>
+<ol start="2">
+<li>连坐机制，如果刷到的脏页周围正好也是脏页则也会一起刷掉。对于硬盘来说这是很好的机制，但是对于使用SSD的话，可以把这个参数设置为0，否则一次刷脏页等待的时间会比较长【在mysql8.0中，这个参数以及默认设置为0了】</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202004181737_743.png" alt=""></p>
+<h3 id="总结-9"><a href="#总结-9" class="headerlink" title="总结"></a>总结</h3><p>刷脏页机制和redo log配合起来的话，使得数据库将随机写转为顺序写，大大提高性能。但是也会导致突然sql执行的比较慢。还是要注意</p>
+<h3 id="原文链接-8"><a href="#原文链接-8" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/71806" target="_blank" rel="noopener">为什么我的MySQL会“抖”一下？</a></p>
+<h2 id="正确删除数据"><a href="#正确删除数据" class="headerlink" title="正确删除数据"></a>正确删除数据</h2><h3 id="复用"><a href="#复用" class="headerlink" title="复用"></a>复用</h3><p>对数据进行增删改，都会导致空间空洞。是的空间没有充分利用。</p>
+<h3 id="删除的过程"><a href="#删除的过程" class="headerlink" title="删除的过程"></a>删除的过程</h3><p>删除数据的过程，并不是真正的删除，而是标记该位置是可复用的，该部分的空间是不回收的。</p>
+<h3 id="重建表"><a href="#重建表" class="headerlink" title="重建表"></a>重建表</h3><p>重建表的过程就可以把这些空洞的表数据清除掉。</p>
+<p>有两种方法，一种是自己进行创建一个临时表，然后把数据移动到该表中。一种是执行<code>alter table t</code>该方法实际是执行online DDL，Mysql会自动帮我们创建一个临时表，并且会把之后的更新写到日志里，online的意思就是指重建的过程，也可以进行更新。</p>
+<h3 id="总结-10"><a href="#总结-10" class="headerlink" title="总结"></a>总结</h3><p>正确的删除数据，无法正确，因为删除的数据就只能在该位置标志为<code>可复用</code>为了回收这部分空间，需要进行<strong>重建表</strong>.</p>
+<h3 id="原文链接-9"><a href="#原文链接-9" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/72388" target="_blank" rel="noopener">为什么表数据删掉一半，表文件大小不变？</a></p>
+<h2 id="Count"><a href="#Count" class="headerlink" title="Count(*)"></a>Count(*)</h2><h3 id="总结-11"><a href="#总结-11" class="headerlink" title="总结"></a>总结</h3><p>count(*)的执行过程，需要扫描表。所以当数据量很大的时候，这个语句的执行时间会比较长。如果业务上需要count()的需求，可以把计数存到表中。</p>
+<h3 id="原文链接-10"><a href="#原文链接-10" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/72775" target="_blank" rel="noopener">count(*)这么慢，我该怎么办？</a></p>
+<h2 id="Order-By的工作方式"><a href="#Order-By的工作方式" class="headerlink" title="Order By的工作方式"></a>Order By的工作方式</h2><h3 id="总结-12"><a href="#总结-12" class="headerlink" title="总结"></a>总结</h3><p>面对原先的数据是无序的话，有两种order by排序算法。</p>
+<p>全字段排序，如果mysql 判断出当前的数据比较少，可以放到sort_buffer，则将数据全部放到里面，然后进行排序，后直接返回</p>
+<p>rowid排序，是因为mysql判断出排序的单行字段太长，则只能把需要排序的字段放到sort_buffer。然后排序完后，在回到表中返回结果。</p>
+<p>相对于全字段排序，rowid排序会多查询一次。</p>
+<h3 id="原文链接-11"><a href="#原文链接-11" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/73479" target="_blank" rel="noopener">“order by”是怎么工作的？</a></p>
+<h2 id="自增主键"><a href="#自增主键" class="headerlink" title="自增主键"></a>自增主键</h2><h3 id="存在哪里"><a href="#存在哪里" class="headerlink" title="存在哪里"></a>存在哪里</h3><p>在MyISAM是存在数据文件中</p>
+<p>在InnoDB中，保存在内存中。5.6以前是存在内存中，发生crash则会重新计算。8.0是存在redo log，如果发生crash会恢复。</p>
+<h3 id="修改机制"><a href="#修改机制" class="headerlink" title="修改机制"></a>修改机制</h3><p>如果插入的数据是0，null或者空，则会自动增加，增加的值为<code>auto_increment_offset</code>。如果是自己输入的值，也会保存进去。并且如果此时输入的值比自增的值要小，则自增的值不变。如果大的话，会重新计算自增的值。</p>
+<h3 id="总结-13"><a href="#总结-13" class="headerlink" title="总结"></a>总结</h3><p>自增主键还是很有用的，不过不能保证连续这个要求。并且自增主键是会用完的，用完会出现一些问题需要处理。</p>
+<h3 id="原文链接-12"><a href="#原文链接-12" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/80531" target="_blank" rel="noopener">自增主键为什么不是连续的？</a></p>
+<h2 id="索引字段做函数操作"><a href="#索引字段做函数操作" class="headerlink" title="索引字段做函数操作"></a>索引字段做函数操作</h2><h3 id="总结-14"><a href="#总结-14" class="headerlink" title="总结"></a>总结</h3><p>如果对索引字段进行函数，可能会破坏有序性，所以有可能不走索引。</p>
+<p>如果进行类型转换也有可能出现不走索引的现象，所以一定要小心。</p>
+<p>如果是字符与数字比较，会把字符转换为数字，隐式转换不会应用在字段上，所以还是会走索引。</p>
+<p>但是如果是数字转字符，则会出现不走索引的情况。</p>
+<p><img src="http://cdn.xuxiaojin.com/202004182114_30.png" alt=""></p>
+<h3 id="原文链接-13"><a href="#原文链接-13" class="headerlink" title="原文链接"></a>原文链接</h3><p><a href="https://time.geekbang.org/column/article/74059" target="_blank" rel="noopener">为什么这些SQL语句逻辑相同，性能却差异巨大？</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <!-- JS库 clipboard 拷贝内容到粘贴板-->
+<script src="https://cdn.bootcss.com/clipboard.js/2.0.1/clipboard.min.js"></script>
+
+<!-- JS库 sweetalert 显示提示信息-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<ul class="post-copyright">
+  <!-- 本文标题 -->
+  <li>
+    <strong>本文标题： </strong>
+    Mysql实战笔记
+  </li>
+
+  <!-- 本文作者 -->
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>
+    XuxiaoJin   |  徐小晋
+  </li>
+
+  <!-- 创建时间 -->
+  <li>
+    <strong>创建于： </strong>
+    2020年04月16日 - 00时04分
+  </li>
+
+  <!-- 修改时间 -->
+  <li>
+    <strong>更新于： </strong>
+    2020年04月18日 - 23时04分
+  </li>
+
+  <!-- 引用链接 -->
+  <li class="post-copyright-link">
+    <strong>引用链接：</strong>
+    <a href="http://blog.xuxiaojin.com/422085835.html" title="Mysql实战笔记"
+      >http://blog.xuxiaojin.com/422085835.html</a
+    >
+    <span class="copy-path" title="点击复制引用链接"
+      ><i
+        style="cursor: pointer"
+        class="fa fa-clipboard"
+        data-clipboard-text="[XuxiaoJin's Blog | Mysql实战笔记](http://blog.xuxiaojin.com/422085835.html)"
+        aria-label="post.copy_success"
+      ></i
+    ></span>
+  </li>
+
+  <!-- 版权声明 -->
+  <li class="post-copyright-license">
+    <strong
+      >版权声明：
+    </strong>
+    本博客所有文章除特别声明外，均采用 CC BY-NC-SA 3.0 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+<script>
+  var clipboard = new ClipboardJS(".fa-clipboard");
+  clipboard.on("success", function(target) {
+    var message = document.createElement("div");
+    message.innerHTML =
+      '<i class="fa fa-check-circle message-icon"></i><span class="message-content">' +
+      target.trigger.getAttribute("aria-label") +
+      "</span>";
+    swal({
+      content: message,
+      className: "copy-success-message",
+      timer: 1000,
+      button: false
+    });
+  });
+</script>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/901468754.html" rel="next" title="JAVA进阶-异常篇">
+                <i class="fa fa-chevron-left"></i> JAVA进阶-异常篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="徐晋" />
+            
+              <p class="site-author-name" itemprop="name">徐晋</p>
+              <p class="site-description motion-element" itemprop="description">君子知命不惧，自当日日自新</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jiayouxujin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1319039722@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-E-Mail"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL查询语句是如何执行的"><span class="nav-number">1.</span> <span class="nav-text">SQL查询语句是如何执行的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接器"><span class="nav-number">1.1.</span> <span class="nav-text">连接器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接"><span class="nav-number">1.3.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL更新语句是如何执行的"><span class="nav-number">2.</span> <span class="nav-text">SQL更新语句是如何执行的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redo-log"><span class="nav-number">2.1.</span> <span class="nav-text">redo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bin-log"><span class="nav-number">2.2.</span> <span class="nav-text">bin log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两阶段提交"><span class="nav-number">2.4.</span> <span class="nav-text">两阶段提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个参数"><span class="nav-number">2.5.</span> <span class="nav-text">两个参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-1"><span class="nav-number">2.6.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务隔离"><span class="nav-number">3.</span> <span class="nav-text">事务隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.1.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">3.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-2"><span class="nav-number">3.3.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">4.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引结构"><span class="nav-number">4.1.</span> <span class="nav-text">索引结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引分类"><span class="nav-number">4.2.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在业务场景下尽量使用自增主键"><span class="nav-number">4.3.</span> <span class="nav-text">在业务场景下尽量使用自增主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖索引"><span class="nav-number">4.4.</span> <span class="nav-text">覆盖索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最左前缀原则"><span class="nav-number">4.5.</span> <span class="nav-text">最左前缀原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引下推原则"><span class="nav-number">4.6.</span> <span class="nav-text">索引下推原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-2"><span class="nav-number">4.7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-3"><span class="nav-number">4.8.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局锁和表锁"><span class="nav-number">5.</span> <span class="nav-text">全局锁和表锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局锁"><span class="nav-number">5.1.</span> <span class="nav-text">全局锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表级锁"><span class="nav-number">5.2.</span> <span class="nav-text">表级锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-3"><span class="nav-number">5.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-4"><span class="nav-number">5.4.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行锁"><span class="nav-number">6.</span> <span class="nav-text">行锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两阶段锁"><span class="nav-number">6.1.</span> <span class="nav-text">两阶段锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁和死锁检测"><span class="nav-number">6.2.</span> <span class="nav-text">死锁和死锁检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-4"><span class="nav-number">6.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-5"><span class="nav-number">6.4.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务隔离-1"><span class="nav-number">7.</span> <span class="nav-text">事务隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-5"><span class="nav-number">7.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通索引和唯一索引"><span class="nav-number">8.</span> <span class="nav-text">普通索引和唯一索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询过程"><span class="nav-number">8.1.</span> <span class="nav-text">查询过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新过程"><span class="nav-number">8.2.</span> <span class="nav-text">更新过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#change-buffer的应用场景"><span class="nav-number">8.3.</span> <span class="nav-text">change buffer的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#change-buffer和redo-log"><span class="nav-number">8.4.</span> <span class="nav-text">change buffer和redo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-6"><span class="nav-number">8.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-6"><span class="nav-number">8.6.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的选择"><span class="nav-number">9.</span> <span class="nav-text">索引的选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-7"><span class="nav-number">9.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-7"><span class="nav-number">9.2.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给字符串添加索引"><span class="nav-number">10.</span> <span class="nav-text">给字符串添加索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-8"><span class="nav-number">10.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flush-脏页"><span class="nav-number">11.</span> <span class="nav-text">flush 脏页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL突然变慢"><span class="nav-number">11.1.</span> <span class="nav-text">SQL突然变慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷脏页机制"><span class="nav-number">11.2.</span> <span class="nav-text">刷脏页机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-9"><span class="nav-number">11.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-8"><span class="nav-number">11.4.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正确删除数据"><span class="nav-number">12.</span> <span class="nav-text">正确删除数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#复用"><span class="nav-number">12.1.</span> <span class="nav-text">复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除的过程"><span class="nav-number">12.2.</span> <span class="nav-text">删除的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重建表"><span class="nav-number">12.3.</span> <span class="nav-text">重建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-10"><span class="nav-number">12.4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-9"><span class="nav-number">12.5.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Count"><span class="nav-number">13.</span> <span class="nav-text">Count(*)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-11"><span class="nav-number">13.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-10"><span class="nav-number">13.2.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Order-By的工作方式"><span class="nav-number">14.</span> <span class="nav-text">Order By的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-12"><span class="nav-number">14.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-11"><span class="nav-number">14.2.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自增主键"><span class="nav-number">15.</span> <span class="nav-text">自增主键</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存在哪里"><span class="nav-number">15.1.</span> <span class="nav-text">存在哪里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改机制"><span class="nav-number">15.2.</span> <span class="nav-text">修改机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-13"><span class="nav-number">15.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-12"><span class="nav-number">15.4.</span> <span class="nav-text">原文链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引字段做函数操作"><span class="nav-number">16.</span> <span class="nav-text">索引字段做函数操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-14"><span class="nav-number">16.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接-13"><span class="nav-number">16.2.</span> <span class="nav-text">原文链接</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐晋</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">76.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+<div class="BbeiAn-info">
+    闽ICP备 -
+    <a target="_blank" href="http://www.miitbeian.gov.cn/"   rel="nofollow">19017538号-1</a> <!--a标签中增加nofollow属性，避免爬虫出站。-->| 
+  <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=19017538号-1" style="text-decoration:none;padding-left:30px;background:url(https://s1.ax1x.com/2018/09/29/ilmwIH.png) no-repeat left center" rel="nofollow">闽公网安备 19017538号-1</a>    
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fUrgV500Iub9AvoTuhS8YmA3-gzGzoHsz',
+        appKey: 'SfEEWyVk3uh3S1oWopriWznO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>
