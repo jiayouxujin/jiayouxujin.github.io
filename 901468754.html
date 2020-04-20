@@ -132,15 +132,19 @@
 
 <meta name="description" content="Exceptrion和Errorexception和error都是继承throwable。其中exception是在程序运行过程中，可以预料的意外情况，应该被捕获，并进行相应处理。error是程序运行过程中，不大可能出现的情况，绝大多数的error都会使得程序处于不正常的情况。所以不需要对其进行处理。 NoClassDefFoundError和ClassNotFoundExceptionClass">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA进阶-异常篇">
+<meta property="og:title" content="JAVA异常篇">
 <meta property="og:url" content="http://blog.xuxiaojin.com/901468754.html">
 <meta property="og:site_name" content="徐小晋的博客">
 <meta property="og:description" content="Exceptrion和Errorexception和error都是继承throwable。其中exception是在程序运行过程中，可以预料的意外情况，应该被捕获，并进行相应处理。error是程序运行过程中，不大可能出现的情况，绝大多数的error都会使得程序处于不正常的情况。所以不需要对其进行处理。 NoClassDefFoundError和ClassNotFoundExceptionClass">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004202020_224.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004202030_712.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004202035_488.png">
 <meta property="article:published_time" content="2020-04-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-05T12:08:17.425Z">
+<meta property="article:modified_time" content="2020-04-20T12:56:40.984Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="JAVA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202004202020_224.png">
 
 
 
@@ -176,7 +180,7 @@
 
 
 
-  <title>JAVA进阶-异常篇 | 徐小晋的博客</title>
+  <title>JAVA异常篇 | 徐小晋的博客</title>
   
 
 
@@ -365,7 +369,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JAVA进阶-异常篇</h1>
+          <h1 class="post-title" itemprop="name headline">JAVA异常篇</h1>
         
 
         <div class="post-meta">
@@ -393,8 +397,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-04-05T20:08:17+08:00">
-                2020-04-05
+              <time title="更新于" itemprop="dateModified" datetime="2020-04-20T20:56:40+08:00">
+                2020-04-20
               </time>
             
 
@@ -432,7 +436,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  486
+                  1.1k
                 </span>
               
 
@@ -448,7 +452,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -483,10 +487,40 @@
 <p>这个输出的方式不好，因为<code>printStackTrace()</code>标准出错不是一个合适的输出选项，在复杂的系统中，无法判断输出到哪个地方去。【这也是我很喜欢写的一种方式，这种方式还得改】</p>
 <p>###处理不当4</p>
 <p>尽量不用try…catch包含一个很大的代码段，只要捕获必要的代码段就好</p>
+<h2 id="try…with…resourse"><a href="#try…with…resourse" class="headerlink" title="try…with…resourse"></a>try…with…resourse</h2><p>try…with..resourse可以解决异常被覆盖的问题</p>
+<blockquote>
+<p>当catch也抛出异常的话，finally捕获的是catch抛出的异常，那么就有异常被覆盖了。</p>
+</blockquote>
+<p>但是一般用来一些资源的关闭。在try关键词后实例化一些实现了AutoCloseable接口的类，JVM将自动添加上close方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> <span class="keyword">implements</span> <span class="title">AutoCloseable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Main</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> (Main main1 = <span class="keyword">new</span> Main(<span class="string">"main1"</span>); Main main2 = <span class="keyword">new</span> Main(<span class="string">"main2"</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Initial"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="一些容易犯的错"><a href="#一些容易犯的错" class="headerlink" title="一些容易犯的错"></a>一些容易犯的错</h2><h3 id="考虑异常处理的范围"><a href="#考虑异常处理的范围" class="headerlink" title="考虑异常处理的范围"></a>考虑异常处理的范围</h3><ul>
 <li>对于自定义的业务异常，以Warn级别记录基本信息后，转换为API包装体返回给API调用方</li>
 <li>对于无法处理的系统异常，以Error级别记录基本信息后，转换为异常信息，以API包装体返回给API调用方</li>
 </ul>
+<hr>
+<p>以上都是针对如何使用异常，接下来从JVM角度谈谈<strong>异常</strong></p>
+<h2 id="JVM是如何捕获异常的"><a href="#JVM是如何捕获异常的" class="headerlink" title="JVM是如何捕获异常的"></a>JVM是如何捕获异常的</h2><p>在编译成字节码的过程中，每个方法都会有一个异常表(Exception table)，每个异常表里面包括四个from to target type，from..to表示try所监控的异常范围，target表示处理异常的范围，type是异常类型。</p>
+<p>在程序运行的过程中，如果触发异常，那么会从上到下遍历该方法的异常表，如果找到对应的条目【即范围与捕获的异常一样】，JVM就转到target所对应的字节码。如果没有？那么会跳出当前方法的Java栈，从调用者的异常表中查找。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202004202020_224.png" alt=""></p>
+<p>##创建异常的实例代价比较大</p>
+<p>创建异常的实例，需要生成异常的轨迹栈，该操作会访问该线程的所有的Java栈帧。记录下信息，包括在第几行触发异常。</p>
+<h2 id="finally一定执行"><a href="#finally一定执行" class="headerlink" title="finally一定执行"></a>finally一定执行</h2><p>为什么finally一定执行？其实这句话不太准确。</p>
+<p>JVM会将finally这部分的代码优化，放到每个正常处理和异常处理路径出口，即try和catch的位置。</p>
+<p>包括每个if else的出口</p>
+<p>关于异常处理路径，会多生几个条目，类型是any,target指向最后的finally的位置。防止在catch也抛出异常，没有执行finally。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tryblock;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> catchblock;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> finallyblock;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            tryblock=<span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            catchblock=<span class="number">2</span>;</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            finallyblock=<span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202004202030_712.png" alt=""></p>
+<p>可以发现总共有三个finallyblock，所以一定会保证finally执行。</p>
+<h3 id="特例"><a href="#特例" class="headerlink" title="特例"></a>特例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">try</span>&#123;</span><br><span class="line">          System.exit(-<span class="number">1</span>);</span><br><span class="line">      &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">          System.out.print(<span class="string">"form finally"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202004202035_488.png" alt=""></p>
+<p>虽然看到finally是复制到try块中，但是执行该代码发现没有输出，这是因为<strong>System.exit</strong>会通过中断JVM的运行来停止运行程序。所以finally就无法运行。</p>
 
       
     </div>
@@ -516,7 +550,7 @@
   <!-- 本文标题 -->
   <li>
     <strong>本文标题： </strong>
-    JAVA进阶-异常篇
+    JAVA异常篇
   </li>
 
   <!-- 本文作者 -->
@@ -534,20 +568,20 @@
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年04月05日 - 20时04分
+    2020年04月20日 - 20时04分
   </li>
 
   <!-- 引用链接 -->
   <li class="post-copyright-link">
     <strong>引用链接：</strong>
-    <a href="http://blog.xuxiaojin.com/901468754.html" title="JAVA进阶-异常篇"
+    <a href="http://blog.xuxiaojin.com/901468754.html" title="JAVA异常篇"
       >http://blog.xuxiaojin.com/901468754.html</a
     >
     <span class="copy-path" title="点击复制引用链接"
       ><i
         style="cursor: pointer"
         class="fa fa-clipboard"
-        data-clipboard-text="[XuxiaoJin's Blog | JAVA进阶-异常篇](http://blog.xuxiaojin.com/901468754.html)"
+        data-clipboard-text="[XuxiaoJin's Blog | JAVA异常篇](http://blog.xuxiaojin.com/901468754.html)"
         aria-label="post.copy_success"
       ></i
     ></span>
@@ -768,7 +802,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Exceptrion和Error"><span class="nav-number">1.</span> <span class="nav-text">Exceptrion和Error</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError和ClassNotFoundException"><span class="nav-number">1.1.</span> <span class="nav-text">NoClassDefFoundError和ClassNotFoundException</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">2.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理不当1"><span class="nav-number">2.1.</span> <span class="nav-text">处理不当1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理不当2"><span class="nav-number">2.2.</span> <span class="nav-text">处理不当2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理不当3"><span class="nav-number">2.3.</span> <span class="nav-text">处理不当3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些容易犯的错"><span class="nav-number">3.</span> <span class="nav-text">一些容易犯的错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#考虑异常处理的范围"><span class="nav-number">3.1.</span> <span class="nav-text">考虑异常处理的范围</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Exceptrion和Error"><span class="nav-number">1.</span> <span class="nav-text">Exceptrion和Error</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError和ClassNotFoundException"><span class="nav-number">1.1.</span> <span class="nav-text">NoClassDefFoundError和ClassNotFoundException</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">2.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理不当1"><span class="nav-number">2.1.</span> <span class="nav-text">处理不当1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理不当2"><span class="nav-number">2.2.</span> <span class="nav-text">处理不当2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理不当3"><span class="nav-number">2.3.</span> <span class="nav-text">处理不当3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try…with…resourse"><span class="nav-number">3.</span> <span class="nav-text">try…with…resourse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些容易犯的错"><span class="nav-number">4.</span> <span class="nav-text">一些容易犯的错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#考虑异常处理的范围"><span class="nav-number">4.1.</span> <span class="nav-text">考虑异常处理的范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM是如何捕获异常的"><span class="nav-number">5.</span> <span class="nav-text">JVM是如何捕获异常的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finally一定执行"><span class="nav-number">6.</span> <span class="nav-text">finally一定执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特例"><span class="nav-number">6.1.</span> <span class="nav-text">特例</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -809,7 +843,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">76.1k</span>
+    <span title="Site words total count">76.7k</span>
   
 </div>
 
