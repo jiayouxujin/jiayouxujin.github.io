@@ -119,7 +119,7 @@
 
 
 
-  <meta name="keywords" content="编程语言," />
+  <meta name="keywords" content="SpringBoot,JAVA," />
 
 
 
@@ -130,17 +130,22 @@
 
 
 
-<meta name="description" content="###异常处理 1234567891011try:    s&#x3D;input(&#39;Please enter two numbers separated by comma:&#39;)    num1&#x3D;int(s.split(&#39;,&#39;)[0].strip())    num2&#x3D;int(s.split(&#39;,&#39;)[1].strip())except ValueError as err:    print(&#39;Value">
+<meta name="description" content="这是一篇大杂烩，包含着泛型和SpringBoot的统一异常处理。 泛型为什么使用泛型在使用collection类的时候，经常写这些代码List&lt;String&gt; list&#x3D;new ArrayList&lt;&gt;()，这里面就设计到泛型。 啥是泛型？ 泛型就像是c++中模板，可以把类型作为参数传入到类，接口，方法中。 为什么使用泛型？先来看一段代码 123456789101112im">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python异常与模块化">
-<meta property="og:url" content="http://blog.xuxiaojin.com/2483463584.html">
+<meta property="og:title" content="Java泛型与SpringBoot统一异常处理">
+<meta property="og:url" content="http://blog.xuxiaojin.com/751276839.html">
 <meta property="og:site_name" content="徐小晋的博客">
-<meta property="og:description" content="###异常处理 1234567891011try:    s&#x3D;input(&#39;Please enter two numbers separated by comma:&#39;)    num1&#x3D;int(s.split(&#39;,&#39;)[0].strip())    num2&#x3D;int(s.split(&#39;,&#39;)[1].strip())except ValueError as err:    print(&#39;Value">
-<meta property="article:published_time" content="2019-06-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-07T15:10:38.704Z">
+<meta property="og:description" content="这是一篇大杂烩，包含着泛型和SpringBoot的统一异常处理。 泛型为什么使用泛型在使用collection类的时候，经常写这些代码List&lt;String&gt; list&#x3D;new ArrayList&lt;&gt;()，这里面就设计到泛型。 啥是泛型？ 泛型就像是c++中模板，可以把类型作为参数传入到类，接口，方法中。 为什么使用泛型？先来看一段代码 123456789101112im">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004211539_791.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004211846_483.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004212036_773.png">
+<meta property="article:published_time" content="2020-04-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-21T12:47:49.269Z">
 <meta property="article:author" content="徐晋">
-<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="JAVA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202004211539_791.png">
 
 
 
@@ -170,13 +175,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.xuxiaojin.com/2483463584.html"/>
+  <link rel="canonical" href="http://blog.xuxiaojin.com/751276839.html"/>
 
 
 
 
 
-  <title>python异常与模块化 | 徐小晋的博客</title>
+  <title>Java泛型与SpringBoot统一异常处理 | 徐小晋的博客</title>
   
 
 
@@ -348,7 +353,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2483463584.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/751276839.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="徐晋">
@@ -365,7 +370,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python异常与模块化</h1>
+          <h1 class="post-title" itemprop="name headline">Java泛型与SpringBoot统一异常处理</h1>
         
 
         <div class="post-meta">
@@ -377,8 +382,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T00:00:00+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-21T00:00:00+08:00">
+                2020-04-21
               </time>
             
 
@@ -393,8 +398,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-07T23:10:38+08:00">
-                2020-03-07
+              <time title="更新于" itemprop="dateModified" datetime="2020-04-21T20:47:49+08:00">
+                2020-04-21
               </time>
             
 
@@ -409,8 +414,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2483463584.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2483463584.html" itemprop="commentCount"></span>
+                <a href="/751276839.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/751276839.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -432,7 +437,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  185
+                  1.1k
                 </span>
               
 
@@ -448,7 +453,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -469,16 +474,49 @@
       
 
       
-        <p>###异常处理</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
+        <hr>
+<p>这是一篇大杂烩，包含着泛型和SpringBoot的统一异常处理。</p>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><h3 id="为什么使用泛型"><a href="#为什么使用泛型" class="headerlink" title="为什么使用泛型"></a>为什么使用泛型</h3><p>在使用<code>collection</code>类的时候，经常写这些代码<code>List&lt;String&gt; list=new ArrayList&lt;&gt;()</code>，这里面就设计到泛型。</p>
+<p>啥是泛型？</p>
+<p>泛型就像是c++中模板，可以把类型作为参数传入到类，接口，方法中。</p>
+<p>为什么使用泛型？先来看一段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Generics</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List list=<span class="keyword">new</span> ArrayList();</span><br><span class="line">        list.add(<span class="number">100</span>);</span><br><span class="line">        Integer a=list.get(<span class="number">0</span>);</span><br><span class="line">        System.out.println(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>还有一种常见形式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://cdn.xuxiaojin.com/202004211539_791.png" alt=""></p>
+<p>这段代码无法通过编译，很奇怪是不是，我明明传入的是int，但是返回的结果是Object。虽然我可以通过强制类型转换，但是这样代码是不是多余的呢？</p>
+<p>这就是泛型的一个作用，就时告诉编译器，这个类型是什么。它可以在编译器帮你检查代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       List&lt;Integer&gt; list=<span class="keyword">new</span> ArrayList();</span><br><span class="line">       list.add(<span class="number">100</span>);</span><br><span class="line">       list.add(<span class="string">"hello world"</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+<p><img src="http://cdn.xuxiaojin.com/202004211846_483.png" alt=""></p>
+<h3 id="泛型是怎么工作的"><a href="#泛型是怎么工作的" class="headerlink" title="泛型是怎么工作的"></a>泛型是怎么工作的</h3><p>首先第一个是<code>type safety</code>，编译器保证在只能用正确的类型，任何不正确的类型插入都会在编译器时期报错。</p>
+<p>例如上面讲到的检查代码</p>
+<p>第二个就是<code>type erasure</code>类型清除，讲的是在生成字节码的过程中，则会把对应的泛型删去，跟没有泛型的代码字节码一摸一样。为的是兼容前面的Java版本。</p>
+<p>类型清除就会有一个冲突，我们一起来看<strong>泛型数组</strong>[Genrics Type Arrays]</p>
+<p>数组要求其是相同类型的集合，也就是说，在代码运行的过程中，如果插入不是同一类型的值，则会抛出异常，那么就需要在运行过程中保持类型的信息。这样就跟上面的类型清除产生了冲突。所以基于上面的冲突，泛型数组是不存在的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericArray</span> &lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> T[] notYetInstantiatedArray;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> T[] array=<span class="keyword">new</span> T[<span class="number">6</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
-<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
+<p>上面的代码就是冲突，不能实例化。</p>
+<h3 id="泛型类和泛型接口"><a href="#泛型类和泛型接口" class="headerlink" title="泛型类和泛型接口"></a>泛型类和泛型接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoClass</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T t;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.t = t;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        DemoClass&lt;String&gt; instance=<span class="keyword">new</span> DemoClass&lt;&gt;();</span><br><span class="line">        instance.set(<span class="string">"lokesh"</span>);</span><br><span class="line">        instance.set(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的类确定了类型为T，并且我们规定它的类型为String，所以我们set(1)的时候在编译的时候就会报错。</p>
+<h3 id="泛型方法和构造函数"><a href="#泛型方法和构造函数" class="headerlink" title="泛型方法和构造函数"></a>泛型方法和构造函数</h3><p>泛型方法和泛型类的区别就是，类型的范围。作用的范围就在方法体里。</p>
+<h2 id="统一异常处理"><a href="#统一异常处理" class="headerlink" title="统一异常处理"></a>统一异常处理</h2><p>先来说说<strong>异常处理</strong>，我最近一直学异常，然后看到有关spring的统一异常处理。原先一直用错，在每一层中使用try…exception，然后前端乱用。</p>
+<p>先来看一下怎么用</p>
+<h3 id="统一返回结果集"><a href="#统一返回结果集" class="headerlink" title="统一返回结果集"></a>统一返回结果集</h3><p>不要使用Map，不容易控制，需要定义一个Java实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.exceptiondemo.common;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResultBean</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> code;</span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line">    <span class="keyword">private</span> Collection&lt;T&gt; data;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ResultBean</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ResultBean <span class="title">error</span><span class="params">(<span class="keyword">int</span> code,String message)</span></span>&#123;</span><br><span class="line">        ResultBean resultBean=<span class="keyword">new</span> ResultBean();</span><br><span class="line">        resultBean.setCode(code);</span><br><span class="line">        resultBean.setMessage(message);</span><br><span class="line">        <span class="keyword">return</span> resultBean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ResultBean <span class="title">success</span><span class="params">()</span></span>&#123;</span><br><span class="line">        ResultBean resultBean=<span class="keyword">new</span> ResultBean();</span><br><span class="line">        resultBean.setCode(<span class="number">0</span>);</span><br><span class="line">        resultBean.setMessage(<span class="string">"success"</span>);</span><br><span class="line">        <span class="keyword">return</span> resultBean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;V&gt; <span class="function">ResultBean&lt;V&gt; <span class="title">success</span><span class="params">(Collection&lt;V&gt; data)</span></span>&#123;</span><br><span class="line">        ResultBean resultBean=<span class="keyword">new</span> ResultBean();</span><br><span class="line">        resultBean.setCode(<span class="number">0</span>);</span><br><span class="line">        resultBean.setMessage(<span class="string">"success"</span>);</span><br><span class="line">        resultBean.setData(data);</span><br><span class="line">        <span class="keyword">return</span> resultBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="后端统一处理异常"><a href="#后端统一处理异常" class="headerlink" title="后端统一处理异常"></a>后端统一处理异常</h3><p>业务处理既然不抛出异常，那么就必然会抛出到controller层。就必须使用AOP对Controller层对所有方法处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.exceptiondemo.common;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ControllerAdvice;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResultBean <span class="title">unknownException</span><span class="params">(Exception e)</span> </span>&#123;</span><br><span class="line">        log.error(<span class="string">"发生了未知异常"</span>, e);</span><br><span class="line">        <span class="keyword">return</span> ResultBean.error(<span class="number">1</span>, <span class="string">"系统出现错误"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="业务层"><a href="#业务层" class="headerlink" title="业务层"></a>业务层</h3><p>业务层处理的代码就比较简单</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.exceptiondemo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.exceptiondemo.common.ResultBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.CrossOrigin;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/goods"</span>)</span><br><span class="line">    <span class="keyword">public</span> ResultBean&lt;HashMap&lt;String, String&gt;&gt; getAll() &#123;</span><br><span class="line">        HashMap&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"商品"</span>, <span class="string">"王老吉"</span>);</span><br><span class="line">        List&lt;HashMap&lt;String, String&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        result.add(map);</span><br><span class="line">        <span class="keyword">return</span> ResultBean.success(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/good"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResultBean <span class="title">getGood</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"运行异常"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202004212036_773.png" alt=""></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="http://zhaojun.im/springboot-exception/" target="_blank" rel="noopener">Spring MVC/Boot 统一异常处理最佳实践</a></li>
+<li><a href="https://howtodoinjava.com/java/generics/complete-java-generics-tutorial/#why_generics" target="_blank" rel="noopener">Complete Java Generics Tutorial</a></li>
+<li><a href="https://github.com/jiayouxujin/ExceptionHandler" target="_blank" rel="noopener">一个小demo</a></li>
+</ol>
 
       
     </div>
@@ -508,38 +546,38 @@
   <!-- 本文标题 -->
   <li>
     <strong>本文标题： </strong>
-    python异常与模块化
+    Java泛型与SpringBoot统一异常处理
   </li>
 
   <!-- 本文作者 -->
   <li class="post-copyright-author">
     <strong>本文作者： </strong>
-    Xuxiaojin   |  徐小晋
+    XuxiaoJin   |  徐小晋
   </li>
 
   <!-- 创建时间 -->
   <li>
     <strong>创建于： </strong>
-    2019年06月28日 - 00时06分
+    2020年04月21日 - 00时04分
   </li>
 
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月07日 - 23时03分
+    2020年04月21日 - 20时04分
   </li>
 
   <!-- 引用链接 -->
   <li class="post-copyright-link">
     <strong>引用链接：</strong>
-    <a href="http://blog.xuxiaojin.com/2483463584.html" title="python异常与模块化"
-      >http://blog.xuxiaojin.com/2483463584.html</a
+    <a href="http://blog.xuxiaojin.com/751276839.html" title="Java泛型与SpringBoot统一异常处理"
+      >http://blog.xuxiaojin.com/751276839.html</a
     >
     <span class="copy-path" title="点击复制引用链接"
       ><i
         style="cursor: pointer"
         class="fa fa-clipboard"
-        data-clipboard-text="[Xuxiaojin's Blog | python异常与模块化](http://blog.xuxiaojin.com/2483463584.html)"
+        data-clipboard-text="[XuxiaoJin's Blog | Java泛型与SpringBoot统一异常处理](http://blog.xuxiaojin.com/751276839.html)"
         aria-label="post.copy_success"
       ></i
     ></span>
@@ -577,7 +615,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> 编程语言</a>
+            <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i> SpringBoot</a>
+          
+            <a href="/tags/JAVA/" rel="tag"><i class="fa fa-tag"></i> JAVA</a>
           
         </div>
       
@@ -590,8 +630,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2560767953.html" rel="next" title="Linux一些常见的命令行">
-                <i class="fa fa-chevron-left"></i> Linux一些常见的命令行
+              <a href="/422085835.html" rel="next" title="Mysql实战笔记">
+                <i class="fa fa-chevron-left"></i> Mysql实战笔记
               </a>
             
           </div>
@@ -599,10 +639,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2958751061.html" rel="prev" title="构建第一个SpringBoot应用程序">
-                构建第一个SpringBoot应用程序 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -760,7 +796,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义异常"><span class="nav-number">1.</span> <span class="nav-text">自定义异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#py模块化"><span class="nav-number">2.</span> <span class="nav-text">py模块化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型"><span class="nav-number">1.</span> <span class="nav-text">泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么使用泛型"><span class="nav-number">1.1.</span> <span class="nav-text">为什么使用泛型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型是怎么工作的"><span class="nav-number">1.2.</span> <span class="nav-text">泛型是怎么工作的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型类和泛型接口"><span class="nav-number">1.3.</span> <span class="nav-text">泛型类和泛型接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型方法和构造函数"><span class="nav-number">1.4.</span> <span class="nav-text">泛型方法和构造函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统一异常处理"><span class="nav-number">2.</span> <span class="nav-text">统一异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#统一返回结果集"><span class="nav-number">2.1.</span> <span class="nav-text">统一返回结果集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后端统一处理异常"><span class="nav-number">2.2.</span> <span class="nav-text">后端统一处理异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#业务层"><span class="nav-number">2.3.</span> <span class="nav-text">业务层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
