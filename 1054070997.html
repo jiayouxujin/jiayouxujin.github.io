@@ -119,7 +119,7 @@
 
 
 
-  <meta name="keywords" content="编程语言," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -130,17 +130,25 @@
 
 
 
-<meta name="description" content="###异常处理 1234567891011try:    s&#x3D;input(&#39;Please enter two numbers separated by comma:&#39;)    num1&#x3D;int(s.split(&#39;,&#39;)[0].strip())    num2&#x3D;int(s.split(&#39;,&#39;)[1].strip())except ValueError as err:    print(&#39;Value">
+<meta name="description" content="拷贝先区分一下对象拷贝和引用拷贝 引用拷贝(reference copy)指的是如果有一个对象car,mycar执行这个对象，这个时候如果使用引用拷贝，会有两个变量mycar1,mycar2,但是只有一个对象car 不同于引用拷贝，对象拷贝指的是会有两个变量和两个对象。 浅拷贝先来看一个浅拷贝的例子 123456789101112131415161718192021222324252627282">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python异常与模块化">
-<meta property="og:url" content="http://blog.xuxiaojin.com/2483463584.html">
+<meta property="og:title" content="Java拷贝与不可变类">
+<meta property="og:url" content="http://blog.xuxiaojin.com/1054070997.html">
 <meta property="og:site_name" content="徐小晋的博客">
-<meta property="og:description" content="###异常处理 1234567891011try:    s&#x3D;input(&#39;Please enter two numbers separated by comma:&#39;)    num1&#x3D;int(s.split(&#39;,&#39;)[0].strip())    num2&#x3D;int(s.split(&#39;,&#39;)[1].strip())except ValueError as err:    print(&#39;Value">
-<meta property="article:published_time" content="2019-06-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-07T15:10:38.704Z">
+<meta property="og:description" content="拷贝先区分一下对象拷贝和引用拷贝 引用拷贝(reference copy)指的是如果有一个对象car,mycar执行这个对象，这个时候如果使用引用拷贝，会有两个变量mycar1,mycar2,但是只有一个对象car 不同于引用拷贝，对象拷贝指的是会有两个变量和两个对象。 浅拷贝先来看一个浅拷贝的例子 123456789101112131415161718192021222324252627282">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272123_847.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272132_401.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272025_724.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272029_521.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272029_146.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272037_434.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202004272241_399.png">
+<meta property="article:published_time" content="2020-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-27T14:44:39.103Z">
 <meta property="article:author" content="徐晋">
-<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202004272123_847.png">
 
 
 
@@ -170,13 +178,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.xuxiaojin.com/2483463584.html"/>
+  <link rel="canonical" href="http://blog.xuxiaojin.com/1054070997.html"/>
 
 
 
 
 
-  <title>python异常与模块化 | 徐小晋的博客</title>
+  <title>Java拷贝与不可变类 | 徐小晋的博客</title>
   
 
 
@@ -348,7 +356,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2483463584.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/1054070997.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="徐晋">
@@ -365,7 +373,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python异常与模块化</h1>
+          <h1 class="post-title" itemprop="name headline">Java拷贝与不可变类</h1>
         
 
         <div class="post-meta">
@@ -377,8 +385,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T00:00:00+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T00:00:00+08:00">
+                2020-04-27
               </time>
             
 
@@ -393,8 +401,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-07T23:10:38+08:00">
-                2020-03-07
+              <time title="更新于" itemprop="dateModified" datetime="2020-04-27T22:44:39+08:00">
+                2020-04-27
               </time>
             
 
@@ -409,8 +417,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2483463584.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2483463584.html" itemprop="commentCount"></span>
+                <a href="/1054070997.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/1054070997.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -432,7 +440,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  185
+                  876
                 </span>
               
 
@@ -448,7 +456,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -469,16 +477,69 @@
       
 
       
-        <p>###异常处理</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
+        <hr>
+<h2 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h2><p>先区分一下<strong>对象拷贝</strong>和<strong>引用拷贝</strong></p>
+<p>引用拷贝(reference copy)指的是如果有一个对象car,mycar执行这个对象，这个时候如果使用引用拷贝，会有两个变量mycar1,mycar2,但是只有一个对象car</p>
+<p>不同于引用拷贝，对象拷贝指的是会有两个变量和两个对象。</p>
+<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p>先来看一个浅拷贝的例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Name name;</span><br><span class="line">    <span class="keyword">private</span> Address address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(Name name, Address address)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(Person originalPerson)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = originalPerson.name;</span><br><span class="line">        <span class="keyword">this</span>.address = originalPerson.address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printPerson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name.printName();</span><br><span class="line">        <span class="keyword">this</span>.address.printAddress();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFirstName</span><span class="params">(String firstname)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name.setFirstName(firstname);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Name name = <span class="keyword">new</span> Name(<span class="string">"xu"</span>, <span class="string">"jin"</span>);</span><br><span class="line">        Address address = <span class="keyword">new</span> Address(<span class="string">"shanghai"</span>, <span class="string">"fengxian"</span>);</span><br><span class="line">        Person person = <span class="keyword">new</span> Person(name, address);</span><br><span class="line"></span><br><span class="line">        Person person1 = <span class="keyword">new</span> Person(person);</span><br><span class="line"></span><br><span class="line">        person.printPerson();</span><br><span class="line">        person1.printPerson();</span><br><span class="line"></span><br><span class="line">        person.setFirstName(<span class="string">"xuxiao"</span>);</span><br><span class="line"></span><br><span class="line">        person.printPerson();</span><br><span class="line">        person1.printPerson();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>还有一种常见形式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://cdn.xuxiaojin.com/202004272123_847.png" alt=""></p>
+<p>从以上例子我们可以看到，两个person其实是共享了name和address，所以当某个对象修改了name的firstname，另外一个对象也会发生变化。</p>
+<blockquote>
+<p>自己在照着写demo的时候开始时没有写正确的。</p>
+<p>我写的是setName</p>
+<p>细想一下，如果我是setName的话，相当于把这个person的Name指向了一个新对象。</p>
+</blockquote>
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(Person originalPerson)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">new</span> Name(originalPerson.name.getFirstName(), originalPerson.name.getLastName());</span><br><span class="line">        <span class="keyword">this</span>.address = originalPerson.address;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+<p><img src="http://cdn.xuxiaojin.com/202004272132_401.png" alt=""></p>
+<p>深度拷贝符合我们的预期。</p>
+<p>所以我们写代码的时候要小心拷贝引起的代码侵入问题。</p>
+<h2 id="Volatile"><a href="#Volatile" class="headerlink" title="Volatile"></a>Volatile</h2><p>现在的计算机一般是多核的，所以每个核都有自己的缓存，数据会被存储到缓存里，以减少读取所花费的时间。</p>
+<p>但是就会引发一个并发线程的问题，多个线程运行在不同核看到的数据可能是不同的。</p>
+<p>volatile就是解决这个。</p>
+<h2 id="final"><a href="#final" class="headerlink" title="final"></a>final</h2><blockquote>
+<p>final修饰的类不能被继承，修饰的变量不能被修改，修改的方法不能被重写。</p>
+</blockquote>
+<p>###变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> variable;</span><br><span class="line">variable = <span class="number">1</span>;</span><br><span class="line">variable = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
-<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
+<p><img src="http://cdn.xuxiaojin.com/202004272025_724.png" alt=""></p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">finaldemo</span> <span class="keyword">extends</span> <span class="title">methoddemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">finaldemo</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printdemo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"from son"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202004272029_521.png" alt=""></p>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p><img src="http://cdn.xuxiaojin.com/202004272029_146.png" alt=""></p>
+<p>通过以上实验，我们知道了上面那句话描述的是什么了。</p>
+<h2 id="final和immutable"><a href="#final和immutable" class="headerlink" title="final和immutable"></a>final和immutable</h2><p>原则:fianl并不等于immutable</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;String&gt; strList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        strList.add(<span class="string">"Hello"</span>);</span><br><span class="line">        strList.add(<span class="string">"world"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码只能保证strList这个引用不能被赋值，但是该对象不被final影响，所以可以添加元素</p>
+<p><img src="http://cdn.xuxiaojin.com/202004272037_434.png" alt=""></p>
+<p>如果有应用需要，可以使用List.of创建。</p>
+<h2 id="immutable类"><a href="#immutable类" class="headerlink" title="immutable类"></a>immutable类</h2><p>如何用Java写出不可变类呢？</p>
+<blockquote>
+<ol>
+<li>变量都应该为private</li>
+<li>对于可变的变量还要加上final修饰</li>
+<li>所有变量都不要有setter</li>
+<li>在构造函数里要使用深拷贝</li>
+<li>在getter里不直接返回对象，而是要使用copy-on-write原则，复制一个对象出去</li>
+</ol>
+</blockquote>
+<p>对于第五点还不是很清楚，我们来实验一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Name name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(Name name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">new</span> Name(name.getFirstName(), name.getLastName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Name <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printPerson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(name.getFirstName() + <span class="string">"_"</span> + name.getLastName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person person = <span class="keyword">new</span> Person(<span class="keyword">new</span> Name(<span class="string">"xu"</span>, <span class="string">"jin"</span>));</span><br><span class="line">        person.printPerson();</span><br><span class="line">        Name name = person.getName();</span><br><span class="line">        name.setFirstName(<span class="string">"xuxiao"</span>);</span><br><span class="line">        person.printPerson();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202004272241_399.png" alt=""></p>
+<p>看到吗？这个结果不是我们想要的，我们想要的不可变的类，是要求它的状态都不可变。</p>
+<p>所以需要对该getter进行修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Name <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Name(name.getFirstName(), name.getLastName());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://dzone.com/articles/spring-auto-wiring-beans-with-autowired-annotation" target="_blank" rel="noopener">Shallow vs. Deep Copy in Java</a></li>
+<li><a href="http://vmlens.com/articles/cp/why_volatile/" target="_blank" rel="noopener">Why do we need the volatile keyword?</a></li>
+<li><a href="https://dzone.com/articles/how-to-create-an-immutable-class-in-java" target="_blank" rel="noopener">How to Create an Immutable Class in Java</a></li>
+</ol>
 
       
     </div>
@@ -508,38 +569,38 @@
   <!-- 本文标题 -->
   <li>
     <strong>本文标题： </strong>
-    python异常与模块化
+    Java拷贝与不可变类
   </li>
 
   <!-- 本文作者 -->
   <li class="post-copyright-author">
     <strong>本文作者： </strong>
-    Xuxiaojin   |  徐小晋
+    XuxiaoJin   |  徐小晋
   </li>
 
   <!-- 创建时间 -->
   <li>
     <strong>创建于： </strong>
-    2019年06月28日 - 00时06分
+    2020年04月27日 - 00时04分
   </li>
 
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月07日 - 23时03分
+    2020年04月27日 - 22时04分
   </li>
 
   <!-- 引用链接 -->
   <li class="post-copyright-link">
     <strong>引用链接：</strong>
-    <a href="http://blog.xuxiaojin.com/2483463584.html" title="python异常与模块化"
-      >http://blog.xuxiaojin.com/2483463584.html</a
+    <a href="http://blog.xuxiaojin.com/1054070997.html" title="Java拷贝与不可变类"
+      >http://blog.xuxiaojin.com/1054070997.html</a
     >
     <span class="copy-path" title="点击复制引用链接"
       ><i
         style="cursor: pointer"
         class="fa fa-clipboard"
-        data-clipboard-text="[Xuxiaojin's Blog | python异常与模块化](http://blog.xuxiaojin.com/2483463584.html)"
+        data-clipboard-text="[XuxiaoJin's Blog | Java拷贝与不可变类](http://blog.xuxiaojin.com/1054070997.html)"
         aria-label="post.copy_success"
       ></i
     ></span>
@@ -577,7 +638,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> 编程语言</a>
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
         </div>
       
@@ -590,8 +651,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2560767953.html" rel="next" title="Linux一些常见的命令行">
-                <i class="fa fa-chevron-left"></i> Linux一些常见的命令行
+              <a href="/751276839.html" rel="next" title="Java泛型与SpringBoot统一异常处理">
+                <i class="fa fa-chevron-left"></i> Java泛型与SpringBoot统一异常处理
               </a>
             
           </div>
@@ -599,10 +660,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2958751061.html" rel="prev" title="构建第一个SpringBoot应用程序">
-                构建第一个SpringBoot应用程序 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -760,7 +817,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义异常"><span class="nav-number">1.</span> <span class="nav-text">自定义异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#py模块化"><span class="nav-number">2.</span> <span class="nav-text">py模块化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝"><span class="nav-number">1.</span> <span class="nav-text">拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浅拷贝"><span class="nav-number">1.1.</span> <span class="nav-text">浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深拷贝"><span class="nav-number">1.2.</span> <span class="nav-text">深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volatile"><span class="nav-number">2.</span> <span class="nav-text">Volatile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final"><span class="nav-number">3.</span> <span class="nav-text">final</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">3.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类"><span class="nav-number">3.2.</span> <span class="nav-text">类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final和immutable"><span class="nav-number">4.</span> <span class="nav-text">final和immutable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#immutable类"><span class="nav-number">5.</span> <span class="nav-text">immutable类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
