@@ -1,6 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>docker简明教程</title>
+    <url>/3712198204.html</url>
+    <content><![CDATA[<hr>
+<h2 id="在Linux安装docker"><a href="#在Linux安装docker" class="headerlink" title="在Linux安装docker"></a>在Linux安装docker</h2><h3 id="Centos"><a href="#Centos" class="headerlink" title="Centos"></a>Centos</h3><p><img src="http://cdn.xuxiaojin.com/202005011427_260.png" alt=""></p>
+<h3 id="win10"><a href="#win10" class="headerlink" title="win10"></a>win10</h3><p>这里放上自己安装配置过程中一些比较重要的点</p>
+<h4 id="开启Hyper-V"><a href="#开启Hyper-V" class="headerlink" title="开启Hyper-V"></a>开启Hyper-V</h4><p>以管理员身份执行下面.cmd</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">pushd</span> "%~dp0"</span><br><span class="line"></span><br><span class="line"><span class="built_in">dir</span> /b <span class="variable">%SystemRoot%</span>\servicing\Packages\*Hyper-V*.mum &gt;hyper-v.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">findstr</span> /i . hyper-v.txt <span class="number">2</span>^&gt;<span class="built_in">nul</span>') <span class="keyword">do</span> dism /online /norestart /add-package:"<span class="variable">%SystemRoot%</span>\servicing\Packages\<span class="variable">%%i</span>"</span><br><span class="line"></span><br><span class="line"><span class="built_in">del</span> hyper-v.txt</span><br><span class="line"></span><br><span class="line">Dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /LimitAccess /ALL</span><br></pre></td></tr></table></figure>
+
+<p>####伪装成win10专业版</p>
+<p>通过管理员身份打开cmd.【这个操作好骚】</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">REG ADD "HKEY_LOCAL_MACHINE\software\Microsoft\Windows NT\CurrentVersion" /v EditionId /T REG_EXPAND_SZ /d Professional /F</span><br></pre></td></tr></table></figure>
+
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.cnblogs.com/samwu/p/10360943.html" target="_blank" rel="noopener">Win10 家庭版安装Docker for Windows</a></p>
+<h2 id="虚拟化与容器"><a href="#虚拟化与容器" class="headerlink" title="虚拟化与容器"></a>虚拟化与容器</h2><p>虚拟这个词其实比较常见的，例如虚拟机啥的。所以我们应该并不陌生。</p>
+<blockquote>
+<p>虚拟化是一种将计算机物理资源进行抽象，转为虚拟的资源供程序使用</p>
+</blockquote>
+<p>简单说就是，将底层抽象。这个带来的好处就是：不用去操心底层的具体情况，程序不需要是适配不同的底层。</p>
+<p>早在IBM公司为了解决底层的接口不同，提出了<strong>虚拟化</strong>的技术，从而实现程序跨平台这一功能。</p>
+<p>虚拟化在<code>资源管理方面</code>能够提高资源的利用率，但是不会减少资源的占用率。利用率和占用率是不同的两个概念，所以要辨别好。</p>
+<p>那么虚拟化是如何提高资源的利用率呢？</p>
+<p>虽然我们能够在一个操作系统里面运行多个程序，但是前提是程序的本身不存在冲突，例如不能使用同一个端口等。虚拟化技术就是把程序隔离在不同环境里，既然环境不同，那么所运行的程序自然也就不会产生冲突。</p>
+<p>接着来看虚拟机，虚拟机虽然屏蔽了底层。例如Java的JVM虽然能够使代码编写一次，到处运行【在开发过程中，无需关注不同系统提供的API】。但是虚拟机有个缺点就是所有指令都需要经过<code>虚拟机监视器</code>的处理才转为机器所能够识别的机器码。</p>
+<p>容器技术是一种全新的虚拟化技术。</p>
+<blockquote>
+<p>容器化是这操作系统自身提供的一些接口，能够让应用程序间能够互不干扰的运行</p>
+</blockquote>
+<p>容器相对于虚拟机来说就是，<code>容器根本不对指令进行转换</code>，所以在性能上，容器要远远好过虚拟机。</p>
+<p><img src="http://cdn.xuxiaojin.com/202004302305_269.png" alt=""></p>
+<h2 id="Docker技术实现"><a href="#Docker技术实现" class="headerlink" title="Docker技术实现"></a>Docker技术实现</h2><blockquote>
+<p>Docker技术的实现有三大技术，包括命名空间(Namespaces)、控制组(Control Groups)、联合文件系统(Union File System)</p>
+</blockquote>
+<p><img src="http://cdn.xuxiaojin.com/202005010717_323.png" alt=""></p>
+<h3 id="命名空间Namespaces"><a href="#命名空间Namespaces" class="headerlink" title="命名空间Namespaces"></a>命名空间Namespaces</h3><p>命名空间我第一个想到的是C++中的<code>using namespaces</code>，在编程语言中Namespaces主要是为了划分不同模块，区别不同模块中相同的命名。</p>
+<p>在操作系统也有相同的实现，能够将计算机资源进行切割和划分，形成各自独立的空间。例如<code>PID Namespaces</code>表示可以造就一个独立的进程运行空间，在该空间里，进程号又可以从1开始，不会感知到外界系统的其他进程或者其他命名空间中运行的程序。</p>
+<p>Docker利用PID Namespaces实现了容器中隔离程序中运行的进程隔离。</p>
+<h3 id="控制组Control-Groups"><a href="#控制组Control-Groups" class="headerlink" title="控制组Control Groups"></a>控制组Control Groups</h3><blockquote>
+<p>CGroups用于控制计算机资源，与Namespaces不同的时，控制的是硬件资源。同时还有分配资源的作用</p>
+</blockquote>
+<p>分配资源是很重要的，可以指定某个隔离环境对任意资源的占用值和利用率。在实际生产环境中很重要，因为在实际生产环境中会有业务系统和监控系统，不希望监控系统占用的资源过多。</p>
+<h3 id="联合文件系统Union-File-System"><a href="#联合文件系统Union-File-System" class="headerlink" title="联合文件系统Union File System"></a>联合文件系统Union File System</h3><blockquote>
+<p>联合文件系统是指能够同时挂载不同实际文件或文件夹到同一个目录下，从而实现联合文件的结构</p>
+</blockquote>
+<p>联合文件系统不属于虚拟化技术，但是Docker却将其引入，从而实现Docker的快启快停的目的，并且不会占用太多的文件系统。</p>
+<p>在Git中，我们虽然每个版本都commit，但是文件占用却没有增加，就是因为使用了联合文件系统。</p>
+<h2 id="docker理念"><a href="#docker理念" class="headerlink" title="docker理念"></a>docker理念</h2><p>Docker推崇的是一种轻量级容器结构，例如要搭建一套LAMP结构。在docker中的最佳实践就是分别基于Apach、Mysql、Php三个镜像建立容器。然后分别运行。</p>
+<p>所以自己一开始中的mysql啥的都是一个镜像一个容器做法符合Docker理念</p>
+<h2 id="四大组成对象"><a href="#四大组成对象" class="headerlink" title="四大组成对象"></a>四大组成对象</h2><h3 id="image镜像"><a href="#image镜像" class="headerlink" title="image镜像"></a>image镜像</h3><blockquote>
+<p>镜像指的是虚拟环境中运行的原始的文件系统</p>
+</blockquote>
+<p>docker基于联合文件系统，创建了一种<code>增量式的镜像结构</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202005011019_227.png" alt=""></p>
+<p>每次对镜像的修改都会将以上修改成一个新的镜像层。所以这种结构，镜像实质上是无法修改的，每次修改都会产生新的镜像。</p>
+<h3 id="Container容器"><a href="#Container容器" class="headerlink" title="Container容器"></a>Container容器</h3><blockquote>
+<p>在docker中，容器就是用来隔离虚拟环境的基础设施。</p>
+<p>如果把镜像理解为类，那么容器就是实例</p>
+</blockquote>
+<h3 id="Network网络"><a href="#Network网络" class="headerlink" title="Network网络"></a>Network网络</h3><p>网络在分布式系统中非常常见，用来在程序间作为信息或数据的交换。但是现在我对docker提供强大的网络还不是很了解</p>
+<p><img src="http://cdn.xuxiaojin.com/202005011418_625.png" alt=""></p>
+<h3 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h3><blockquote>
+<p>在Docker中，将数据共享或持久化的文件和目录称为数据卷</p>
+</blockquote>
+<h2 id="docker镜像"><a href="#docker镜像" class="headerlink" title="docker镜像"></a>docker镜像</h2><h3 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h3><p>通过执行<code>docker images</code>可以查看当前存放和管理的镜像</p>
+<p><img src="http://cdn.xuxiaojin.com/202005011510_910.png" alt=""></p>
+<p>可以查看镜像ID，构建时间，占用空间</p>
+<h3 id="镜像命名"><a href="#镜像命名" class="headerlink" title="镜像命名"></a>镜像命名</h3><p><img src="http://cdn.xuxiaojin.com/202005011512_621.png" alt=""></p>
+<p>镜像命名</p>
+<ul>
+<li>username:主要用于识别上传镜像的不同用户</li>
+<li>repository:用于识别进行的内容</li>
+<li>tag:表示镜像的版本，用来区分进行内容的不同细节</li>
+</ul>
+<p>另外docker镜像缺省的时候会用<code>latest</code>标签，所以在我们不需要软件的迭代周期，就可以下载软件的最新版。</p>
+<h2 id="镜像仓库"><a href="#镜像仓库" class="headerlink" title="镜像仓库"></a>镜像仓库</h2><p>类似于git一样，镜像仓库就是用来托管镜像。借助镜像仓库，我们得到一个镜像的中转站，可以把开发环境所使用的镜像推送到镜像仓库，然后在测试或者生产环境上拉取它们。</p>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><p><code>docker pull</code>拉取镜像，会先下载该镜像所需的所有镜像层，然后组装。如果本地有的话，就会跳过该镜像的下载。</p>
+<p><img src="http://cdn.xuxiaojin.com/202005011613_238.png" alt=""></p>
+<h3 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h3><p>可以通过<code>docker hub</code>来搜索镜像。也可以通过执行<code>docker search images</code></p>
+<h3 id="管理镜像"><a href="#管理镜像" class="headerlink" title="管理镜像"></a>管理镜像</h3><p>通过<code>docker inspect</code>查看对应镜像的信息</p>
+<h3 id="参数识别"><a href="#参数识别" class="headerlink" title="参数识别"></a>参数识别</h3><p>只要我们传入的参数能够表示对应的镜像就可以，不需要传入多余的参数</p>
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>删除镜像的命令是<code>docker rmi</code></p>
+<h2 id="容器生命周期"><a href="#容器生命周期" class="headerlink" title="容器生命周期"></a>容器生命周期</h2><p><img src="http://cdn.xuxiaojin.com/202005011607_887.png" alt=""></p>
+<ul>
+<li><code>created</code>表示容器已经被创建，容器所需的相关资源已经准备好了，但是容器中的程序还没有运行</li>
+<li><code>running</code>表示容器正在运行，即容器中的程序正在运行</li>
+<li><code>paused</code>表示容器已暂停，容器中所有程序都处于暂停状态</li>
+<li><code>stopped</code>表示容器已经停止，所占用的资源和沙盘依然存在</li>
+<li><code>deleted</code>表示容器已经被删除</li>
+</ul>
+<h3 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h3><p>选择好镜像后可以通过执行<code>docker create</code>来创建容器，但是如果每次都是通过容器ID来操作容器显得很繁琐，所以可以通过容器名来操作容器。</p>
+<p>在创建容器的时候，可以通过<code>--name</code>来配置容器名</p>
+<blockquote>
+<p>非常推荐使用–name来配置容器名，这样方便后续操作</p>
+</blockquote>
+<p><img src="http://cdn.xuxiaojin.com/202005011619_540.png" alt=""></p>
+<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p>通过<code>docker create</code>启动的容器处于created状态，内部应用程序还没有执行，所以可以通过<code>docker start</code>命令来启动它。</p>
+<p><img src="http://cdn.xuxiaojin.com/202005011628_6.png" alt=""></p>
+<p>当然我们可以通过<code>docker run</code>将上述的create和start两个操作合并成同一步</p>
+<p>并且要注意的是，通常我们启动一个容器喜欢将其放到后台运行，而不是衔接到当前的控制台上，所以需要加一个参数<code>-d</code>，这个会告诉docker程序启动后在后台运行与控制台分离</p>
+<p><code>docker run --name nginx -d ningx</code></p>
+<h3 id="管理容器"><a href="#管理容器" class="headerlink" title="管理容器"></a>管理容器</h3><p>我们可以通过<code>docker ps</code>查看当前正在运行的容器的信息。如果要查看更加详细的信息加上<code>-a</code>选项</p>
+<h3 id="停止和删除容器"><a href="#停止和删除容器" class="headerlink" title="停止和删除容器"></a>停止和删除容器</h3><p>将正在运行的程序停止，通过执行<code>docker stop</code>即可。但是该操作，内部所做的修改仍然存在可以通过执行<code>docker start</code>继续执行</p>
+<p>如果需要完全删除容器，可以通过<code>docker rm</code>命令将容器删除</p>
+<p><del>如果是在运行中的容器默认是不可删除的，可以添加<code>-f</code>选项</del></p>
+<blockquote>
+<p>一个比较好的实践是如果容器短期内不会使用，就要将其删掉</p>
+</blockquote>
+<h3 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h3><p>通过<code>docker exec</code>进入容器，相当于我们可以通过docker exec帮助我们在容器里面执行命令</p>
+<p>比较好的操作是通过docker exec命令来启动sh或者bash</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker exec -it nginx bash</span><br></pre></td></tr></table></figure>
+
+<p><code>-i</code>表示保持输入流，使用它才能保证控制台程序能够正确识别我们的命令</p>
+<p><code>-t</code>表示启动一个为终端，形成与bash的交互，如果没有的话，没法看到bash内部的执行结果</p>
+<p>【一直都跑这个代码，但是不知道什么意思】</p>
+<h3 id="衔接到容器"><a href="#衔接到容器" class="headerlink" title="衔接到容器"></a>衔接到容器</h3><p>通过执行<code>docker attach</code>将当前的输入输出流连接到指定的容器</p>
+<h2 id="容器网络"><a href="#容器网络" class="headerlink" title="容器网络"></a>容器网络</h2><h3 id="沙盒Sandbox"><a href="#沙盒Sandbox" class="headerlink" title="沙盒Sandbox"></a>沙盒Sandbox</h3><p>提供给容器虚拟的网路栈，隔离了容器网络与宿主主机网络，形成了完全独立的容器网络环境</p>
+<h3 id="网路Network"><a href="#网路Network" class="headerlink" title="网路Network"></a>网路Network</h3><p>Docker内部的虚拟子网，网络内的参与者相互可见并能够通讯</p>
+<h3 id="端点Endpoint"><a href="#端点Endpoint" class="headerlink" title="端点Endpoint"></a>端点Endpoint</h3><p>位于容器与网络隔离墙上的洞，其主要目的是形成一个可以控制的突破封闭的网路环境出入口</p>
+<h3 id="容器互联"><a href="#容器互联" class="headerlink" title="容器互联"></a>容器互联</h3><p>在<code>docker create</code>或者<code>docker run</code>的时候创建<code>--link</code>选项进行配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql</span><br><span class="line">docker run -d --name webapp --link mysql webapp</span><br></pre></td></tr></table></figure>
+
+<p>在webapp中只需要通过mysql这个名字就可以访问到</p>
+<p><code>jdbc:mysql://mysql:3306/webapp</code>,不需要知道具体的Ip</p>
+<h3 id="暴露端口"><a href="#暴露端口" class="headerlink" title="暴露端口"></a>暴露端口</h3><p>容器虽然运行了，但是并不代表可以随便访问。我们只能访问暴露出来的接口。</p>
+<p>可以通过<code>--expose</code>选项暴露接口</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes --expose 13306 --expose 23306 mysql:5.7</span><br></pre></td></tr></table></figure>
+
+<h3 id="端口映射"><a href="#端口映射" class="headerlink" title="端口映射"></a>端口映射</h3><p>如果从容器外要访问容器提供的服务。我们可以把容器的端口映射到宿主操作系统的端口上，从外部访问宿主操作系统的端口，数据请求就会自动发送给与之关联的容器端口。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name nginx -p 80:80 -p 443:443 nginx</span><br></pre></td></tr></table></figure>
+
+<p><code>-p &lt;ip&gt;:&lt;host-port&gt;:&lt;container-port&gt;</code>其中ip是宿主机器监听的ip，默认是0.0.0.0，host-port与container-port分别是宿主操作系统端口与容器的端口。这两者可以不一样。</p>
+<p>通过docker ps，可以通过-&gt;标记了端口的映射关系</p>
+<p><img src="http://cdn.xuxiaojin.com/202005011859_727.png" alt=""></p>
+<h2 id="挂载方式"><a href="#挂载方式" class="headerlink" title="挂载方式"></a>挂载方式</h2><p>Docker提供三种试用不同场景的文件系统挂载方式</p>
+<p><img src="http://cdn.xuxiaojin.com/202005011938_995.png" alt=""></p>
+<ul>
+<li><code>Bind Mount</code>能够直接将宿主操作系统中目录和文件挂载容器内的文件系统中。通过指定容器外的路径和容器内的路径，就可以形成挂载的关系。在容器内外对文件的读写都是互相可见的。</li>
+<li><code>Volume</code>从宿主操作系统中挂载目录到容器内，只需要指定容器内的目录，不需要关系具体挂在到了宿主操作系统中的哪里</li>
+<li><code>Tmpfs Mount</code>支持挂载系统内存中一部分到容器的文件系统里去</li>
+</ul>
+<h3 id="挂载文件到容器"><a href="#挂载文件到容器" class="headerlink" title="挂载文件到容器"></a>挂载文件到容器</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name nginx -v /webapp/html:/usr/share/nginx/html nginx</span><br></pre></td></tr></table></figure>
+
+<p><code>-v &lt;host-path&gt;:&lt;container-path&gt;</code>hostpath，containerpath分别表示宿主操作系统中的目录和容器中的目录。</p>
+<p>定义目录的时候必须使用绝对路径</p>
+<p>通过执行<code>docker inspect</code>中的<code>Mounts</code>可以看到数据挂载相关的部分。</p>
+<h3 id="使用数据卷"><a href="#使用数据卷" class="headerlink" title="使用数据卷"></a>使用数据卷</h3><p>数据卷的本质是宿主操作系统上的一个目录，这个目录存放在Docker内部，接受Docker管理</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name webapp -v /webapp/storage webapp</span><br></pre></td></tr></table></figure>
+
+<p><code>-v &lt;name&gt;:&lt;container-path&gt;</code></p>
+<p>两个容器可以通过挂载相同的数据卷来共享数据</p>
+<p>可以通过<code>docker volume ls</code>查看已经创建的数据卷</p>
+<h3 id="删除数据卷"><a href="#删除数据卷" class="headerlink" title="删除数据卷"></a>删除数据卷</h3><p>可以通过执行<code>docker volume rm volumename</code>删除掉没有被引用的数据卷。</p>
+<p>如果在创建数据卷的时候，没有命名，那么很难被删除掉。可以通过下面三种方法</p>
+<ol>
+<li>docker rm -v containername 通过删除容器一起把关联的数据卷删除掉</li>
+<li>docker volume rm 查看，找到没有关联的数据卷</li>
+<li>docker volume prune可以删除掉没有被容器引用的数据卷</li>
+</ol>
+<p><img src="http://cdn.xuxiaojin.com/202005012013_132.png" alt=""></p>
+<h3 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h3><p>数据卷容器指的就是没有一个具体的应用，甚至不需要运行。主要是为了定义一个或者多个数据卷并持有它们的引用</p>
+<p><img src="http://cdn.xuxiaojin.com/202005012017_363.png" alt=""></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name appdata -v /webapp/storage ubuntu</span><br><span class="line">docker run -d --name webapp --volumes-from appdata webapp</span><br></pre></td></tr></table></figure>
+
+<p><code>--volumes-from</code>打通了容器间文件系统的管理</p>
+<h3 id="数据卷备份与恢复"><a href="#数据卷备份与恢复" class="headerlink" title="数据卷备份与恢复"></a>数据卷备份与恢复</h3><p>要备份数据卷，需要先通过一个临时容器，将要备份的目录和数据卷都挂载在这个容器上</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --rm --volumes-from appdata -v /backup:/backup ubunt tar cvf /backup/backup.tar /webapp/storage</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202005012058_8.png" alt=""></p>
+<p>恢复数据卷</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --rm --volumes-from appdata -v /backup:/backup ubuntu tar xvf /backup/backup.tar -C /webapp/storge --strip</span><br></pre></td></tr></table></figure>
+
+<h2 id="保存和共享镜像"><a href="#保存和共享镜像" class="headerlink" title="保存和共享镜像"></a>保存和共享镜像</h2><h3 id="提交容器更改"><a href="#提交容器更改" class="headerlink" title="提交容器更改"></a>提交容器更改</h3><p>将容器中修改的内容保存成镜像的命令是<code>docker commit</code>，提交之后可以在本地镜像里中找到<code>docker images</code>。可以在提交容器更改的时候给一个提交信息。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker commit -m "Configuration" webapp</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202005012109_912.png" alt=""></p>
+<h3 id="给镜像命名"><a href="#给镜像命名" class="headerlink" title="给镜像命名"></a>给镜像命名</h3><p>提交更新后的镜像没有<code>tag</code>和<code>repository</code></p>
+<p>通过<code>docker tag</code>给镜像取名字</p>
+<p><img src="http://cdn.xuxiaojin.com/202005012112_774.png" alt=""></p>
+<p>也可以通过<code>docker tag</code>对已经存在的镜像命名，但是两者引用这相同的镜像层。对应的image id一样。</p>
+<p><img src="http://cdn.xuxiaojin.com/202005012114_572.png" alt=""></p>
+<blockquote>
+<p>也可以通过使用docker commit -m”…” container repository:tag</p>
+</blockquote>
+<h3 id="镜像迁移"><a href="#镜像迁移" class="headerlink" title="镜像迁移"></a>镜像迁移</h3><p>通过执行<code>docker save</code>将镜像导出去</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker save -o ./webapp.tar webapp:1.0</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202005012119_665.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202005012120_98.png" alt=""></p>
+<h3 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h3><p>与<code>docker save</code>相对的是<code>docker load</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker load -i ./test.tar</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202005012125_623.png" alt=""></p>
+<blockquote>
+<p>通过docker save和docker load同时能够导出和恢复多个镜像</p>
+</blockquote>
+<h3 id="导出和导入容器"><a href="#导出和导入容器" class="headerlink" title="导出和导入容器"></a>导出和导入容器</h3><p>可以直接通过<code>docker export</code>和<code>docker import</code></p>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><blockquote>
+<p>dockerfile包含了构建镜像过程中需要执行的命令和其他操作</p>
+</blockquote>
+<p>dockerfile内容比较简单一种是注释行，一种是指令行</p>
+<h3 id="dockerfile的结构"><a href="#dockerfile的结构" class="headerlink" title="dockerfile的结构"></a>dockerfile的结构</h3><ul>
+<li>基础指令：用于定义镜像的基础和性质</li>
+<li>控制指令：描述镜像在构建过程中需要执行的命令</li>
+<li>引入指令：用于将外部文件直接引入构建镜像的内部</li>
+<li>执行指令：指定在启动的时候需要执行的脚本或者命令</li>
+<li>配置指令：对网络、用户等内容进行配置</li>
+</ul>
+<h3 id="常见的dockerfile指令"><a href="#常见的dockerfile指令" class="headerlink" title="常见的dockerfile指令"></a>常见的dockerfile指令</h3><h4 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h4><p>可以通过from指令指定一个基础镜像，接下来的指令都是基于这个基本镜像所展开</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> &lt;image&gt; [AS &lt;name&gt;]</span><br><span class="line"><span class="keyword">FROM</span> &lt;image&gt;[:&lt;tag&gt;] [AS &lt;name&gt;]</span><br><span class="line"><span class="keyword">FROM</span> &lt;image&gt;[@&lt;digest&gt;][AS &lt;name&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>####RUN</p>
+<p>RUN用于向控制台发送命令的指令，在RUN指令之后，我们可以拼接上需要的命令，在构建Docker就会执行这些命令，把对系统文件的修改记录下俩，形成镜像的变化</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> &lt;<span class="built_in">command</span>&gt;</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> [<span class="string">"executable"</span>,<span class="string">"param1"</span>,<span class="string">"param2"</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="ENTRYPOINT和CMD"><a href="#ENTRYPOINT和CMD" class="headerlink" title="ENTRYPOINT和CMD"></a>ENTRYPOINT和CMD</h4><p>通过ENTRYPOINT和CMD实现在容器启动的时候，根据镜像所定义的命令启动容器中进程号为1的进程</p>
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java拷贝与不可变类</title>
     <url>/1054070997.html</url>
     <content><![CDATA[<hr>
@@ -418,51 +638,6 @@
       </tags>
   </entry>
   <entry>
-    <title>编译原理</title>
-    <url>/294358179.html</url>
-    <content><![CDATA[<hr>
-<h2 id="正则文法和有限自动机"><a href="#正则文法和有限自动机" class="headerlink" title="正则文法和有限自动机"></a>正则文法和有限自动机</h2><p><code>词法分析</code>的工作就是将一个长长的字符串识别出一个个单词，这个单词就是token。</p>
-<p>先来解析一下简单的语法<strong>age&gt;=45</strong>,其中应用到的有限自动机如下所示(<a href="https://time.geekbang.org/column/article/118378" target="_blank" rel="noopener">图片来源</a>)</p>
-<p><img src="http://cdn.xuxiaojin.com/202003162016_141.png" alt=""></p>
-<ul>
-<li>标识符：以字母开头，后面的字符可以使字母或数字</li>
-<li>比较符：&gt; GT和&gt;= GE</li>
-<li>数字：全部由数字构成</li>
-</ul>
-<p>然后我参照部分代码写出的很<del>垃圾</del>的代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BianYi</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String TEXT = <span class="string">"age &gt;= 45"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Token token = <span class="keyword">new</span> Token();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> StringBuilder tokenTxet = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        TEXT = TEXT.trim();</span><br><span class="line">        DfaState state = initToken(TEXT.charAt(<span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; TEXT.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> ch = TEXT.charAt(i);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">                <span class="keyword">case</span> Initial:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> Identifier:</span><br><span class="line">                    <span class="keyword">if</span> (Character.isDigit(ch) || Character.isLetter(ch)) &#123;</span><br><span class="line">                        tokenTxet.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GT:</span><br><span class="line">                    <span class="keyword">if</span> (ch == <span class="string">'='</span>) &#123;</span><br><span class="line">                        state = GE;</span><br><span class="line">                        tokenTxet.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GE:</span><br><span class="line">                    state=initToken(ch);</span><br><span class="line">                <span class="keyword">case</span> IntLiteral:</span><br><span class="line">                    <span class="keyword">if</span>(Character.isDigit(ch))&#123;</span><br><span class="line">                        tokenTxet.append(ch);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        state=initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    state=initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(tokenTxet.length()&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">            initToken(<span class="string">' '</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DfaState <span class="title">initToken</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tokenTxet.length()&gt;<span class="number">0</span>&amp;&amp;token.type!=Initial)&#123;</span><br><span class="line">            System.out.println(token.type+<span class="string">"\t"</span>+tokenTxet.toString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        tokenTxet = <span class="keyword">new</span> StringBuilder(<span class="string">""</span>);</span><br><span class="line">        DfaState dfaState = DfaState.Initial;</span><br><span class="line">        <span class="keyword">if</span> (Character.isLetter(ch)) &#123;</span><br><span class="line">            dfaState = DfaState.Identifier;</span><br><span class="line">            token.type = DfaState.Identifier;</span><br><span class="line">            tokenTxet.append(ch);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">            dfaState = DfaState.IntLiteral;</span><br><span class="line">            token.type = DfaState.IntLiteral;</span><br><span class="line">            tokenTxet.append(ch);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'&gt;'</span>) &#123;</span><br><span class="line">            dfaState = DfaState.GT;</span><br><span class="line">            token.type = DfaState.GT;</span><br><span class="line">            tokenTxet.append(ch);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dfaState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后参照老师的代码，对自己的代码进行优化</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BianYi</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> StringBuilder tokentext;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Token&gt; tokens;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Token token;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String text1 = <span class="string">"age &gt;= 45"</span>;</span><br><span class="line">        System.out.println(<span class="string">"parse :"</span> + text1);</span><br><span class="line">        SimpleTokenReader tokenReader = tokensize(text1);</span><br><span class="line">        dump(tokenReader);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dump</span><span class="params">(SimpleTokenReader tokenReader)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"type\ttext"</span>);</span><br><span class="line">        Token token = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> ((token = (tokenReader.read())) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(token.getType() + <span class="string">"\t"</span> + token.getText());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DfaState <span class="title">initToken</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tokentext.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            token.text = tokentext.toString();</span><br><span class="line">            tokens.add(token);</span><br><span class="line"></span><br><span class="line">            tokentext = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            token = <span class="keyword">new</span> Token();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        DfaState newState = DfaState.Initial;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (Character.isLetter(ch)) &#123;</span><br><span class="line">            newState = DfaState.Identifier;</span><br><span class="line">            tokentext.append(ch);</span><br><span class="line">            token.type = DfaState.Identifier;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">            newState = DfaState.IntLiteral;</span><br><span class="line">            tokentext.append(ch);</span><br><span class="line">            token.type = DfaState.IntLiteral;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'&gt;'</span>) &#123;</span><br><span class="line">            newState = DfaState.GT;</span><br><span class="line">            tokentext.append(ch);</span><br><span class="line">            token.type = DfaState.GT;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> newState;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SimpleTokenReader <span class="title">tokensize</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">        DfaState state = DfaState.Initial;</span><br><span class="line">        tokentext = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        token = <span class="keyword">new</span> Token();</span><br><span class="line">        tokens = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> ch : text.toCharArray()) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">                <span class="keyword">case</span> Initial:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> Identifier:</span><br><span class="line">                    <span class="keyword">if</span> (Character.isLetter(ch) || Character.isDigit(ch)) &#123;</span><br><span class="line">                        tokentext.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> IntLiteral:</span><br><span class="line">                    <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">                        tokentext.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GT:</span><br><span class="line">                    <span class="keyword">if</span> (ch == <span class="string">'='</span>) &#123;</span><br><span class="line">                        state = DfaState.GE;</span><br><span class="line">                        tokentext.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GE:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (tokentext.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            initToken(<span class="string">' '</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SimpleTokenReader(tokens);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleTokenReader</span> </span>&#123;</span><br><span class="line">        List&lt;Token&gt; tokenList;</span><br><span class="line">        <span class="keyword">int</span> pos;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SimpleTokenReader</span><span class="params">(List&lt;Token&gt; tokens)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.tokenList = tokens;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Token <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (pos &lt; tokenList.size()) &#123;</span><br><span class="line">                <span class="keyword">return</span> tokenList.get(pos++);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>主要是进行封装之类使得代码更加整洁，并且有一个地方自己没有做好就是，一开始状态可以先假设为<code>Init</code>,不管有没有字符！</p>
-<p>即tokenSize的第一行代码，但是我自己的想法就是第一个字符去得到状态，如果没有字符，那么这个代码就会崩掉，说明自己这个地方还是没有写好！！</p>
-<p><img src="http://cdn.xuxiaojin.com/202003162048_837.png" alt=""></p>
-<h3 id="正则表达式描述标识符"><a href="#正则表达式描述标识符" class="headerlink" title="正则表达式描述标识符"></a>正则表达式描述标识符</h3><p>前面我们是通过文字描述标识符的构成方法，现在我们要用比较正规的方法就是<code>正则表达式</code></p>
-<h3 id="标识符与关键字规则冲突"><a href="#标识符与关键字规则冲突" class="headerlink" title="标识符与关键字规则冲突"></a>标识符与关键字规则冲突</h3><p>按照我们上面的代码如果解析<code>int age&gt;=45</code>的时候会出现</p>
-<p><img src="http://cdn.xuxiaojin.com/202003162058_847.png" alt=""></p>
-<p>我们看到这个解析将标识符与关键词冲突。</p>
-<blockquote>
-<p>关键词是作为语法要求的词汇</p>
-</blockquote>
-<p>那么要将这两者区分，需要将自动机里面进行修改</p>
-<p><img src="http://cdn.xuxiaojin.com/202003162102_961.png" alt=""></p>
-<p>然后在<code>initToken</code>里面进行修改</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (Character.isLetter(ch)) &#123;</span><br><span class="line">    	<span class="keyword">if</span>(ch==<span class="string">'i'</span>)&#123;</span><br><span class="line">            newState = DfaState.Id_int1;</span><br><span class="line">            token.type = DfaState.Id_int1;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            newState = DfaState.Identifier;</span><br><span class="line">            token.type = DfaState.Identifier; </span><br><span class="line">        &#125;</span><br><span class="line">     tokentext.append(ch);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后在<code>tokenSize</code>里面也要进行修改，通过上面的自动机图，可以很好的进行修改逻辑。</p>
-<p>上面这种方法是引入中间状态，但是如果在最后输出的时候，判断是否是关键字，如果是关键字的话将其type修改一下，这种方法也是可以的！</p>
-<p>##语法分析器</p>
-<p>声明语句左边是一个非终结符，右边是它的产生式，在<code>语法解析</code>的过程中，左边会被右边替代，直到最后全部都是终结符</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://time.geekbang.org/column/article/118378" target="_blank" rel="noopener">正则文法和有限自动机：纯手工打造词法分析器</a></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>编译原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JAVA基础——线程篇</title>
     <url>/3273698426.html</url>
     <content><![CDATA[<hr>
@@ -551,6 +726,51 @@
 ]]></content>
       <tags>
         <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编译原理</title>
+    <url>/294358179.html</url>
+    <content><![CDATA[<hr>
+<h2 id="正则文法和有限自动机"><a href="#正则文法和有限自动机" class="headerlink" title="正则文法和有限自动机"></a>正则文法和有限自动机</h2><p><code>词法分析</code>的工作就是将一个长长的字符串识别出一个个单词，这个单词就是token。</p>
+<p>先来解析一下简单的语法<strong>age&gt;=45</strong>,其中应用到的有限自动机如下所示(<a href="https://time.geekbang.org/column/article/118378" target="_blank" rel="noopener">图片来源</a>)</p>
+<p><img src="http://cdn.xuxiaojin.com/202003162016_141.png" alt=""></p>
+<ul>
+<li>标识符：以字母开头，后面的字符可以使字母或数字</li>
+<li>比较符：&gt; GT和&gt;= GE</li>
+<li>数字：全部由数字构成</li>
+</ul>
+<p>然后我参照部分代码写出的很<del>垃圾</del>的代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BianYi</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String TEXT = <span class="string">"age &gt;= 45"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Token token = <span class="keyword">new</span> Token();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> StringBuilder tokenTxet = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        TEXT = TEXT.trim();</span><br><span class="line">        DfaState state = initToken(TEXT.charAt(<span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; TEXT.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> ch = TEXT.charAt(i);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">                <span class="keyword">case</span> Initial:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> Identifier:</span><br><span class="line">                    <span class="keyword">if</span> (Character.isDigit(ch) || Character.isLetter(ch)) &#123;</span><br><span class="line">                        tokenTxet.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GT:</span><br><span class="line">                    <span class="keyword">if</span> (ch == <span class="string">'='</span>) &#123;</span><br><span class="line">                        state = GE;</span><br><span class="line">                        tokenTxet.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GE:</span><br><span class="line">                    state=initToken(ch);</span><br><span class="line">                <span class="keyword">case</span> IntLiteral:</span><br><span class="line">                    <span class="keyword">if</span>(Character.isDigit(ch))&#123;</span><br><span class="line">                        tokenTxet.append(ch);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        state=initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    state=initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(tokenTxet.length()&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">            initToken(<span class="string">' '</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DfaState <span class="title">initToken</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tokenTxet.length()&gt;<span class="number">0</span>&amp;&amp;token.type!=Initial)&#123;</span><br><span class="line">            System.out.println(token.type+<span class="string">"\t"</span>+tokenTxet.toString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        tokenTxet = <span class="keyword">new</span> StringBuilder(<span class="string">""</span>);</span><br><span class="line">        DfaState dfaState = DfaState.Initial;</span><br><span class="line">        <span class="keyword">if</span> (Character.isLetter(ch)) &#123;</span><br><span class="line">            dfaState = DfaState.Identifier;</span><br><span class="line">            token.type = DfaState.Identifier;</span><br><span class="line">            tokenTxet.append(ch);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">            dfaState = DfaState.IntLiteral;</span><br><span class="line">            token.type = DfaState.IntLiteral;</span><br><span class="line">            tokenTxet.append(ch);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'&gt;'</span>) &#123;</span><br><span class="line">            dfaState = DfaState.GT;</span><br><span class="line">            token.type = DfaState.GT;</span><br><span class="line">            tokenTxet.append(ch);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dfaState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后参照老师的代码，对自己的代码进行优化</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BianYi</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> StringBuilder tokentext;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Token&gt; tokens;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Token token;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String text1 = <span class="string">"age &gt;= 45"</span>;</span><br><span class="line">        System.out.println(<span class="string">"parse :"</span> + text1);</span><br><span class="line">        SimpleTokenReader tokenReader = tokensize(text1);</span><br><span class="line">        dump(tokenReader);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dump</span><span class="params">(SimpleTokenReader tokenReader)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"type\ttext"</span>);</span><br><span class="line">        Token token = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> ((token = (tokenReader.read())) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(token.getType() + <span class="string">"\t"</span> + token.getText());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DfaState <span class="title">initToken</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tokentext.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            token.text = tokentext.toString();</span><br><span class="line">            tokens.add(token);</span><br><span class="line"></span><br><span class="line">            tokentext = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            token = <span class="keyword">new</span> Token();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        DfaState newState = DfaState.Initial;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (Character.isLetter(ch)) &#123;</span><br><span class="line">            newState = DfaState.Identifier;</span><br><span class="line">            tokentext.append(ch);</span><br><span class="line">            token.type = DfaState.Identifier;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">            newState = DfaState.IntLiteral;</span><br><span class="line">            tokentext.append(ch);</span><br><span class="line">            token.type = DfaState.IntLiteral;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'&gt;'</span>) &#123;</span><br><span class="line">            newState = DfaState.GT;</span><br><span class="line">            tokentext.append(ch);</span><br><span class="line">            token.type = DfaState.GT;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> newState;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SimpleTokenReader <span class="title">tokensize</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">        DfaState state = DfaState.Initial;</span><br><span class="line">        tokentext = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        token = <span class="keyword">new</span> Token();</span><br><span class="line">        tokens = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> ch : text.toCharArray()) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">                <span class="keyword">case</span> Initial:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> Identifier:</span><br><span class="line">                    <span class="keyword">if</span> (Character.isLetter(ch) || Character.isDigit(ch)) &#123;</span><br><span class="line">                        tokentext.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> IntLiteral:</span><br><span class="line">                    <span class="keyword">if</span> (Character.isDigit(ch)) &#123;</span><br><span class="line">                        tokentext.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GT:</span><br><span class="line">                    <span class="keyword">if</span> (ch == <span class="string">'='</span>) &#123;</span><br><span class="line">                        state = DfaState.GE;</span><br><span class="line">                        tokentext.append(ch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        state = initToken(ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> GE:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    state = initToken(ch);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (tokentext.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            initToken(<span class="string">' '</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SimpleTokenReader(tokens);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleTokenReader</span> </span>&#123;</span><br><span class="line">        List&lt;Token&gt; tokenList;</span><br><span class="line">        <span class="keyword">int</span> pos;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SimpleTokenReader</span><span class="params">(List&lt;Token&gt; tokens)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.tokenList = tokens;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Token <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (pos &lt; tokenList.size()) &#123;</span><br><span class="line">                <span class="keyword">return</span> tokenList.get(pos++);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主要是进行封装之类使得代码更加整洁，并且有一个地方自己没有做好就是，一开始状态可以先假设为<code>Init</code>,不管有没有字符！</p>
+<p>即tokenSize的第一行代码，但是我自己的想法就是第一个字符去得到状态，如果没有字符，那么这个代码就会崩掉，说明自己这个地方还是没有写好！！</p>
+<p><img src="http://cdn.xuxiaojin.com/202003162048_837.png" alt=""></p>
+<h3 id="正则表达式描述标识符"><a href="#正则表达式描述标识符" class="headerlink" title="正则表达式描述标识符"></a>正则表达式描述标识符</h3><p>前面我们是通过文字描述标识符的构成方法，现在我们要用比较正规的方法就是<code>正则表达式</code></p>
+<h3 id="标识符与关键字规则冲突"><a href="#标识符与关键字规则冲突" class="headerlink" title="标识符与关键字规则冲突"></a>标识符与关键字规则冲突</h3><p>按照我们上面的代码如果解析<code>int age&gt;=45</code>的时候会出现</p>
+<p><img src="http://cdn.xuxiaojin.com/202003162058_847.png" alt=""></p>
+<p>我们看到这个解析将标识符与关键词冲突。</p>
+<blockquote>
+<p>关键词是作为语法要求的词汇</p>
+</blockquote>
+<p>那么要将这两者区分，需要将自动机里面进行修改</p>
+<p><img src="http://cdn.xuxiaojin.com/202003162102_961.png" alt=""></p>
+<p>然后在<code>initToken</code>里面进行修改</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (Character.isLetter(ch)) &#123;</span><br><span class="line">    	<span class="keyword">if</span>(ch==<span class="string">'i'</span>)&#123;</span><br><span class="line">            newState = DfaState.Id_int1;</span><br><span class="line">            token.type = DfaState.Id_int1;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            newState = DfaState.Identifier;</span><br><span class="line">            token.type = DfaState.Identifier; </span><br><span class="line">        &#125;</span><br><span class="line">     tokentext.append(ch);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>tokenSize</code>里面也要进行修改，通过上面的自动机图，可以很好的进行修改逻辑。</p>
+<p>上面这种方法是引入中间状态，但是如果在最后输出的时候，判断是否是关键字，如果是关键字的话将其type修改一下，这种方法也是可以的！</p>
+<p>##语法分析器</p>
+<p>声明语句左边是一个非终结符，右边是它的产生式，在<code>语法解析</code>的过程中，左边会被右边替代，直到最后全部都是终结符</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://time.geekbang.org/column/article/118378" target="_blank" rel="noopener">正则文法和有限自动机：纯手工打造词法分析器</a></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>编译原理</tag>
       </tags>
   </entry>
   <entry>
@@ -1658,54 +1878,21 @@
       </tags>
   </entry>
   <entry>
-    <title>Build Systems文档翻译</title>
-    <url>/4044010014.html</url>
+    <title>Auto-configuration文档翻译</title>
+    <url>/1608351778.html</url>
     <content><![CDATA[<hr>
-<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
-<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
-<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
+<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
+<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
 <blockquote>
-<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
-<p>但是我们强烈建议你不要写上version</p>
+<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
 </blockquote>
-<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
-<ul>
-<li>Java 1.8 作为默认的编译级别</li>
-<li>源代码通过UTF-8编码</li>
-<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
-<li>一个执行的repackage goal</li>
-<li>必要的资源筛选</li>
-<li>必要的插件配置</li>
-<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
-</ul>
-<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
+<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
+<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
-</blockquote>
-<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
-<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
-</blockquote>
-<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
-<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
-<blockquote>
-<p>命名里奥妙</p>
-<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
-<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
-</blockquote>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
-<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
-<li>以后依赖不写版本，通过springboot的依赖管理</li>
-<li>观察自己引入的依赖是以什么开头</li>
-</ol>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -1862,6 +2049,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Build Systems文档翻译</title>
+    <url>/4044010014.html</url>
+    <content><![CDATA[<hr>
+<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
+<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
+<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
+<blockquote>
+<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
+<p>但是我们强烈建议你不要写上version</p>
+</blockquote>
+<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
+<ul>
+<li>Java 1.8 作为默认的编译级别</li>
+<li>源代码通过UTF-8编码</li>
+<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
+<li>一个执行的repackage goal</li>
+<li>必要的资源筛选</li>
+<li>必要的插件配置</li>
+<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
+</ul>
+<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
+</blockquote>
+<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
+<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
+</blockquote>
+<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
+<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
+<blockquote>
+<p>命名里奥妙</p>
+<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
+<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
+</blockquote>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
+<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
+<li>以后依赖不写版本，通过springboot的依赖管理</li>
+<li>观察自己引入的依赖是以什么开头</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Developing Your First SpringBoot Application文档翻译</title>
     <url>/1113545103.html</url>
     <content><![CDATA[<hr>
@@ -1982,27 +2223,6 @@
 <p>一次只能运行一个LiveReload服务，如果你启动多个应用的话，只有第一个应用支持LiveReload</p>
 </blockquote>
 <h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>已在项目中使用devtools</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Auto-configuration文档翻译</title>
-    <url>/1608351778.html</url>
-    <content><![CDATA[<hr>
-<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
-<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
-<blockquote>
-<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
-</blockquote>
-<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
-<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
-<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -2940,6 +3160,46 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot通过注解使用MyBatis</title>
+    <url>/260235536.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的东西。</p>
+<h3 id="通过注解使用MyBatis"><a href="#通过注解使用MyBatis" class="headerlink" title="通过注解使用MyBatis"></a>通过注解使用MyBatis</h3><p>先前一篇的文章，我们通过注解来使用MyBatis，但是跟先前的风格有点不一样，所以这一次我们直接使用注解，能够有一个较直观的对比。引入依赖什么的这里就不说了。</p>
+<h3 id="配置连接数据库"><a href="#配置连接数据库" class="headerlink" title="配置连接数据库"></a>配置连接数据库</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test?serverTimezone=UTC</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=<span class="number">995495</span></span><br></pre></td></tr></table></figure>
+
+<p>题外话：问题是成长的催化剂。刚开始一直连不上数据库，后面一查是时区问题serverTimezone=UTC</p>
+<h3 id="Model层"><a href="#Model层" class="headerlink" title="Model层"></a>Model层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略getter和setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mapper层"><a href="#Mapper层" class="headerlink" title="Mapper层"></a>Mapper层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByName</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此可以发现跟我们先前用的jpa其实是很像的，迁移是很快的，接下来我们就继续探讨其注解</p>
+<h3 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h3><h4 id="使用-Param"><a href="#使用-Param" class="headerlink" title="使用@Param"></a>使用@Param</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age)values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>解释 @Param中定义中的name对应的sql中的#{name},age同理</p>
+<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a>使用Map</h4><p>通过Map&lt;String,Object&gt;对象来作为传递参数的容器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VARCHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByMap</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String,Object&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map.put(<span class="string">"name"</span>,<span class="string">"CCC"</span>);</span><br><span class="line">map.put(<span class="string">"age"</span>,<span class="number">40</span>);</span><br><span class="line">userMapper.insertByMap(map);</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用对象"><a href="#使用对象" class="headerlink" title="使用对象"></a>使用对象</h4><p>可以直接使用java对象来作为查询条件的传参</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByUser</span><span class="params">(User user)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>这样#{name}和#{age}就分别对应了User对象中的name和age属性</p>
+<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByname</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VACHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Update</span>(<span class="string">"update user set age=#&#123;age&#125; where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Delete</span>(<span class="string">"delete from user where id=#&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(Long id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于上面的这些内容都比较好理解</p>
+<h3 id="返回结果的绑定"><a href="#返回结果的绑定" class="headerlink" title="返回结果的绑定"></a>返回结果的绑定</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Results</span>(&#123;</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"name"</span>,column=<span class="string">"name"</span>),</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"age"</span>,column=<span class="string">"age"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@Select</span>(<span class="string">"select name,age from user"</span>)</span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>解释一下：</p>
+<p>@Result中的property属性对应着User对象中的成员名，column对应select出来的字段</p>
+<h3 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h3><p>总的来说，增删改查一般的业务都是够用的，但是有时候需要生成动态sql,mybatis也有这种的注解。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>加油！现在有思路，并且慢慢懂得完善自己的技能库。</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot与MyBatis</title>
     <url>/2204185805.html</url>
     <content><![CDATA[<hr>
@@ -3013,46 +3273,6 @@
 <h4 id="使用MyBatis"><a href="#使用MyBatis" class="headerlink" title="使用MyBatis"></a>使用MyBatis</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">playWithArtifacts</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Coffee espresso=<span class="keyword">new</span> Coffee()</span><br><span class="line">        .withName(<span class="string">"espresso"</span>)</span><br><span class="line">        .withPrice(Money.of(CurrencyUnit.of(<span class="string">"CNY"</span>),<span class="number">20.0</span>))</span><br><span class="line">        .withCreateTime(<span class="keyword">new</span> Date())</span><br><span class="line">        .withUpdateTime(<span class="keyword">new</span> Date());</span><br><span class="line">    coffeeMapper.insert(espresso);</span><br><span class="line">    </span><br><span class="line">    CoffeeExample example=<span class="keyword">new</span> CoffeeExample();</span><br><span class="line">    example.createCriteria().andNameEqualTo(<span class="string">"latte"</span>);</span><br><span class="line">    List&lt;Coffee&gt; list=coffeeMapper.selectByExample(example);</span><br><span class="line">    list.forEach(c-&gt;log.info(<span class="string">"selectbyExample:&#123;&#125;"</span>,c));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>就是现在，技术有点感觉，但是感觉还不全，精力有。就是现在不断去学习，不断去更新前一天的自己。</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot通过注解使用MyBatis</title>
-    <url>/260235536.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新的东西。</p>
-<h3 id="通过注解使用MyBatis"><a href="#通过注解使用MyBatis" class="headerlink" title="通过注解使用MyBatis"></a>通过注解使用MyBatis</h3><p>先前一篇的文章，我们通过注解来使用MyBatis，但是跟先前的风格有点不一样，所以这一次我们直接使用注解，能够有一个较直观的对比。引入依赖什么的这里就不说了。</p>
-<h3 id="配置连接数据库"><a href="#配置连接数据库" class="headerlink" title="配置连接数据库"></a>配置连接数据库</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test?serverTimezone=UTC</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=<span class="number">995495</span></span><br></pre></td></tr></table></figure>
-
-<p>题外话：问题是成长的催化剂。刚开始一直连不上数据库，后面一查是时区问题serverTimezone=UTC</p>
-<h3 id="Model层"><a href="#Model层" class="headerlink" title="Model层"></a>Model层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略getter和setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mapper层"><a href="#Mapper层" class="headerlink" title="Mapper层"></a>Mapper层</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByName</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>至此可以发现跟我们先前用的jpa其实是很像的，迁移是很快的，接下来我们就继续探讨其注解</p>
-<h3 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h3><h4 id="使用-Param"><a href="#使用-Param" class="headerlink" title="使用@Param"></a>使用@Param</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age)values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name,@<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span>Integer age)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>解释 @Param中定义中的name对应的sql中的#{name},age同理</p>
-<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a>使用Map</h4><p>通过Map&lt;String,Object&gt;对象来作为传递参数的容器</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VARCHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByMap</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String,Object&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map.put(<span class="string">"name"</span>,<span class="string">"CCC"</span>);</span><br><span class="line">map.put(<span class="string">"age"</span>,<span class="number">40</span>);</span><br><span class="line">userMapper.insertByMap(map);</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用对象"><a href="#使用对象" class="headerlink" title="使用对象"></a>使用对象</h4><p>可以直接使用java对象来作为查询条件的传参</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertByUser</span><span class="params">(User user)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>这样#{name}和#{age}就分别对应了User对象中的name和age属性</p>
-<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByname</span><span class="params">(@Param(<span class="string">"name"</span>)</span>String name)</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name,jdbcType=VACHAR&#125;,#&#123;age,jdbcType=INTEGER&#125;)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Map&lt;String,Object&gt; map)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Update</span>(<span class="string">"update user set age=#&#123;age&#125; where name=#&#123;name&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Delete</span>(<span class="string">"delete from user where id=#&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(Long id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于上面的这些内容都比较好理解</p>
-<h3 id="返回结果的绑定"><a href="#返回结果的绑定" class="headerlink" title="返回结果的绑定"></a>返回结果的绑定</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Results</span>(&#123;</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"name"</span>,column=<span class="string">"name"</span>),</span><br><span class="line">    <span class="meta">@Result</span>(property=<span class="string">"age"</span>,column=<span class="string">"age"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@Select</span>(<span class="string">"select name,age from user"</span>)</span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>解释一下：</p>
-<p>@Result中的property属性对应着User对象中的成员名，column对应select出来的字段</p>
-<h3 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h3><p>总的来说，增删改查一般的业务都是够用的，但是有时候需要生成动态sql,mybatis也有这种的注解。</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>加油！现在有思路，并且慢慢懂得完善自己的技能库。</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -3224,7 +3444,7 @@
   </entry>
   <entry>
     <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
-    <url>/1697153394.html</url>
+    <url>/1697153393.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
 <h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
@@ -3277,7 +3497,7 @@
   </entry>
   <entry>
     <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
-    <url>/1697153393.html</url>
+    <url>/1697153394.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
 <h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
@@ -3626,6 +3846,76 @@
       </tags>
   </entry>
   <entry>
+    <title>python的列表、元组、字典、集合</title>
+    <url>/2329127915.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文对python的四种基本类型 列表、元组、字典、集合有个全貌的了解，并且分析其性能，不同的应用场景。</p>
+<h3 id="Overview-of-Python-Lists-and-Tuples"><a href="#Overview-of-Python-Lists-and-Tuples" class="headerlink" title="Overview of Python Lists and Tuples"></a>Overview of Python Lists and Tuples</h3><p>在python中经常被创建的数据类型就是列表(list)和元组(tuple)</p>
+<p>相同点：都是存放有一定的顺序存放对象和值，这些值或对象可以是任何类型，包括None空类型</p>
+<p>不同点：列表是可变的，即长度可以发生改变。元组不可发生改变，意味着一旦元组被创建的时候，其对象不能够被天剑或者删除，顺序也不会发生改变。</p>
+<h4 id="Show-me-the-code"><a href="#Show-me-the-code" class="headerlink" title="Show me the code"></a>Show me the code</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#creating a python list or tuple</span></span><br><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="string">'three'</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="string">'three'</span>)</span><br><span class="line"></span><br><span class="line">print(lst)</span><br><span class="line">print(tup)</span><br><span class="line"></span><br><span class="line"><span class="comment">#to create a tuple with only one value,add a trailing comma to the value</span></span><br><span class="line">tup2=<span class="number">0</span>,</span><br><span class="line">print(tup2)</span><br><span class="line"><span class="comment">#the below code will not do the work with a tuple only one value</span></span><br><span class="line">tup3=(<span class="number">0</span>)</span><br><span class="line">print(tup3)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Get python list or tuple values</span></span><br><span class="line">print(lst[<span class="number">0</span>])</span><br><span class="line">print(lst[<span class="number">-1</span>])</span><br><span class="line">print(tup[<span class="number">0</span>])</span><br><span class="line">print(tup[<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#Slicing python lists and tuples</span></span><br><span class="line">print(lst[<span class="number">0</span>:<span class="number">2</span>])</span><br><span class="line">print(tup[<span class="number">1</span>:<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#assiging a python list value by index</span></span><br><span class="line">lst[<span class="number">0</span>]=<span class="string">'ONE'</span></span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment"># error 'tuple' object does not support item assignment</span></span><br><span class="line"><span class="comment"># tup[0]='ONE'</span></span><br><span class="line"><span class="comment"># print(tup)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#adding to a python list</span></span><br><span class="line">lst+=[<span class="literal">None</span>]</span><br><span class="line">print(lst)</span><br><span class="line">lst.append(<span class="number">5</span>)</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#the python del keyword for Lists</span></span><br><span class="line"><span class="keyword">del</span> lst[<span class="number">3</span>]</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> lst[<span class="number">2</span>:]</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#the concatenation works in tuple</span></span><br><span class="line">tup+=(<span class="number">4</span>,)</span><br><span class="line">print(tup)</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">结果</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="string">'three'</span>]</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="string">'three'</span>)</span><br><span class="line">(<span class="number">0</span>,)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">three</span><br><span class="line"><span class="number">1</span></span><br><span class="line">three</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">(<span class="number">2</span>, <span class="string">'three'</span>)</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="literal">None</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="literal">None</span>, <span class="number">5</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="number">5</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>]</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>我们来一个一个分析</p>
+<ol>
+<li>创建list和tuple通过 []又或者可以通过调用list()函数 lst=list([1,2,’three’])，同样tuple可以通过()又或者可以通过tup=tuple((1,2,’three’))</li>
+<li>通过索引访问list和tuple的值，并且还支持负索引</li>
+<li>list和tuple支持切片操作</li>
+<li>通过索引分配值给list以及、通过del函数可以对list删除、通过+添加list</li>
+<li>tuple只支持+，但是这里特别注意，这里是<strong>重新开辟一块内存</strong>，创建新的元祖</li>
+</ol>
+<p>补充点别的：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">print(list(tup))</span><br><span class="line">print(tuple(lst))</span><br><span class="line">---</span><br><span class="line">结果</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">#lst和tup可以通过函数相互转换</span></span><br><span class="line"></span><br><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">print(lst.count(<span class="number">3</span>))</span><br><span class="line">print(tup.count(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">print(lst.index(<span class="number">3</span>))</span><br><span class="line">print(tup.index(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">lst.reverse()</span><br><span class="line">print(lst)</span><br><span class="line">lst.sort()</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#error tuple object has no attribute reverse</span></span><br><span class="line"><span class="comment"># print(tup.reverse())</span></span><br><span class="line"><span class="comment"># print(tup.sort())</span></span><br><span class="line"></span><br><span class="line">print(list(reversed(tup)))</span><br><span class="line">print(sorted(tup))</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">结果</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">[<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">[<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+<p>分析一下</p>
+<ol>
+<li>count(item)统计列表/元组中Item出现的次数</li>
+<li>index(item)统计列表/元组中item第一次出现的索引</li>
+<li>list.reverse()和list.sort()分别表示原地倒转列表和排序(注意1.返回值是None,如果使用print(list.reverse()) 2.元组没有内置这两个函数，会报错)</li>
+<li>reversed()和sorted()同样表示对列表/元组进行倒叙和排序，但是会返回一个结果</li>
+</ol>
+<h4 id="深入性能"><a href="#深入性能" class="headerlink" title="深入性能"></a>深入性能</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">print(lst.__sizeof__())</span><br><span class="line"><span class="number">64</span></span><br><span class="line">print(tup.__sizeof__())</span><br><span class="line"><span class="number">48</span></span><br></pre></td></tr></table></figure>
+
+<p>分析一下：</p>
+<p>列表虽然跟元组存储一样多的元素个数，但是却比元组多16字节，这是因为列表是动态的，它需要存储一个指针，用来指向对应的元素(int型 8字节),而且因为其长度时可变的，需要额外的存储已经分配的长度(8字节)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[]</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">40</span></span><br><span class="line">l.append(<span class="number">1</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">2</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">3</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">4</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">5</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">104</span></span><br></pre></td></tr></table></figure>
+
+<p>通过运行结果，我们可以看到，list为了减少每次增加/删减的性能开销，每次都会额外分配一些空间(这个跟java的hashmap有点像)</p>
+<p>这里还有一点注意的是</p>
+<p>前面lst=[1,2,3]是直接初始化，所以只会分配3个元素的空间</p>
+<p>而不断通过append实际上分配了4个元素空间 l=[]…</p>
+<h4 id="两者的使用场景"><a href="#两者的使用场景" class="headerlink" title="两者的使用场景"></a>两者的使用场景</h4><ol>
+<li>如果存储的数据和数量不变，比如地点的经纬度，选择元组更合适</li>
+<li>如果数据或者数量是可变的，比如社交平台的日志功能，那么选择列表更合适</li>
+</ol>
+<h3 id="Overview-of-Python-Dictionaries-and-sets"><a href="#Overview-of-Python-Dictionaries-and-sets" class="headerlink" title="Overview of Python Dictionaries and sets"></a>Overview of Python Dictionaries and sets</h3><p>字典其实就是一组通过键值对存储的数据(其中在python3.7后，这些顺序是有序的，否则是没有顺序的)，并且可以随意删除数据，增加数据，访问数据(时间复杂度都可以在常数时间内)。其长度大小可变。</p>
+<p>注意：the map key,which can be any immutable type,to values,which can be any type,just like the values of a list or tuple.键不能是可变的数据类型，值可以是任意类型</p>
+<p>集合相对于字典来讲，就是存储的数据不是以键值对，而是只有值。其他性能基本相同</p>
+<h4 id="show-me-the-code"><a href="#show-me-the-code" class="headerlink" title="show me the code"></a>show me the code</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d1=&#123;<span class="string">'name'</span>:<span class="string">'jason'</span>,<span class="string">'age'</span>:<span class="number">20</span>,<span class="string">'gender'</span>:<span class="string">'male'</span>&#125;</span><br><span class="line">d2=dict(&#123;<span class="string">'name'</span>:<span class="string">'jason'</span>,<span class="string">'age'</span>:<span class="number">20</span>,<span class="string">'gender'</span>:<span class="string">'male'</span>&#125;)</span><br><span class="line">d3=dict([(<span class="string">'name'</span>,<span class="string">'jason'</span>),(<span class="string">'age'</span>,<span class="number">20</span>),(<span class="string">'gender'</span>,<span class="string">'male'</span>)])</span><br><span class="line">d4=dict(name=<span class="string">'jason'</span>,age=<span class="number">20</span>,gender=<span class="string">'male'</span>)</span><br><span class="line">print(d1==d2==d3==d4)</span><br><span class="line"></span><br><span class="line">s1=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line">s2=set([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">print(s1==s2)</span><br><span class="line"></span><br><span class="line"><span class="comment">#字典操作</span></span><br><span class="line">print(d1)</span><br><span class="line">print(d1[<span class="string">'name'</span>])</span><br><span class="line">print(d1.get(<span class="string">'location'</span>,<span class="string">'null'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#集合访问</span></span><br><span class="line">print(<span class="number">1</span> <span class="keyword">in</span> s1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#增删改</span></span><br><span class="line">d1[<span class="string">'location'</span>]=<span class="string">'shanghai'</span></span><br><span class="line">d1[<span class="string">'name'</span>]=<span class="string">'xu'</span></span><br><span class="line">d1.pop(<span class="string">'age'</span>)</span><br><span class="line"></span><br><span class="line">print(d1)</span><br><span class="line"></span><br><span class="line">s1.add(<span class="number">4</span>)</span><br><span class="line">s1.remove(<span class="number">1</span>)</span><br><span class="line">print(s1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#copy</span></span><br><span class="line">d4=d1</span><br><span class="line">d5=d1.copy()</span><br><span class="line"></span><br><span class="line">d5[<span class="string">'name'</span>]=<span class="string">'Jin'</span></span><br><span class="line">print(d5)</span><br><span class="line">print(d1)</span><br><span class="line"></span><br><span class="line">d4[<span class="string">'name'</span>]=<span class="string">'Jin'</span></span><br><span class="line">print(d4)</span><br><span class="line">print(d1)</span><br></pre></td></tr></table></figure>
+
+<p>分析一下：</p>
+<ol>
+<li><p>创建字典，总共有四种方法，第一种就是直接使用{‘key’:value}其中用,隔开。后面三种调用dict()函数，dict(mapping)相当于传入一个mapping，dict(iterable)它的初始化过程是 for k,v in iterable: d[k]=v,所以传入的格式[(‘key’,value)],最后一种就是通过key=’value’ 创建集合的方法有两种{value}以及set([value])</p>
+</li>
+<li><p>字典的增删改查分别通过 d[‘key’]=value,d.pop(‘key’),d[‘key’]=newvalue,d[‘key’]或者d.get(‘key’,default)或者 value in dict</p>
+</li>
+<li><p>集合的增删改查 s.add(value),s.remove(value),没有该操作,value in s</p>
+</li>
+<li><p>字典的copy，如果直接用“=”实际上这两个引用都会直接指向同一个地址，当其中任意一个发生改变，就会引起其中另外一个发生改变。如果使用copy()函数，这两个指向不同的地址，不会发生冲突</p>
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><p>字典其实是一个hash表，所以其性能非常高，如果在不发生冲突的情况下。 </p>
+</li>
+</ol>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>本文对python的四种数据类型进行讨论分别是列表list,元组tuple,字典dict，集合set</p>
+<p>总结一下:</p>
+<p>列表list,通过[]表示，可以存储各种各样的数据类型，然后有顺序，其长度可以发生改变，并且任意删除，增加，访问。</p>
+<p>元组tuple，通过()表示，可以存储各种各样的数据类型，有顺序，其长度不可发生改变，可以任意访问，增加通过+会创建一个新的元组</p>
+<p>字典dict，通过{}表示，存储键值对，长度可以改变，可以通过hash的访问，任意删除，增加，修改</p>
+<p>集合set，通过{},相对于字典存储值，长度可变，访问不可通过索引，只能通过in，可以添加add(),可以删除remove()</p>
+]]></content>
+      <tags>
+        <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python自定义函数与面向对象</title>
     <url>/2041354615.html</url>
     <content><![CDATA[<hr>
@@ -3691,76 +3981,6 @@
 <h4 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h4><p>这样，已经大致的会写python的类了，但是面向对象里面还有个重要的思想就是继承。不过这个留到后面来深入。当前我的目标就是对python基础有个全貌的了解。</p>
 </li>
 </ol>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python的列表、元组、字典、集合</title>
-    <url>/2329127915.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文对python的四种基本类型 列表、元组、字典、集合有个全貌的了解，并且分析其性能，不同的应用场景。</p>
-<h3 id="Overview-of-Python-Lists-and-Tuples"><a href="#Overview-of-Python-Lists-and-Tuples" class="headerlink" title="Overview of Python Lists and Tuples"></a>Overview of Python Lists and Tuples</h3><p>在python中经常被创建的数据类型就是列表(list)和元组(tuple)</p>
-<p>相同点：都是存放有一定的顺序存放对象和值，这些值或对象可以是任何类型，包括None空类型</p>
-<p>不同点：列表是可变的，即长度可以发生改变。元组不可发生改变，意味着一旦元组被创建的时候，其对象不能够被天剑或者删除，顺序也不会发生改变。</p>
-<h4 id="Show-me-the-code"><a href="#Show-me-the-code" class="headerlink" title="Show me the code"></a>Show me the code</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#creating a python list or tuple</span></span><br><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="string">'three'</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="string">'three'</span>)</span><br><span class="line"></span><br><span class="line">print(lst)</span><br><span class="line">print(tup)</span><br><span class="line"></span><br><span class="line"><span class="comment">#to create a tuple with only one value,add a trailing comma to the value</span></span><br><span class="line">tup2=<span class="number">0</span>,</span><br><span class="line">print(tup2)</span><br><span class="line"><span class="comment">#the below code will not do the work with a tuple only one value</span></span><br><span class="line">tup3=(<span class="number">0</span>)</span><br><span class="line">print(tup3)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Get python list or tuple values</span></span><br><span class="line">print(lst[<span class="number">0</span>])</span><br><span class="line">print(lst[<span class="number">-1</span>])</span><br><span class="line">print(tup[<span class="number">0</span>])</span><br><span class="line">print(tup[<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#Slicing python lists and tuples</span></span><br><span class="line">print(lst[<span class="number">0</span>:<span class="number">2</span>])</span><br><span class="line">print(tup[<span class="number">1</span>:<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#assiging a python list value by index</span></span><br><span class="line">lst[<span class="number">0</span>]=<span class="string">'ONE'</span></span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment"># error 'tuple' object does not support item assignment</span></span><br><span class="line"><span class="comment"># tup[0]='ONE'</span></span><br><span class="line"><span class="comment"># print(tup)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#adding to a python list</span></span><br><span class="line">lst+=[<span class="literal">None</span>]</span><br><span class="line">print(lst)</span><br><span class="line">lst.append(<span class="number">5</span>)</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#the python del keyword for Lists</span></span><br><span class="line"><span class="keyword">del</span> lst[<span class="number">3</span>]</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> lst[<span class="number">2</span>:]</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#the concatenation works in tuple</span></span><br><span class="line">tup+=(<span class="number">4</span>,)</span><br><span class="line">print(tup)</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">结果</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="string">'three'</span>]</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="string">'three'</span>)</span><br><span class="line">(<span class="number">0</span>,)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">three</span><br><span class="line"><span class="number">1</span></span><br><span class="line">three</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">(<span class="number">2</span>, <span class="string">'three'</span>)</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="literal">None</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="literal">None</span>, <span class="number">5</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="number">5</span>]</span><br><span class="line">[<span class="string">'ONE'</span>, <span class="number">2</span>]</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="string">'three'</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
-
-<p>我们来一个一个分析</p>
-<ol>
-<li>创建list和tuple通过 []又或者可以通过调用list()函数 lst=list([1,2,’three’])，同样tuple可以通过()又或者可以通过tup=tuple((1,2,’three’))</li>
-<li>通过索引访问list和tuple的值，并且还支持负索引</li>
-<li>list和tuple支持切片操作</li>
-<li>通过索引分配值给list以及、通过del函数可以对list删除、通过+添加list</li>
-<li>tuple只支持+，但是这里特别注意，这里是<strong>重新开辟一块内存</strong>，创建新的元祖</li>
-</ol>
-<p>补充点别的：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">print(list(tup))</span><br><span class="line">print(tuple(lst))</span><br><span class="line">---</span><br><span class="line">结果</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">#lst和tup可以通过函数相互转换</span></span><br><span class="line"></span><br><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">print(lst.count(<span class="number">3</span>))</span><br><span class="line">print(tup.count(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">print(lst.index(<span class="number">3</span>))</span><br><span class="line">print(tup.index(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">lst.reverse()</span><br><span class="line">print(lst)</span><br><span class="line">lst.sort()</span><br><span class="line">print(lst)</span><br><span class="line"></span><br><span class="line"><span class="comment">#error tuple object has no attribute reverse</span></span><br><span class="line"><span class="comment"># print(tup.reverse())</span></span><br><span class="line"><span class="comment"># print(tup.sort())</span></span><br><span class="line"></span><br><span class="line">print(list(reversed(tup)))</span><br><span class="line">print(sorted(tup))</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">结果</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">[<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">[<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
-
-<p>分析一下</p>
-<ol>
-<li>count(item)统计列表/元组中Item出现的次数</li>
-<li>index(item)统计列表/元组中item第一次出现的索引</li>
-<li>list.reverse()和list.sort()分别表示原地倒转列表和排序(注意1.返回值是None,如果使用print(list.reverse()) 2.元组没有内置这两个函数，会报错)</li>
-<li>reversed()和sorted()同样表示对列表/元组进行倒叙和排序，但是会返回一个结果</li>
-</ol>
-<h4 id="深入性能"><a href="#深入性能" class="headerlink" title="深入性能"></a>深入性能</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">tup=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">print(lst.__sizeof__())</span><br><span class="line"><span class="number">64</span></span><br><span class="line">print(tup.__sizeof__())</span><br><span class="line"><span class="number">48</span></span><br></pre></td></tr></table></figure>
-
-<p>分析一下：</p>
-<p>列表虽然跟元组存储一样多的元素个数，但是却比元组多16字节，这是因为列表是动态的，它需要存储一个指针，用来指向对应的元素(int型 8字节),而且因为其长度时可变的，需要额外的存储已经分配的长度(8字节)</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[]</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">40</span></span><br><span class="line">l.append(<span class="number">1</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">2</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">3</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">4</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">72</span></span><br><span class="line">l.append(<span class="number">5</span>)</span><br><span class="line">print(l.__sizeof__())</span><br><span class="line"><span class="number">104</span></span><br></pre></td></tr></table></figure>
-
-<p>通过运行结果，我们可以看到，list为了减少每次增加/删减的性能开销，每次都会额外分配一些空间(这个跟java的hashmap有点像)</p>
-<p>这里还有一点注意的是</p>
-<p>前面lst=[1,2,3]是直接初始化，所以只会分配3个元素的空间</p>
-<p>而不断通过append实际上分配了4个元素空间 l=[]…</p>
-<h4 id="两者的使用场景"><a href="#两者的使用场景" class="headerlink" title="两者的使用场景"></a>两者的使用场景</h4><ol>
-<li>如果存储的数据和数量不变，比如地点的经纬度，选择元组更合适</li>
-<li>如果数据或者数量是可变的，比如社交平台的日志功能，那么选择列表更合适</li>
-</ol>
-<h3 id="Overview-of-Python-Dictionaries-and-sets"><a href="#Overview-of-Python-Dictionaries-and-sets" class="headerlink" title="Overview of Python Dictionaries and sets"></a>Overview of Python Dictionaries and sets</h3><p>字典其实就是一组通过键值对存储的数据(其中在python3.7后，这些顺序是有序的，否则是没有顺序的)，并且可以随意删除数据，增加数据，访问数据(时间复杂度都可以在常数时间内)。其长度大小可变。</p>
-<p>注意：the map key,which can be any immutable type,to values,which can be any type,just like the values of a list or tuple.键不能是可变的数据类型，值可以是任意类型</p>
-<p>集合相对于字典来讲，就是存储的数据不是以键值对，而是只有值。其他性能基本相同</p>
-<h4 id="show-me-the-code"><a href="#show-me-the-code" class="headerlink" title="show me the code"></a>show me the code</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d1=&#123;<span class="string">'name'</span>:<span class="string">'jason'</span>,<span class="string">'age'</span>:<span class="number">20</span>,<span class="string">'gender'</span>:<span class="string">'male'</span>&#125;</span><br><span class="line">d2=dict(&#123;<span class="string">'name'</span>:<span class="string">'jason'</span>,<span class="string">'age'</span>:<span class="number">20</span>,<span class="string">'gender'</span>:<span class="string">'male'</span>&#125;)</span><br><span class="line">d3=dict([(<span class="string">'name'</span>,<span class="string">'jason'</span>),(<span class="string">'age'</span>,<span class="number">20</span>),(<span class="string">'gender'</span>,<span class="string">'male'</span>)])</span><br><span class="line">d4=dict(name=<span class="string">'jason'</span>,age=<span class="number">20</span>,gender=<span class="string">'male'</span>)</span><br><span class="line">print(d1==d2==d3==d4)</span><br><span class="line"></span><br><span class="line">s1=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line">s2=set([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">print(s1==s2)</span><br><span class="line"></span><br><span class="line"><span class="comment">#字典操作</span></span><br><span class="line">print(d1)</span><br><span class="line">print(d1[<span class="string">'name'</span>])</span><br><span class="line">print(d1.get(<span class="string">'location'</span>,<span class="string">'null'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#集合访问</span></span><br><span class="line">print(<span class="number">1</span> <span class="keyword">in</span> s1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#增删改</span></span><br><span class="line">d1[<span class="string">'location'</span>]=<span class="string">'shanghai'</span></span><br><span class="line">d1[<span class="string">'name'</span>]=<span class="string">'xu'</span></span><br><span class="line">d1.pop(<span class="string">'age'</span>)</span><br><span class="line"></span><br><span class="line">print(d1)</span><br><span class="line"></span><br><span class="line">s1.add(<span class="number">4</span>)</span><br><span class="line">s1.remove(<span class="number">1</span>)</span><br><span class="line">print(s1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#copy</span></span><br><span class="line">d4=d1</span><br><span class="line">d5=d1.copy()</span><br><span class="line"></span><br><span class="line">d5[<span class="string">'name'</span>]=<span class="string">'Jin'</span></span><br><span class="line">print(d5)</span><br><span class="line">print(d1)</span><br><span class="line"></span><br><span class="line">d4[<span class="string">'name'</span>]=<span class="string">'Jin'</span></span><br><span class="line">print(d4)</span><br><span class="line">print(d1)</span><br></pre></td></tr></table></figure>
-
-<p>分析一下：</p>
-<ol>
-<li><p>创建字典，总共有四种方法，第一种就是直接使用{‘key’:value}其中用,隔开。后面三种调用dict()函数，dict(mapping)相当于传入一个mapping，dict(iterable)它的初始化过程是 for k,v in iterable: d[k]=v,所以传入的格式[(‘key’,value)],最后一种就是通过key=’value’ 创建集合的方法有两种{value}以及set([value])</p>
-</li>
-<li><p>字典的增删改查分别通过 d[‘key’]=value,d.pop(‘key’),d[‘key’]=newvalue,d[‘key’]或者d.get(‘key’,default)或者 value in dict</p>
-</li>
-<li><p>集合的增删改查 s.add(value),s.remove(value),没有该操作,value in s</p>
-</li>
-<li><p>字典的copy，如果直接用“=”实际上这两个引用都会直接指向同一个地址，当其中任意一个发生改变，就会引起其中另外一个发生改变。如果使用copy()函数，这两个指向不同的地址，不会发生冲突</p>
-<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><p>字典其实是一个hash表，所以其性能非常高，如果在不发生冲突的情况下。 </p>
-</li>
-</ol>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>本文对python的四种数据类型进行讨论分别是列表list,元组tuple,字典dict，集合set</p>
-<p>总结一下:</p>
-<p>列表list,通过[]表示，可以存储各种各样的数据类型，然后有顺序，其长度可以发生改变，并且任意删除，增加，访问。</p>
-<p>元组tuple，通过()表示，可以存储各种各样的数据类型，有顺序，其长度不可发生改变，可以任意访问，增加通过+会创建一个新的元组</p>
-<p>字典dict，通过{}表示，存储键值对，长度可以改变，可以通过hash的访问，任意删除，增加，修改</p>
-<p>集合set，通过{},相对于字典存储值，长度可变，访问不可通过索引，只能通过in，可以添加add(),可以删除remove()</p>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
@@ -4082,6 +4302,43 @@
       </tags>
   </entry>
   <entry>
+    <title>集合(Set)</title>
+    <url>/2719220805.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>集合这个数据结构，需要了解一下，因为对于一些数据只能用集合来存储,没有特定的顺序，并且数据不重复。</p>
+<p>【这部分，我只找到一点材料，所以今天补充一下】</p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>A set is an abstract data type that can store certain values,without any particular order,and no repeated values.</p>
+<p>The Sets data structure is usually used to test whether elements belong to set of values.</p>
+</blockquote>
+<p>这个定义说明，集合经常用来验证<strong>某个值是否在这里面</strong>。</p>
+<h4 id="集合的表示"><a href="#集合的表示" class="headerlink" title="集合的表示"></a>集合的表示</h4><p>用一个数组表示，数组的index表示存储的值，数组存储的值表示 该集合的代表，如果就是集合的代表，则为-1</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">       <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">       Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">           Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h4><h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><p>沿当前节点往上查，当查到某个节点的值为-1时，就是其所在的集合</p>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">       <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">       <span class="keyword">return</span> num;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="集合的并运算"><a href="#集合的并运算" class="headerlink" title="集合的并运算"></a>集合的并运算</h5><p>直接将另外一个集合接到当前集合下</p>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//集合并运算</span></span><br><span class="line">   <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">       Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>改进版</strong></p>
+<p>按秩合并</p>
+<p>就是判断两个集合的大小，小的接到大的下面</p>
+<p>路径压缩</p>
+<p>查找某个值的时候，直接将这个值接到根节点下面</p>
+<p>全部代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SetPractice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] Set;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> MAXN;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化容量为MAXN</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SetPractice</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MAXN=<span class="number">16</span>;</span><br><span class="line">        Set=<span class="keyword">new</span> <span class="keyword">int</span>[MAXN];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">        <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">        Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">            Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//集合并运算</span></span><br><span class="line">    <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按秩合并</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnionBysize</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(set1.length&lt;set2.length)</span><br><span class="line">            Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Set[set1[<span class="number">0</span>]]=set2[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//路径压缩</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindAndShorten</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Set[num]&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Set[num]=FindAndShorten(Set[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> set1[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set2[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set3[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        SetPractice setPractice=<span class="keyword">new</span> SetPractice();</span><br><span class="line">        setPractice.Put(set1);</span><br><span class="line">        setPractice.Put(set2);</span><br><span class="line">        setPractice.Put(set3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>集合</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>堆</title>
     <url>/4206121381.html</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于堆的数据结构，虽然上课听了，但是还是不熟悉。所以今天以这一篇文章来督促自己学习“堆”</p>
@@ -4154,43 +4411,6 @@
       <tags>
         <tag>堆</tag>
         <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>集合(Set)</title>
-    <url>/2719220805.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>集合这个数据结构，需要了解一下，因为对于一些数据只能用集合来存储,没有特定的顺序，并且数据不重复。</p>
-<p>【这部分，我只找到一点材料，所以今天补充一下】</p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
-<p>A set is an abstract data type that can store certain values,without any particular order,and no repeated values.</p>
-<p>The Sets data structure is usually used to test whether elements belong to set of values.</p>
-</blockquote>
-<p>这个定义说明，集合经常用来验证<strong>某个值是否在这里面</strong>。</p>
-<h4 id="集合的表示"><a href="#集合的表示" class="headerlink" title="集合的表示"></a>集合的表示</h4><p>用一个数组表示，数组的index表示存储的值，数组存储的值表示 该集合的代表，如果就是集合的代表，则为-1</p>
-<p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">       <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">       Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">           Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h4><h5 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h5><p>沿当前节点往上查，当查到某个节点的值为-1时，就是其所在的集合</p>
-<p>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">       <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">       <span class="keyword">return</span> num;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="集合的并运算"><a href="#集合的并运算" class="headerlink" title="集合的并运算"></a>集合的并运算</h5><p>直接将另外一个集合接到当前集合下</p>
-<p>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//集合并运算</span></span><br><span class="line">   <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">       Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>改进版</strong></p>
-<p>按秩合并</p>
-<p>就是判断两个集合的大小，小的接到大的下面</p>
-<p>路径压缩</p>
-<p>查找某个值的时候，直接将这个值接到根节点下面</p>
-<p>全部代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SetPractice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] Set;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> MAXN;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化容量为MAXN</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SetPractice</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MAXN=<span class="number">16</span>;</span><br><span class="line">        Set=<span class="keyword">new</span> <span class="keyword">int</span>[MAXN];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Put</span><span class="params">(<span class="keyword">int</span> []set)</span></span>&#123;</span><br><span class="line">        <span class="comment">//以每个集合的第一个数为代表</span></span><br><span class="line">        Set[set[<span class="number">0</span>]]=-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;set.length;i++)&#123;</span><br><span class="line">            Set[set[i]]=set[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找某个元素所在的集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(;Set[num]&gt;=<span class="number">0</span>;num=Set[num]);</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//集合并运算</span></span><br><span class="line">    <span class="comment">//直接将第二个集合的代表元素接在第一个集合的代表元素后面</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按秩合并</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnionBysize</span><span class="params">(<span class="keyword">int</span> []set1,<span class="keyword">int</span> []set2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(set1.length&lt;set2.length)</span><br><span class="line">            Set[set2[<span class="number">0</span>]]=set1[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Set[set1[<span class="number">0</span>]]=set2[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//路径压缩</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FindAndShorten</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(Set[num]&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Set[num]=FindAndShorten(Set[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> set1[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set2[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> set3[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        SetPractice setPractice=<span class="keyword">new</span> SetPractice();</span><br><span class="line">        setPractice.Put(set1);</span><br><span class="line">        setPractice.Put(set2);</span><br><span class="line">        setPractice.Put(set3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我也奇怪，为什么集合没有好的材料？？？</p>
-]]></content>
-      <tags>
-        <tag>数据结构与算法</tag>
-        <tag>集合</tag>
       </tags>
   </entry>
   <entry>
