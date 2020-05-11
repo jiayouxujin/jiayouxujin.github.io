@@ -119,7 +119,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="spring," />
 
 
 
@@ -130,17 +130,19 @@
 
 
 
-<meta name="description" content="前言每天都要比前一天都学一点。 简单介绍List，是一些有序的元素集合，而Set就没有顺序。 ArrayListArrayList实现可以调整大小的数组，但元素不断被加入时，其大小也会自动调整。ArrayList里的元素可以直接通过get和set的方法来得到，所以比Array(数组)好用 12345678ArrayList&lt;Integer&gt; a&#x3D;new ArrayList&lt;&amp;g">
+<meta name="description" content="Java ReflectionJava Reflection能够在运行期间，在不知道类名，方法等的情况下，能够观察类，接口，属性和方法。 ###访问属性 举个例子 12345678910111213141516171819202122232425import java.lang.reflect.Field;import java.util.HashMap;import java.util.Map;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java中ArrayList、LinkedList、Vector的区别">
-<meta property="og:url" content="http://blog.xuxiaojin.com/1160018501.html">
+<meta property="og:title" content="spring的IoC">
+<meta property="og:url" content="http://blog.xuxiaojin.com/3742925258.html">
 <meta property="og:site_name" content="徐小晋的博客">
-<meta property="og:description" content="前言每天都要比前一天都学一点。 简单介绍List，是一些有序的元素集合，而Set就没有顺序。 ArrayListArrayList实现可以调整大小的数组，但元素不断被加入时，其大小也会自动调整。ArrayList里的元素可以直接通过get和set的方法来得到，所以比Array(数组)好用 12345678ArrayList&lt;Integer&gt; a&#x3D;new ArrayList&lt;&amp;g">
-<meta property="article:published_time" content="2019-08-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-07T15:10:38.725Z">
+<meta property="og:description" content="Java ReflectionJava Reflection能够在运行期间，在不知道类名，方法等的情况下，能够观察类，接口，属性和方法。 ###访问属性 举个例子 12345678910111213141516171819202122232425import java.lang.reflect.Field;import java.util.HashMap;import java.util.Map;">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202005112054_716.png">
+<meta property="article:published_time" content="2020-05-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-11T15:17:53.157Z">
 <meta property="article:author" content="徐晋">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202005112054_716.png">
 
 
 
@@ -170,13 +172,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.xuxiaojin.com/1160018501.html"/>
+  <link rel="canonical" href="http://blog.xuxiaojin.com/3742925258.html"/>
 
 
 
 
 
-  <title>java中ArrayList、LinkedList、Vector的区别 | 徐小晋的博客</title>
+  <title>spring的IoC | 徐小晋的博客</title>
   
 
 
@@ -348,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/1160018501.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/3742925258.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="徐晋">
@@ -365,7 +367,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java中ArrayList、LinkedList、Vector的区别</h1>
+          <h1 class="post-title" itemprop="name headline">spring的IoC</h1>
         
 
         <div class="post-meta">
@@ -377,8 +379,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-15T00:00:00+08:00">
-                2019-08-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-11T00:00:00+08:00">
+                2020-05-11
               </time>
             
 
@@ -393,8 +395,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-07T23:10:38+08:00">
-                2020-03-07
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-11T23:17:53+08:00">
+                2020-05-11
               </time>
             
 
@@ -409,8 +411,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/1160018501.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/1160018501.html" itemprop="commentCount"></span>
+                <a href="/3742925258.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/3742925258.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -432,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  283
+                  985
                 </span>
               
 
@@ -448,7 +450,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -469,42 +471,44 @@
       
 
       
-        <hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点。</p>
-<h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h3><p>List，是一些有序的元素集合，而Set就没有顺序。</p>
-<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>ArrayList实现可以调整大小的数组，但元素不断被加入时，其大小也会自动调整。ArrayList里的元素可以直接通过get和set的方法来得到，所以比Array(数组)好用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; a=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">a.add(<span class="number">2</span>)</span><br><span class="line"> ...</span><br><span class="line">    </span><br><span class="line">Iterator&lt;Integer&gt; iter=a.iterator();</span><br><span class="line"><span class="keyword">while</span>(iter.hasNext())&#123;</span><br><span class="line">    System.out.println(iter.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="Java-Reflection"><a href="#Java-Reflection" class="headerlink" title="Java Reflection"></a>Java Reflection</h2><p>Java Reflection能够在运行期间，在不知道类名，方法等的情况下，能够观察类，接口，属性和方法。</p>
+<p>###访问属性</p>
+<p>举个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaInvokeDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JavaInvokeDemo</span><span class="params">(<span class="keyword">int</span> count, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;</span><br><span class="line">        JavaInvokeDemo javaInvokeDemo = <span class="keyword">new</span> JavaInvokeDemo(<span class="number">100</span>, <span class="string">"xujin"</span>);</span><br><span class="line"></span><br><span class="line">        Class clazz = JavaInvokeDemo<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">        Map&lt;Object, Object&gt; json = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Field field : clazz.getFields()) &#123;</span><br><span class="line">            json.put(field.getName(), field.get(javaInvokeDemo));</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(json);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><p>LinkedList实现一个双队列的接口，相比于ArrayList在add和remove表现的更好，但是在get和set表现的比较差</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LinkedList&lt;Integer&gt; l=<span class="keyword">new</span> LinedList&lt;Integer&gt;();</span><br><span class="line">l.add(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">Iterator&lt;Integer&gt; it=l.iterator();</span><br><span class="line"><span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">    it.next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以用反射构造JSON格式的数据，像<code>GSON</code>这类工具库。</p>
+<p>但是我在写代码的过程中，发现了一个问题，如果属性的作用域是私有的，那么就不会有结果输出，然后通过查询，发现可以通过一些特殊方法，使得可以访问私有作用域的属性。</p>
+<p><img src="http://cdn.xuxiaojin.com/202005112054_716.png" alt=""></p>
+<p>我们先来看一个概念</p>
+<blockquote>
+<p>getFields() can only be accessed in the class declared as<strong><em>\</em>Public field**</strong>Private field it can’t access .getDeclaredFields() can access the class<strong>All fields</strong>, has nothing to do with public, private, protect.</p>
+</blockquote>
+<p>通过上面我们可以知道getFields只能放回Public修饰的</p>
+<p>getDeclaredFields()可以返回所有访问权限修饰的。所以我们可以通过<code>getDeclaredFields()</code>返回private，然后更改访问权限。就可以访问到private</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaInvokeDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    </span><br><span class="line">    ........</span><br><span class="line">        <span class="keyword">for</span> (Field field : clazz.getDeclaredFields()) &#123;</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            json.put(field.getName(), field.get(javaInvokeDemo));</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(json);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h3><p>vector与ArrayList相似，但是其是同步的。</p>
-<p>当你线程安全的时候，ArrayList是更好的选择，vector和ArrayList需要更多的空间来存储元素。vector每次都会两倍两倍的扩展其大小，但是arraylist不会。</p>
-<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><table>
-<thead>
-<tr>
-<th>method</th>
-<th>ArrayList</th>
-<th>LinkedList</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>get()</td>
-<td>O(1)</td>
-<td>O(n)</td>
-</tr>
-<tr>
-<td>add()</td>
-<td>O(1)</td>
-<td>O(1)</td>
-</tr>
-<tr>
-<td>remove()</td>
-<td>O(n)</td>
-<td>O(n)</td>
-</tr>
-</tbody></table>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>今天换回原来地方，老味道，新刺激。加油。</p>
+<p>如果要访问一个静态的变量的话，我们不要传入一个引用，只要一个null就可以，因为静态变量是类的作用域，所用该类的实例共享</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class clazz = JavaInvokeDemo<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">      Field field = clazz.getField(<span class="string">"mesage"</span>);</span><br><span class="line">      System.out.println(field.get(<span class="keyword">null</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="访问方法"><a href="#访问方法" class="headerlink" title="访问方法"></a>访问方法</h3><p>有了上面的基础，我们可以很简单的想到如何去访问方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaInvokeDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JavaInvokeDemo</span><span class="params">(<span class="keyword">int</span> count, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">descript</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"count is "</span> + <span class="keyword">this</span>.count + <span class="string">" name is "</span> + <span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line"></span><br><span class="line">        JavaInvokeDemo javaInvokeDemo = <span class="keyword">new</span> JavaInvokeDemo(<span class="number">10</span>, <span class="string">"xujin"</span>);</span><br><span class="line">        Class clazz = JavaInvokeDemo<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">        Method descriptMethod = clazz.getMethod(<span class="string">"descript"</span>);</span><br><span class="line">        descriptMethod.invoke(javaInvokeDemo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何实现反射"><a href="#如何实现反射" class="headerlink" title="如何实现反射"></a>如何实现反射</h2><p>这部分知识有点难，稍微学习下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">target</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Exception(<span class="string">"#"</span>+i).printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line">        Class&lt;?&gt; klass=Class.forName(<span class="string">"Test"</span>);</span><br><span class="line">        Method method=klass.getMethod(<span class="string">"target"</span>, <span class="keyword">int</span><span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        method.invoke(<span class="keyword">null</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">java.lang.Exception: #0</span></span><br><span class="line"><span class="comment">	at Test.target(Test.java:6)</span></span><br><span class="line"><span class="comment">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span></span><br><span class="line"><span class="comment">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span></span><br><span class="line"><span class="comment">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span></span><br><span class="line"><span class="comment">	at java.lang.reflect.Method.invoke(Method.java:498)</span></span><br><span class="line"><span class="comment">	at Test.main(Test.java:12)</span></span><br><span class="line"><span class="comment">	**/</span></span><br></pre></td></tr></table></figure>
+
+<p>通过打印栈，我们可以看到先调用了Method.invoke，然后进入委托实现，在进入本地实现，最后进入目标方法</p>
+<p>中间有一个委托实现，是因为Java的反射调用机制还设立一个动态生成字节码的实现，直接使用invoke来实现，使用委托实现能够在本地实现及动态实现中切换</p>
+<p>动态实现的效率要快，因为不需要经过Java到C++在到Java的过程，但是如果只调用一次，反而更慢，因为生成字节码的过程中反而更慢。所以JVM设置一个阈值15，如果调用在15之下，采用本地实现。在15时，便生成动态字节码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java.lang.Exception: #19</span><br><span class="line">	at Test.target(Test.java:<span class="number">6</span>)</span><br><span class="line">	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>)</span><br><span class="line">	at Test.main(Test.java:<span class="number">13</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="反射小结"><a href="#反射小结" class="headerlink" title="反射小结"></a>反射小结</h2><p>通过上面反射的实现机制，我们可以看到反射的性能其实是不高的。</p>
+<p>但是Spring里面用反射实现了很多操作</p>
+<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="http://tutorials.jenkov.com/java-reflection/private-fields-and-methods.html" target="_blank" rel="noopener">Java Reflection - Private Fields and Methods</a></li>
+<li>[<a href="http://www.programmersought.com/article/9551359183/]" target="_blank" rel="noopener">http://www.programmersought.com/article/9551359183/]</a>(The difference between getFields() and getDeclaredFields() in class name .class)</li>
+<li><a href="https://time.geekbang.org/column/article/12192" target="_blank" rel="noopener">JVM是如何实现反射的？</a></li>
+<li></li>
+</ol>
 
       
     </div>
@@ -534,38 +538,38 @@
   <!-- 本文标题 -->
   <li>
     <strong>本文标题： </strong>
-    java中ArrayList、LinkedList、Vector的区别
+    spring的IoC
   </li>
 
   <!-- 本文作者 -->
   <li class="post-copyright-author">
     <strong>本文作者： </strong>
-    Xuxiaojin   |  徐小晋
+    XuxiaoJin   |  徐小晋
   </li>
 
   <!-- 创建时间 -->
   <li>
     <strong>创建于： </strong>
-    2019年08月15日 - 00时08分
+    2020年05月11日 - 00时05分
   </li>
 
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月07日 - 23时03分
+    2020年05月11日 - 23时05分
   </li>
 
   <!-- 引用链接 -->
   <li class="post-copyright-link">
     <strong>引用链接：</strong>
-    <a href="http://blog.xuxiaojin.com/1160018501.html" title="java中ArrayList、LinkedList、Vector的区别"
-      >http://blog.xuxiaojin.com/1160018501.html</a
+    <a href="http://blog.xuxiaojin.com/3742925258.html" title="spring的IoC"
+      >http://blog.xuxiaojin.com/3742925258.html</a
     >
     <span class="copy-path" title="点击复制引用链接"
       ><i
         style="cursor: pointer"
         class="fa fa-clipboard"
-        data-clipboard-text="[Xuxiaojin's Blog | java中ArrayList、LinkedList、Vector的区别](http://blog.xuxiaojin.com/1160018501.html)"
+        data-clipboard-text="[XuxiaoJin's Blog | spring的IoC](http://blog.xuxiaojin.com/3742925258.html)"
         aria-label="post.copy_success"
       ></i
     ></span>
@@ -603,7 +607,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+            <a href="/tags/spring/" rel="tag"><i class="fa fa-tag"></i> spring</a>
           
         </div>
       
@@ -616,8 +620,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2399757600.html" rel="next" title="java中Integer与int的区别">
-                <i class="fa fa-chevron-left"></i> java中Integer与int的区别
+              <a href="/1547187792.html" rel="next" title="Liunx进程命令">
+                <i class="fa fa-chevron-left"></i> Liunx进程命令
               </a>
             
           </div>
@@ -625,10 +629,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/605738871.html" rel="prev" title="SpringBoot 使用https">
-                SpringBoot 使用https <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -786,7 +786,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList"><span class="nav-number">1.2.</span> <span class="nav-text">ArrayList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedList"><span class="nav-number">1.3.</span> <span class="nav-text">LinkedList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vector"><span class="nav-number">1.4.</span> <span class="nav-text">Vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number">1.5.</span> <span class="nav-text">时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">2.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Reflection"><span class="nav-number">1.</span> <span class="nav-text">Java Reflection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问方法"><span class="nav-number">1.1.</span> <span class="nav-text">访问方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何实现反射"><span class="nav-number">2.</span> <span class="nav-text">如何实现反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射小结"><span class="nav-number">3.</span> <span class="nav-text">反射小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">4.</span> <span class="nav-text">IOC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
