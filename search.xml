@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Python实现关联规则的笔记</title>
+    <url>/1583838332.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是个实验，自己一开始虽然知道算法很简单，但是写不出来</p>
+<p>有点菜</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="支持度"><a href="#支持度" class="headerlink" title="支持度"></a>支持度</h3><p>支持度表示某个商品组合出现的次数与总次数之间的比例，支持度越高表示这个组合出现的概率越高</p>
+<h3 id="置信度"><a href="#置信度" class="headerlink" title="置信度"></a>置信度</h3><p>条件概率，即购买了A多大概率会购买B。</p>
+<p>有关规则如{‘鸡蛋’,’面包’}-&gt;{‘牛奶’} 置信度计算公式为{‘鸡蛋’,’面包’,’牛奶’}的支持度/{‘鸡蛋’,’面包’}的支持度</p>
+<h3 id="提升度"><a href="#提升度" class="headerlink" title="提升度"></a>提升度</h3><p>单单看上面的支持度和置信度并不能够很好为推荐决策，所以我们可以通过提升度。提升度指的是购买A对购买B提升了多少</p>
+<p>提升度(A-&gt;B)=置信度(A-&gt;B)/支持度(B)</p>
+<h3 id="频繁项集"><a href="#频繁项集" class="headerlink" title="频繁项集"></a>频繁项集</h3><p>表示组合的支持度大于等于最小的支持度的项集</p>
+<p>##Apriori算法</p>
+<p>基本思路</p>
+<ol>
+<li>首先找到一项集，然后通过找到符合最小支持度的商品</li>
+<li>在k项集中组合k+1，判断是否满足最小支持度</li>
+<li>重复2，直到k+1项的集合为空</li>
+</ol>
+<h2 id="FP-growth"><a href="#FP-growth" class="headerlink" title="FP-growth"></a>FP-growth</h2><p>FP-growth的步骤分为两步，包括构建FP树，从FP树中挖掘频繁集</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><table>
+<thead>
+<tr>
+<th>数据集</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a,b,c</td>
+</tr>
+<tr>
+<td>c,d,b,a</td>
+</tr>
+<tr>
+<td>d,e,a</td>
+</tr>
+<tr>
+<td>b,a</td>
+</tr>
+</tbody></table>
+<p>最小支持度为2</p>
+<p>首先统计 a:4 b:3 c:2 d:2 e:1</p>
+<p>因为e不满足最小支持度，去掉</p>
+<p>再对每个数据集通过支持度进行一个排序</p>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>调整后的数据集</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a,b,c</td>
+<td>a,b,c</td>
+</tr>
+<tr>
+<td>c,d,b,a</td>
+<td>a,b,c,d</td>
+</tr>
+<tr>
+<td>d,e,a</td>
+<td>a,d</td>
+</tr>
+<tr>
+<td>b,a</td>
+<td>a,b</td>
+</tr>
+</tbody></table>
+<p>接着通过调整后的数据集创建FP树，同时更新头指针表</p>
+<p>这个比较负载可以看文末的链接</p>
+<p>可以得到频繁集为</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>频繁项集</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a</td>
+<td>{a}</td>
+</tr>
+<tr>
+<td>b</td>
+<td>{b},{b,a}</td>
+</tr>
+<tr>
+<td>c</td>
+<td>{c},{c,a},{c,b},{c,b,a}</td>
+</tr>
+<tr>
+<td>d</td>
+<td>{d},{d,a}</td>
+</tr>
+</tbody></table>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>自己写的代码跑出来的时间很长</p>
+<p>然后在群里看到优化方法</p>
+<p>就是二项集通过遍历，找到就行。</p>
+<p><img src="http://cdn.xuxiaojin.com/202005201545_611.png" alt=""></p>
+<p>直接从4000s降到50s。太强了</p>
+<p><img src="http://cdn.xuxiaojin.com/202005201557_345.png" alt=""></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><p><a href="https://time.geekbang.org/column/article/82628" target="_blank" rel="noopener">关联规则挖掘（上）：如何用Apriori发现用户购物规则？</a></p>
+</li>
+<li><p><a href="https://www.ibm.com/developerworks/cn/analytics/library/machine-learning-hands-on2-fp-growth/index.html" target="_blank" rel="noopener">频繁项集与关联规则 FP-growth 的原理和实现</a></p>
+</li>
+<li><p><a href="https://paste.ubuntu.com/p/3RqBy4QN9r/" target="_blank" rel="noopener">50s的代码</a></p>
+</li>
+<li><p><a href="https://www.cnblogs.com/90zeng/p/apriori.html" target="_blank" rel="noopener">基于Python的机器学习实战：Apriori</a></p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+        <tag>Apriori</tag>
+        <tag>FP-growth</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Logback日志</title>
     <url>/958704782.html</url>
     <content><![CDATA[<hr>
@@ -2369,26 +2486,84 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBootApplication文档翻译</title>
-    <url>/1324367350.html</url>
+    <title>Build Systems文档翻译</title>
+    <url>/4044010014.html</url>
     <content><![CDATA[<hr>
-<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
+<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
+<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
+<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
+<blockquote>
+<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
+<p>但是我们强烈建议你不要写上version</p>
+</blockquote>
+<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
 <ul>
-<li>@EnableAutoConfiguration</li>
-<li>@ComponentScan</li>
-<li>@Configuration</li>
+<li>Java 1.8 作为默认的编译级别</li>
+<li>源代码通过UTF-8编码</li>
+<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
+<li>一个执行的repackage goal</li>
+<li>必要的资源筛选</li>
+<li>必要的插件配置</li>
+<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
 </ul>
-<p>如下面这个例子</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
-<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
-<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
-<p>也可以讲远程的debugger绑定到你的应用程序。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
+</blockquote>
+<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
+<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
-<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
+<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
+</blockquote>
+<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
+<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
+<blockquote>
+<p>命名里奥妙</p>
+<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
+<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
+</blockquote>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
+<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
+<li>以后依赖不写版本，通过springboot的依赖管理</li>
+<li>观察自己引入的依赖是以什么开头</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Structuring Your Code文档翻译</title>
+    <url>/2026129430.html</url>
+    <content><![CDATA[<hr>
+<h1 id="结构化你的代码-组织你的代码"><a href="#结构化你的代码-组织你的代码" class="headerlink" title="结构化你的代码(组织你的代码)"></a>结构化你的代码(组织你的代码)</h1><p>springboot并不需要特别的代码样式才能工作，但是这里有一些很好的练习能够帮助。</p>
+<h2 id="使用默认的包"><a href="#使用默认的包" class="headerlink" title="使用默认的包"></a>使用默认的包</h2><p>当一个类不包含任何包的声明，它会被认为是默认的包。使用默认的包通常是不被鼓励的并且需要防范的。当springboot应用使用@ComponentScan @EntityScan 或者@SpringBootApplication注解时，会导致特别的问题，因为每一个jar里的类都会被读取。</p>
+<blockquote>
+<p>我们建议你遵循java中建议的包命名约定 例如 com.example.project</p>
+</blockquote>
+<h2 id="找到主要的应用程序类"><a href="#找到主要的应用程序类" class="headerlink" title="找到主要的应用程序类"></a>找到主要的应用程序类</h2><p>我们真诚的建议你在有一个root package找到自己主要的应用程序类，@SpringBootApplication注解通常会被放到你的主类，并且隐式的定义了某些项的搜索类。例如，如果你正在编写一个jpa应用，通过@SpringBootApplication注解的类会被找到被@Entity注解的类。使用根包也会允许组件扫描只应用在你的文件。</p>
+<blockquote>
+<p>如果你不想使用@SpringBootApplication注解，@EnableAutoConfiguration和@ComponentScan注解可以用来替代，完成相同的行为</p>
+</blockquote>
+<p>下面显示一种通常的样式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com</span><br><span class="line"> +- example</span><br><span class="line">     +- myapplication</span><br><span class="line">         +- Application.java</span><br><span class="line">         |</span><br><span class="line">         +- customer</span><br><span class="line">         |   +- Customer.java</span><br><span class="line">         |   +- CustomerController.java</span><br><span class="line">         |   +- CustomerService.java</span><br><span class="line">         |   +- CustomerRepository.java</span><br><span class="line">         |</span><br><span class="line">         +- order</span><br><span class="line">             +- Order.java</span><br><span class="line">             +- OrderController.java</span><br><span class="line">             +- OrderService.java</span><br><span class="line">             +- OrderRepository.java</span><br></pre></td></tr></table></figure>
+
+<p>Application.java会实现main方法，还有@SpringBootApplication.如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html" target="_blank" rel="noopener">Structuring Your Code</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><ol>
+<li>springbootapplication会自动扫描相关组件</li>
+<li>最好是要有包的区分，强烈建议</li>
+<li>官方给的那种形式其实用的比较少吧！还是现在用的形式好，不过官方这种突然想想也挺好的，改起来特别容易，不用来回找，像小程序那样。</li>
+</ol>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -2471,84 +2646,26 @@
       </tags>
   </entry>
   <entry>
-    <title>Structuring Your Code文档翻译</title>
-    <url>/2026129430.html</url>
+    <title>SpringBootApplication文档翻译</title>
+    <url>/1324367350.html</url>
     <content><![CDATA[<hr>
-<h1 id="结构化你的代码-组织你的代码"><a href="#结构化你的代码-组织你的代码" class="headerlink" title="结构化你的代码(组织你的代码)"></a>结构化你的代码(组织你的代码)</h1><p>springboot并不需要特别的代码样式才能工作，但是这里有一些很好的练习能够帮助。</p>
-<h2 id="使用默认的包"><a href="#使用默认的包" class="headerlink" title="使用默认的包"></a>使用默认的包</h2><p>当一个类不包含任何包的声明，它会被认为是默认的包。使用默认的包通常是不被鼓励的并且需要防范的。当springboot应用使用@ComponentScan @EntityScan 或者@SpringBootApplication注解时，会导致特别的问题，因为每一个jar里的类都会被读取。</p>
-<blockquote>
-<p>我们建议你遵循java中建议的包命名约定 例如 com.example.project</p>
-</blockquote>
-<h2 id="找到主要的应用程序类"><a href="#找到主要的应用程序类" class="headerlink" title="找到主要的应用程序类"></a>找到主要的应用程序类</h2><p>我们真诚的建议你在有一个root package找到自己主要的应用程序类，@SpringBootApplication注解通常会被放到你的主类，并且隐式的定义了某些项的搜索类。例如，如果你正在编写一个jpa应用，通过@SpringBootApplication注解的类会被找到被@Entity注解的类。使用根包也会允许组件扫描只应用在你的文件。</p>
-<blockquote>
-<p>如果你不想使用@SpringBootApplication注解，@EnableAutoConfiguration和@ComponentScan注解可以用来替代，完成相同的行为</p>
-</blockquote>
-<p>下面显示一种通常的样式：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com</span><br><span class="line"> +- example</span><br><span class="line">     +- myapplication</span><br><span class="line">         +- Application.java</span><br><span class="line">         |</span><br><span class="line">         +- customer</span><br><span class="line">         |   +- Customer.java</span><br><span class="line">         |   +- CustomerController.java</span><br><span class="line">         |   +- CustomerService.java</span><br><span class="line">         |   +- CustomerRepository.java</span><br><span class="line">         |</span><br><span class="line">         +- order</span><br><span class="line">             +- Order.java</span><br><span class="line">             +- OrderController.java</span><br><span class="line">             +- OrderService.java</span><br><span class="line">             +- OrderRepository.java</span><br></pre></td></tr></table></figure>
-
-<p>Application.java会实现main方法，还有@SpringBootApplication.如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html" target="_blank" rel="noopener">Structuring Your Code</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><ol>
-<li>springbootapplication会自动扫描相关组件</li>
-<li>最好是要有包的区分，强烈建议</li>
-<li>官方给的那种形式其实用的比较少吧！还是现在用的形式好，不过官方这种突然想想也挺好的，改起来特别容易，不用来回找，像小程序那样。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Build Systems文档翻译</title>
-    <url>/4044010014.html</url>
-    <content><![CDATA[<hr>
-<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
-<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
-<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
-<blockquote>
-<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
-<p>但是我们强烈建议你不要写上version</p>
-</blockquote>
-<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
+<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
 <ul>
-<li>Java 1.8 作为默认的编译级别</li>
-<li>源代码通过UTF-8编码</li>
-<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
-<li>一个执行的repackage goal</li>
-<li>必要的资源筛选</li>
-<li>必要的插件配置</li>
-<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
+<li>@EnableAutoConfiguration</li>
+<li>@ComponentScan</li>
+<li>@Configuration</li>
 </ul>
-<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如下面这个例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
-</blockquote>
-<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
-<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
+<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
+<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
+<p>也可以讲远程的debugger绑定到你的应用程序。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
 
-<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
-</blockquote>
-<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
-<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
-<blockquote>
-<p>命名里奥妙</p>
-<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
-<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
-</blockquote>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
-<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
-<li>以后依赖不写版本，通过springboot的依赖管理</li>
-<li>观察自己引入的依赖是以什么开头</li>
-</ol>
+<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
+<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -2627,6 +2744,44 @@
       </tags>
   </entry>
   <entry>
+    <title>Auto-configuration文档翻译</title>
+    <url>/1608351778.html</url>
+    <content><![CDATA[<hr>
+<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
+<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
+<blockquote>
+<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
+</blockquote>
+<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
+<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
+<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Configuration Classes文档翻译</title>
+    <url>/316142548.html</url>
+    <content><![CDATA[<hr>
+<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
+<blockquote>
+<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
+</blockquote>
+<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
+<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Developing Your First SpringBoot Application文档翻译</title>
     <url>/1113545103.html</url>
     <content><![CDATA[<hr>
@@ -2675,44 +2830,6 @@
 <li>main方法是通过run转移到springbootapplication</li>
 <li>打成jar包需要在pom下添加plugins</li>
 </ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Auto-configuration文档翻译</title>
-    <url>/1608351778.html</url>
-    <content><![CDATA[<hr>
-<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
-<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
-<blockquote>
-<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
-</blockquote>
-<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
-<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
-<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Configuration Classes文档翻译</title>
-    <url>/316142548.html</url>
-    <content><![CDATA[<hr>
-<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
-<blockquote>
-<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
-</blockquote>
-<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
-<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -4022,6 +4139,37 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot开发Web应用</title>
+    <url>/764686384.html</url>
+    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
+<p>在application.properties下添加</p>
+<p>spring.mvc.static-path-pattern=/static/**</p>
+<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
+<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>html文件建立在src/main/resources下的templates文件夹下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<ol>
+<li>Controller返回的是视图 index.html</li>
+<li>ModelMap</li>
+</ol>
+<blockquote>
+<p>Modal can supply attributes used for rendering views</p>
+<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
+</blockquote>
+<p>打开浏览器localhost:8080即可访问到</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot的JDBC操作数据库</title>
     <url>/81179857.html</url>
     <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
@@ -4116,37 +4264,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot开发Web应用</title>
-    <url>/764686384.html</url>
-    <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
-<p>在application.properties下添加</p>
-<p>spring.mvc.static-path-pattern=/static/**</p>
-<p>就可以访问到static文件夹的静态资源 例如访问localhost:8080/static/**.jpg</p>
-<h3 id="使用Thymeleaf来渲染Web页面"><a href="#使用Thymeleaf来渲染Web页面" class="headerlink" title="使用Thymeleaf来渲染Web页面"></a>使用Thymeleaf来渲染Web页面</h3><p>在pom文件下引入依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>html文件建立在src/main/resources下的templates文件夹下</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">th:text</span>=<span class="string">"$&#123;host&#125;"</span>&gt;</span>徐小晋博客<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在controller</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(ModelMap map)</span></span>&#123;</span><br><span class="line">        map.addAttribute(<span class="string">"host"</span>,<span class="string">"https://jiayouxujin.github.io/"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释</p>
-<ol>
-<li>Controller返回的是视图 index.html</li>
-<li>ModelMap</li>
-</ol>
-<blockquote>
-<p>Modal can supply attributes used for rendering views</p>
-<p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
-</blockquote>
-<p>打开浏览器localhost:8080即可访问到</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>构建第一个SpringBoot应用程序</title>
     <url>/2958751061.html</url>
     <content><![CDATA[<h3 id="SpringBoot是什么"><a href="#SpringBoot是什么" class="headerlink" title="SpringBoot是什么"></a>SpringBoot是什么</h3><p>简化各种配置，让你专注与你的业务逻辑。</p>
@@ -4203,24 +4320,6 @@
       </tags>
   </entry>
   <entry>
-    <title>python异常与模块化</title>
-    <url>/2483463584.html</url>
-    <content><![CDATA[<p>###异常处理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>还有一种常见形式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
-
-<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
-<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux一些常见的命令行</title>
     <url>/2560767953.html</url>
     <content><![CDATA[<hr>
@@ -4265,6 +4364,24 @@
 ]]></content>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python异常与模块化</title>
+    <url>/2483463584.html</url>
+    <content><![CDATA[<p>###异常处理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>还有一种常见形式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+
+<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
+<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
+]]></content>
+      <tags>
+        <tag>编程语言</tag>
       </tags>
   </entry>
   <entry>
@@ -4332,57 +4449,6 @@
 <p>元组tuple，通过()表示，可以存储各种各样的数据类型，有顺序，其长度不可发生改变，可以任意访问，增加通过+会创建一个新的元组</p>
 <p>字典dict，通过{}表示，存储键值对，长度可以改变，可以通过hash的访问，任意删除，增加，修改</p>
 <p>集合set，通过{},相对于字典存储值，长度可变，访问不可通过索引，只能通过in，可以添加add(),可以删除remove()</p>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python的字符串</title>
-    <url>/4045311999.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要对python的字符串操作进行探讨与分析</p>
-<h4 id="字符串基础"><a href="#字符串基础" class="headerlink" title="字符串基础"></a>字符串基础</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">'jason'</span></span><br><span class="line">city=<span class="string">'''shanghai'''</span></span><br><span class="line">text=<span class="string">"welcome to shanghai"</span></span><br><span class="line">print(name)</span><br><span class="line">print(city)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure>
-
-<p>python的字符串通常包含在单引号，双引号以及三引号中</p>
-<h4 id="字符串的常用操作"><a href="#字符串的常用操作" class="headerlink" title="字符串的常用操作"></a>字符串的常用操作</h4><p>可以将字符串想象成由单个字符组成的数组，即python的字符串支持索引，切片和遍历等</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">print(name[<span class="number">0</span>])</span><br><span class="line">print(name[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> name:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
-
-<p>其中特别要注意的就是python的字符串是不可变的(immutable)这一点跟元组有点类似</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">name[<span class="number">0</span>]=<span class="string">'j'</span></span><br><span class="line"><span class="comment">#报错，'str' object does not support item assignment</span></span><br></pre></td></tr></table></figure>
-
-<p>所以跟元组类似，如果要改变python的字符串，只能通过创建新的字符串来完成</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">a=<span class="string">'j'</span>+name[<span class="number">1</span>:]</span><br><span class="line">print(a)</span><br><span class="line">b=name.replace(<span class="string">'X'</span>,<span class="string">'j'</span>)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
-
-<p>接着我们来看+=操作符的字符串拼接方法</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">'Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin'</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">print(firstname)</span><br><span class="line"></span><br><span class="line"><span class="comment">#在拼接的时候，python解释器首先会检测是否还有其他引用，如果没有的话会在原地扩充字符串buffer的大小(后面要跟stringBuild联系起来)</span></span><br></pre></td></tr></table></figure>
-
-<p>我们再看一下字符串的分割函数split(separator),表示把字符串分割成子字符串，并且返回一个分割后的字符串组合的里列表</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=firstname.split(<span class="string">" "</span>) <span class="comment">#以空格分隔</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> a:</span><br><span class="line">    print(item)</span><br></pre></td></tr></table></figure>
-
-<p>还需要看一下字符串处理的操作</p>
-<ul>
-<li>string.strip(str),去掉<strong>首尾</strong>的str字符串</li>
-<li>string.lstrip(str),去掉<strong>开头</strong>的str字符串</li>
-<li>string.rstrip(str)去掉<strong>尾部</strong>的str字符串</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">' Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin '</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">a=firstname.strip(<span class="string">' '</span>)</span><br><span class="line">b=firstname.lstrip(<span class="string">' '</span>)</span><br><span class="line">c=firstname.rstrip(<span class="string">' '</span>)</span><br><span class="line">print(firstname)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment">#用来去掉空格很有效果，验证密码什么的</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h4><p>先来看一个例子</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id:&#123;&#125;,name:&#123;&#125;'</span>.format(id,name))</span><br></pre></td></tr></table></figure>
-
-<p>这里的string.format()就是**格式化函数，而{}就是格式符，用来为后面的真实值预留位置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id: %s,name: %s'</span>%(id,name))</span><br></pre></td></tr></table></figure>
-
-<p>这个是之前python版本处理相通功能的做法，当然我更喜欢用{}因为这样看起来比较规范</p>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>这篇文章主要讨论了python的字符串，总结一下</p>
-<ol>
-<li>python的字符串三种表现形式</li>
-<li>python字符串的操作，索引，切片，遍历，拼接，分割，处理</li>
-<li>python的字符的格式化，用来处理一些日志</li>
-<li>python的字符串是不可变的与元组相同</li>
-</ol>
-<p>好了~可以滚去复习了，考试周来了！</p>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
@@ -4460,37 +4526,54 @@
       </tags>
   </entry>
   <entry>
-    <title>攻克链表难关</title>
-    <url>/205465454.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>链表一直是我比较怕的东西，其实应该是我没有理解指针的定义。</p>
-<p>我需要从机器的角度思考，机器可不会存储“箭头”，机器存储的是“地址”。当我明白了这个的时候，我瞬间感觉自己好像有点恍然大悟。</p>
-<h4 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h4><p>#####思路</p>
-<p>每一个节点都可以通过其的前驱节点找到，即pre-&gt;next表示的就是当前节点 pre-&gt;next-&gt;next表示当前节点的要存储的地址，如果是反转的话应该就是 pre-&gt;next-&gt;next=pre;这样就反转了。</p>
-<h5 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h5><p>通过上面思路，很容易想到我们可以通过递归的方法，从后往前，因为后面的节点总能够被前面节点找到，如果前面节点没有发生改变。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(head==<span class="literal">NULL</span>||head-&gt;next==<span class="literal">NULL</span>) <span class="keyword">return</span> head;</span><br><span class="line">       </span><br><span class="line">       ListNode* p=reverseList(head-&gt;next);</span><br><span class="line">       </span><br><span class="line">       head-&gt;next-&gt;next=head;</span><br><span class="line">       head-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">       <span class="keyword">return</span> p;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+    <title>python的字符串</title>
+    <url>/4045311999.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要对python的字符串操作进行探讨与分析</p>
+<h4 id="字符串基础"><a href="#字符串基础" class="headerlink" title="字符串基础"></a>字符串基础</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">'jason'</span></span><br><span class="line">city=<span class="string">'''shanghai'''</span></span><br><span class="line">text=<span class="string">"welcome to shanghai"</span></span><br><span class="line">print(name)</span><br><span class="line">print(city)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure>
 
-<p>还可以不通过使用递归的方法，这个时候我们从头开始遍历，但是呢会出现一个问题，那就是你前面节点改变了，你后面的节点可能就找不到了，所以这个时候要存下两个节点，即当前节点和pre</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">      ListNode *pre=<span class="literal">NULL</span>;</span><br><span class="line">      ListNode *curr=head;</span><br><span class="line">       </span><br><span class="line">      <span class="keyword">while</span>(curr!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">          ListNode *nextNode=curr-&gt;next;</span><br><span class="line">          curr-&gt;next=pre;</span><br><span class="line">          pre=curr;</span><br><span class="line">          curr=nextNode;</span><br><span class="line">      &#125;</span><br><span class="line">       <span class="keyword">return</span> pre;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>python的字符串通常包含在单引号，双引号以及三引号中</p>
+<h4 id="字符串的常用操作"><a href="#字符串的常用操作" class="headerlink" title="字符串的常用操作"></a>字符串的常用操作</h4><p>可以将字符串想象成由单个字符组成的数组，即python的字符串支持索引，切片和遍历等</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">print(name[<span class="number">0</span>])</span><br><span class="line">print(name[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> name:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
 
-<h4 id="链表中环的检测"><a href="#链表中环的检测" class="headerlink" title="链表中环的检测"></a>链表中环的检测</h4><h5 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h5><p>使用快慢指针，类似于跑步，当两个人的速度一快一慢的时候，总能够在环形跑道上相遇，利用这个特点，可以很好的用来判断链表中是否有环。</p>
-<h5 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">hasCycle</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(head==<span class="literal">NULL</span>||head-&gt;next==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        ListNode *slow=head;</span><br><span class="line">        ListNode *fast=head-&gt;next;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(fast!=slow)&#123;</span><br><span class="line">            <span class="keyword">if</span>(fast==<span class="literal">NULL</span>||fast-&gt;next==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            slow=slow-&gt;next;</span><br><span class="line">            fast=fast-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其中特别要注意的就是python的字符串是不可变的(immutable)这一点跟元组有点类似</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">name[<span class="number">0</span>]=<span class="string">'j'</span></span><br><span class="line"><span class="comment">#报错，'str' object does not support item assignment</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="合并两个有序链表"><a href="#合并两个有序链表" class="headerlink" title="合并两个有序链表"></a>合并两个有序链表</h4><h5 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h5><p>合并有序链表，其实跟排序中的归并排序类似，不过呢这里是通过链表存储的数据，对于单链表来说，如果没有头结点的话，是找不到这个单链表，所以对于单链表来说头结点很重要。</p>
-<h5 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        ListNode *preHead=<span class="keyword">new</span> ListNode(<span class="number">-1</span>);</span><br><span class="line">        ListNode *pre=preHead;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(l1!=<span class="literal">NULL</span>&amp;&amp;l2!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l1-&gt;val&lt;l2-&gt;val)&#123;</span><br><span class="line">                pre-&gt;next=l1;</span><br><span class="line">                l1=l1-&gt;next;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                pre-&gt;next=l2;</span><br><span class="line">                l2=l2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            pre=pre-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        pre-&gt;next=l1!=<span class="literal">NULL</span>?l1:l2;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> preHead-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>所以跟元组类似，如果要改变python的字符串，只能通过创建新的字符串来完成</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">a=<span class="string">'j'</span>+name[<span class="number">1</span>:]</span><br><span class="line">print(a)</span><br><span class="line">b=name.replace(<span class="string">'X'</span>,<span class="string">'j'</span>)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
 
-<h4 id="删除链表倒数第N个节点"><a href="#删除链表倒数第N个节点" class="headerlink" title="删除链表倒数第N个节点"></a>删除链表倒数第N个节点</h4><h5 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h5><p>删除链表节点好做，但是我需要找到倒数的第N+1个节点，可以通过双指针，这两个指针相差N个节点，当一个指针走到最后一个节点的时候，前一个指针正好走到倒数第N个节点，在进行微调一下。</p>
-<h5 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h5><p>思路虽然想出来了，但是实现中却也碰到一些问题，那就是如果只有一个节点呢，参考了题解，恍然大悟，增加一个哨兵，可以解决这个问题。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        ListNode* dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        dummy-&gt;next=head;</span><br><span class="line">        ListNode* first=dummy;</span><br><span class="line">        ListNode* second=dummy;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)&#123;</span><br><span class="line">            first=first-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(first!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            first=first-&gt;next;</span><br><span class="line">            second=second-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        second-&gt;next=second-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> dummy-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>接着我们来看+=操作符的字符串拼接方法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">'Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin'</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">print(firstname)</span><br><span class="line"></span><br><span class="line"><span class="comment">#在拼接的时候，python解释器首先会检测是否还有其他引用，如果没有的话会在原地扩充字符串buffer的大小(后面要跟stringBuild联系起来)</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="求链表的中间节点"><a href="#求链表的中间节点" class="headerlink" title="求链表的中间节点"></a>求链表的中间节点</h4><h5 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h5><p>继续使用快慢指针，快的指针每次会比慢指针多走一步，这样当快指针到达链表尾部时，慢指针正好在链表的中间</p>
-<h5 id="核心代码-4"><a href="#核心代码-4" class="headerlink" title="核心代码"></a>核心代码</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">middleNode</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        ListNode *fast=head;</span><br><span class="line">        ListNode *slow=head;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(fast!=<span class="literal">NULL</span>&amp;&amp;fast-&gt;next!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            slow=slow-&gt;next;</span><br><span class="line">            fast=fast-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们再看一下字符串的分割函数split(separator),表示把字符串分割成子字符串，并且返回一个分割后的字符串组合的里列表</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=firstname.split(<span class="string">" "</span>) <span class="comment">#以空格分隔</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> a:</span><br><span class="line">    print(item)</span><br></pre></td></tr></table></figure>
 
-<h4 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h4><p>通过以上的训练，我们基本上理清楚了链表的Next存的是什么，是地址所以只要把握这个原则就可以很好的理解很多链表相关的东西。</p>
-<h4 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h4><p>LeetCode 206,141,21,19,876</p>
+<p>还需要看一下字符串处理的操作</p>
+<ul>
+<li>string.strip(str),去掉<strong>首尾</strong>的str字符串</li>
+<li>string.lstrip(str),去掉<strong>开头</strong>的str字符串</li>
+<li>string.rstrip(str)去掉<strong>尾部</strong>的str字符串</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">' Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin '</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">a=firstname.strip(<span class="string">' '</span>)</span><br><span class="line">b=firstname.lstrip(<span class="string">' '</span>)</span><br><span class="line">c=firstname.rstrip(<span class="string">' '</span>)</span><br><span class="line">print(firstname)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment">#用来去掉空格很有效果，验证密码什么的</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h4><p>先来看一个例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id:&#123;&#125;,name:&#123;&#125;'</span>.format(id,name))</span><br></pre></td></tr></table></figure>
+
+<p>这里的string.format()就是**格式化函数，而{}就是格式符，用来为后面的真实值预留位置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id: %s,name: %s'</span>%(id,name))</span><br></pre></td></tr></table></figure>
+
+<p>这个是之前python版本处理相通功能的做法，当然我更喜欢用{}因为这样看起来比较规范</p>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>这篇文章主要讨论了python的字符串，总结一下</p>
+<ol>
+<li>python的字符串三种表现形式</li>
+<li>python字符串的操作，索引，切片，遍历，拼接，分割，处理</li>
+<li>python的字符的格式化，用来处理一些日志</li>
+<li>python的字符串是不可变的与元组相同</li>
+</ol>
+<p>好了~可以滚去复习了，考试周来了！</p>
 ]]></content>
       <tags>
-        <tag>数据结构与算法</tag>
-        <tag>链表</tag>
+        <tag>编程语言</tag>
       </tags>
   </entry>
   <entry>
@@ -4523,6 +4606,40 @@
       <tags>
         <tag>数据结构与算法</tag>
         <tag>图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>攻克链表难关</title>
+    <url>/205465454.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>链表一直是我比较怕的东西，其实应该是我没有理解指针的定义。</p>
+<p>我需要从机器的角度思考，机器可不会存储“箭头”，机器存储的是“地址”。当我明白了这个的时候，我瞬间感觉自己好像有点恍然大悟。</p>
+<h4 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h4><p>#####思路</p>
+<p>每一个节点都可以通过其的前驱节点找到，即pre-&gt;next表示的就是当前节点 pre-&gt;next-&gt;next表示当前节点的要存储的地址，如果是反转的话应该就是 pre-&gt;next-&gt;next=pre;这样就反转了。</p>
+<h5 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h5><p>通过上面思路，很容易想到我们可以通过递归的方法，从后往前，因为后面的节点总能够被前面节点找到，如果前面节点没有发生改变。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(head==<span class="literal">NULL</span>||head-&gt;next==<span class="literal">NULL</span>) <span class="keyword">return</span> head;</span><br><span class="line">       </span><br><span class="line">       ListNode* p=reverseList(head-&gt;next);</span><br><span class="line">       </span><br><span class="line">       head-&gt;next-&gt;next=head;</span><br><span class="line">       head-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">       <span class="keyword">return</span> p;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>还可以不通过使用递归的方法，这个时候我们从头开始遍历，但是呢会出现一个问题，那就是你前面节点改变了，你后面的节点可能就找不到了，所以这个时候要存下两个节点，即当前节点和pre</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">      ListNode *pre=<span class="literal">NULL</span>;</span><br><span class="line">      ListNode *curr=head;</span><br><span class="line">       </span><br><span class="line">      <span class="keyword">while</span>(curr!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">          ListNode *nextNode=curr-&gt;next;</span><br><span class="line">          curr-&gt;next=pre;</span><br><span class="line">          pre=curr;</span><br><span class="line">          curr=nextNode;</span><br><span class="line">      &#125;</span><br><span class="line">       <span class="keyword">return</span> pre;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="链表中环的检测"><a href="#链表中环的检测" class="headerlink" title="链表中环的检测"></a>链表中环的检测</h4><h5 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h5><p>使用快慢指针，类似于跑步，当两个人的速度一快一慢的时候，总能够在环形跑道上相遇，利用这个特点，可以很好的用来判断链表中是否有环。</p>
+<h5 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">hasCycle</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(head==<span class="literal">NULL</span>||head-&gt;next==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        ListNode *slow=head;</span><br><span class="line">        ListNode *fast=head-&gt;next;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(fast!=slow)&#123;</span><br><span class="line">            <span class="keyword">if</span>(fast==<span class="literal">NULL</span>||fast-&gt;next==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            slow=slow-&gt;next;</span><br><span class="line">            fast=fast-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="合并两个有序链表"><a href="#合并两个有序链表" class="headerlink" title="合并两个有序链表"></a>合并两个有序链表</h4><h5 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h5><p>合并有序链表，其实跟排序中的归并排序类似，不过呢这里是通过链表存储的数据，对于单链表来说，如果没有头结点的话，是找不到这个单链表，所以对于单链表来说头结点很重要。</p>
+<h5 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        ListNode *preHead=<span class="keyword">new</span> ListNode(<span class="number">-1</span>);</span><br><span class="line">        ListNode *pre=preHead;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(l1!=<span class="literal">NULL</span>&amp;&amp;l2!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l1-&gt;val&lt;l2-&gt;val)&#123;</span><br><span class="line">                pre-&gt;next=l1;</span><br><span class="line">                l1=l1-&gt;next;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                pre-&gt;next=l2;</span><br><span class="line">                l2=l2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            pre=pre-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        pre-&gt;next=l1!=<span class="literal">NULL</span>?l1:l2;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> preHead-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除链表倒数第N个节点"><a href="#删除链表倒数第N个节点" class="headerlink" title="删除链表倒数第N个节点"></a>删除链表倒数第N个节点</h4><h5 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h5><p>删除链表节点好做，但是我需要找到倒数的第N+1个节点，可以通过双指针，这两个指针相差N个节点，当一个指针走到最后一个节点的时候，前一个指针正好走到倒数第N个节点，在进行微调一下。</p>
+<h5 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h5><p>思路虽然想出来了，但是实现中却也碰到一些问题，那就是如果只有一个节点呢，参考了题解，恍然大悟，增加一个哨兵，可以解决这个问题。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        ListNode* dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        dummy-&gt;next=head;</span><br><span class="line">        ListNode* first=dummy;</span><br><span class="line">        ListNode* second=dummy;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)&#123;</span><br><span class="line">            first=first-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(first!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            first=first-&gt;next;</span><br><span class="line">            second=second-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        second-&gt;next=second-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> dummy-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="求链表的中间节点"><a href="#求链表的中间节点" class="headerlink" title="求链表的中间节点"></a>求链表的中间节点</h4><h5 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h5><p>继续使用快慢指针，快的指针每次会比慢指针多走一步，这样当快指针到达链表尾部时，慢指针正好在链表的中间</p>
+<h5 id="核心代码-4"><a href="#核心代码-4" class="headerlink" title="核心代码"></a>核心代码</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">middleNode</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        ListNode *fast=head;</span><br><span class="line">        ListNode *slow=head;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(fast!=<span class="literal">NULL</span>&amp;&amp;fast-&gt;next!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            slow=slow-&gt;next;</span><br><span class="line">            fast=fast-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h4><p>通过以上的训练，我们基本上理清楚了链表的Next存的是什么，是地址所以只要把握这个原则就可以很好的理解很多链表相关的东西。</p>
+<h4 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h4><p>LeetCode 206,141,21,19,876</p>
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+        <tag>链表</tag>
       </tags>
   </entry>
   <entry>
