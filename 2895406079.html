@@ -141,7 +141,7 @@
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202006011332_80.png">
 <meta property="og:image" content="http://cdn.xuxiaojin.com/202006011358_215.png">
 <meta property="article:published_time" content="2020-05-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-01T06:18:00.951Z">
+<meta property="article:modified_time" content="2020-06-01T06:44:51.447Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -375,10 +375,6 @@
 
         <div class="post-meta">
                   
-            <i class="fa fa-thumb-tack"></i>
-            <font color=7D26CD>置顶</font>
-            <span class="post-meta-divider">|</span>
-          
           <span class="post-time">
             
               <span class="post-meta-item-icon">
@@ -403,7 +399,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-06-01T14:18:00+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-01T14:44:51+08:00">
                 2020-06-01
               </time>
             
@@ -442,7 +438,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  903
+                  929
                 </span>
               
 
@@ -528,6 +524,10 @@
 <h1 id="DateTimeFormatter"><a href="#DateTimeFormatter" class="headerlink" title="DateTimeFormatter"></a>DateTimeFormatter</h1><p>解决上面的问题可以使用<code>DateTimeFormatter</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> DateTimeFormatter dateTimeFormatter=<span class="keyword">new</span> DateTimeFormatterBuilder()</span><br><span class="line">           .appendValue(ChronoField.YEAR)</span><br><span class="line">           .appendLiteral(<span class="string">"/"</span>)</span><br><span class="line">           .appendValue(ChronoField.MONTH_OF_YEAR)</span><br><span class="line">           .appendLiteral(<span class="string">"/"</span>)</span><br><span class="line">           .appendValue(ChronoField.DAY_OF_MONTH)</span><br><span class="line">           .appendLiteral(<span class="string">" "</span>)</span><br><span class="line">           .appendValue(ChronoField.HOUR_OF_DAY)</span><br><span class="line">           .appendLiteral(<span class="string">":"</span>)</span><br><span class="line">           .appendValue(ChronoField.MINUTE_OF_HOUR)</span><br><span class="line">           .appendLiteral(<span class="string">":"</span>)</span><br><span class="line">           .appendValue(ChronoField.SECOND_OF_MINUTE)</span><br><span class="line">           .appendLiteral(<span class="string">"."</span>)</span><br><span class="line">           .appendValue(ChronoField.MILLI_OF_SECOND)</span><br><span class="line">           .toFormatter();</span><br></pre></td></tr></table></figure>
 
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><a href="https://time.geekbang.org/column/article/224240" target="_blank" rel="noopener">用好Java 8的日期时间类，少踩一些“老三样”的坑</a></li>
+<li><a href="https://github.com/jiayouxujin/java8DateDemo" target="_blank" rel="noopener">github代码</a></li>
+</ol>
 
       
     </div>
@@ -805,7 +805,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Date"><span class="nav-number">2.</span> <span class="nav-text">Date</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Calendar国际化"><span class="nav-number">3.</span> <span class="nav-text">Calendar国际化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存时间"><span class="nav-number">4.</span> <span class="nav-text">保存时间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不保存时区，出现时间错乱"><span class="nav-number">4.1.</span> <span class="nav-text">不保存时区，出现时间错乱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同系统的默认时区，输出的时间不同"><span class="nav-number">4.2.</span> <span class="nav-text">不同系统的默认时区，输出的时间不同</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时区"><span class="nav-number">5.</span> <span class="nav-text">时区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时间格式的解析"><span class="nav-number">6.</span> <span class="nav-text">时间格式的解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#提前跨年"><span class="nav-number">6.1.</span> <span class="nav-text">提前跨年</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线程安全"><span class="nav-number">6.2.</span> <span class="nav-text">非线程安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析字符与格式不匹配"><span class="nav-number">6.3.</span> <span class="nav-text">解析字符与格式不匹配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DateTimeFormatter"><span class="nav-number">7.</span> <span class="nav-text">DateTimeFormatter</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Date"><span class="nav-number">2.</span> <span class="nav-text">Date</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Calendar国际化"><span class="nav-number">3.</span> <span class="nav-text">Calendar国际化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存时间"><span class="nav-number">4.</span> <span class="nav-text">保存时间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不保存时区，出现时间错乱"><span class="nav-number">4.1.</span> <span class="nav-text">不保存时区，出现时间错乱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同系统的默认时区，输出的时间不同"><span class="nav-number">4.2.</span> <span class="nav-text">不同系统的默认时区，输出的时间不同</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时区"><span class="nav-number">5.</span> <span class="nav-text">时区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时间格式的解析"><span class="nav-number">6.</span> <span class="nav-text">时间格式的解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#提前跨年"><span class="nav-number">6.1.</span> <span class="nav-text">提前跨年</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线程安全"><span class="nav-number">6.2.</span> <span class="nav-text">非线程安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析字符与格式不匹配"><span class="nav-number">6.3.</span> <span class="nav-text">解析字符与格式不匹配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DateTimeFormatter"><span class="nav-number">7.</span> <span class="nav-text">DateTimeFormatter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">8.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
