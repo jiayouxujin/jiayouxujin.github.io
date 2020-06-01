@@ -119,7 +119,7 @@
 
 
 
-  <meta name="keywords" content="SpringBoot文档," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -130,17 +130,22 @@
 
 
 
-<meta name="description" content="自动配置SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。 你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类  你只需要添加到@EnableAutoConfiguration">
+<meta name="description" content="前言记得开始写的时候，对日期这个问题一直模糊着，现在学习下。 Date12345Date wrongDate &#x3D; new Date(2019, 12, 31, 11, 12, 13);       System.out.println(wrongDate);       Date rightDate&#x3D;new Date(2019-1900,11,31,11,12,13);       System">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Auto-configuration文档翻译">
-<meta property="og:url" content="http://blog.xuxiaojin.com/1608351778.html">
+<meta property="og:title" content="Java8日期">
+<meta property="og:url" content="http://blog.xuxiaojin.com/2895406079.html">
 <meta property="og:site_name" content="徐小晋的博客">
-<meta property="og:description" content="自动配置SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。 你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类  你只需要添加到@EnableAutoConfiguration">
-<meta property="article:published_time" content="2019-10-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-07T15:10:38.734Z">
+<meta property="og:description" content="前言记得开始写的时候，对日期这个问题一直模糊着，现在学习下。 Date12345Date wrongDate &#x3D; new Date(2019, 12, 31, 11, 12, 13);       System.out.println(wrongDate);       Date rightDate&#x3D;new Date(2019-1900,11,31,11,12,13);       System">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202006011318_140.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202006011314_507.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202006011332_80.png">
+<meta property="og:image" content="http://cdn.xuxiaojin.com/202006011358_215.png">
+<meta property="article:published_time" content="2020-05-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-01T06:18:00.951Z">
 <meta property="article:author" content="徐晋">
-<meta property="article:tag" content="SpringBoot文档">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.xuxiaojin.com/202006011318_140.png">
 
 
 
@@ -170,13 +175,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.xuxiaojin.com/1608351778.html"/>
+  <link rel="canonical" href="http://blog.xuxiaojin.com/2895406079.html"/>
 
 
 
 
 
-  <title>Auto-configuration文档翻译 | 徐小晋的博客</title>
+  <title>Java8日期 | 徐小晋的博客</title>
   
 
 
@@ -348,7 +353,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/1608351778.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.xuxiaojin.com/2895406079.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="徐晋">
@@ -365,11 +370,15 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Auto-configuration文档翻译</h1>
+          <h1 class="post-title" itemprop="name headline">Java8日期</h1>
         
 
         <div class="post-meta">
                   
+            <i class="fa fa-thumb-tack"></i>
+            <font color=7D26CD>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
           <span class="post-time">
             
               <span class="post-meta-item-icon">
@@ -378,8 +387,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-13T00:00:00+08:00">
-                2019-10-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-01T00:00:00+08:00">
+                2020-06-01
               </time>
             
 
@@ -394,8 +403,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-07T23:10:38+08:00">
-                2020-03-07
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-01T14:18:00+08:00">
+                2020-06-01
               </time>
             
 
@@ -410,8 +419,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/1608351778.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/1608351778.html" itemprop="commentCount"></span>
+                <a href="/2895406079.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2895406079.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -433,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  294
+                  903
                 </span>
               
 
@@ -449,7 +458,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -471,18 +480,54 @@
 
       
         <hr>
-<h1 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h1><p>SpringBoot自动配置尝试着通过你添加的Jar依赖来配置你的Spring应用。例如HSQLDB在你的classpath,你不要手动配置任何数据库连接的bean，SpringBoot会自动配置。</p>
-<p>你需要将@EnableAutoConfiguration或者@SpringBootApplication注解添加到你的配置类</p>
-<blockquote>
-<p>你只需要添加到@EnableAutoConfiguration或者@SpringBootApplication到主要配置类，写着Main方法的类</p>
-</blockquote>
-<h2 id="逐渐取代自动配置"><a href="#逐渐取代自动配置" class="headerlink" title="逐渐取代自动配置"></a>逐渐取代自动配置</h2><p>自动配置是非侵入式的，任何时候你能够自动配置来取代自动配置。例如，如果你添加自己的DataSource的bean，默认的嵌入式数据库支持将不再支持。</p>
-<p>如果你想要知道当前自动配置的东西，你只需要通过–debug启动你的应用。在控制台就可以看到配置。</p>
-<h2 id="丢弃特殊的自动配置类"><a href="#丢弃特殊的自动配置类" class="headerlink" title="丢弃特殊的自动配置类"></a>丢弃特殊的自动配置类</h2><p>如果你发现一些特殊的自动配置类是你不想要应用的，你可以使用@EnalbeAutoConfiguration的exclude属性来丢弃掉他们，例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>(exclude=&#123;DataSourceAutoConfiguration<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记得开始写的时候，对日期这个问题一直模糊着，现在学习下。</p>
+<h1 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Date wrongDate = <span class="keyword">new</span> Date(<span class="number">2019</span>, <span class="number">12</span>, <span class="number">31</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>);</span><br><span class="line">       System.out.println(wrongDate);</span><br><span class="line"></span><br><span class="line">       Date rightDate=<span class="keyword">new</span> Date(<span class="number">2019</span>-<span class="number">1900</span>,<span class="number">11</span>,<span class="number">31</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>);</span><br><span class="line">       System.out.println(rightDate);</span><br></pre></td></tr></table></figure>
 
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html" target="_blank" rel="noopener">Auto-configuration</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>知道了自动配置</p>
+<blockquote>
+<p>年份应该是和1900的差值，月应该是从0到11</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Date并没有时区问题，任何一台电脑使用new Date初始化得到的时间都一样，因为Date中保存的时间是UTC时间</li>
+<li>Date中保存的是一个时间戳，代表从1970年1月1日0点到现在的毫秒数</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="keyword">new</span> Date(<span class="number">0</span>));</span><br><span class="line">        System.out.println(TimeZone.getDefault().getID()+<span class="string">":"</span>+TimeZone.getDefault().getRawOffset()/<span class="number">3600000</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202006011318_140.png" alt=""></p>
+<h1 id="Calendar国际化"><a href="#Calendar国际化" class="headerlink" title="Calendar国际化"></a>Calendar国际化</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Calendar calendar=Calendar.getInstance();</span><br><span class="line">        calendar.set(<span class="number">2019</span>,<span class="number">11</span>,<span class="number">31</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>);</span><br><span class="line">        System.out.println(calendar.getTime());</span><br><span class="line">        Calendar calendar1=Calendar.getInstance(TimeZone.getTimeZone(<span class="string">"America/New_York"</span>));</span><br><span class="line">        calendar1.set(<span class="number">2019</span>,Calendar.DECEMBER,<span class="number">31</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>);</span><br><span class="line">        System.out.println(calendar1.getTime());</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>初始时，年份可以是当前年，月份是从0到11</p>
+</blockquote>
+<p><img src="http://cdn.xuxiaojin.com/202006011314_507.png" alt=""></p>
+<h1 id="保存时间"><a href="#保存时间" class="headerlink" title="保存时间"></a>保存时间</h1><ol>
+<li>使用UTC保存，保存的时间不带有时区的属性</li>
+<li>以字面量保存<code>年/月/日 时:分:秒</code>，并且同时要保存时区信息</li>
+</ol>
+<h2 id="不保存时区，出现时间错乱"><a href="#不保存时区，出现时间错乱" class="headerlink" title="不保存时区，出现时间错乱"></a>不保存时区，出现时间错乱</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String stringDate=<span class="string">"2020-01-02 22:00:00"</span>;</span><br><span class="line">       SimpleDateFormat inputFormat=<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">       Date date=inputFormat.parse(stringDate);</span><br><span class="line">       System.out.println(date+<span class="string">":"</span>+date.getTime());</span><br><span class="line"></span><br><span class="line">       inputFormat.setTimeZone(TimeZone.getTimeZone(<span class="string">"America/New_York"</span>));</span><br><span class="line">       Date date1=inputFormat.parse(stringDate);</span><br><span class="line">       System.out.println(date1+<span class="string">":"</span>+date1.getTime());</span><br></pre></td></tr></table></figure>
+
+<p>如果保存字面量，不保存时区，那么解析的时候碰到国际化，就可能出现问题</p>
+<p>保存的是<code>UTC</code>，解析出来的不是错乱的时间，而是对于同一个本地时间，不同时区解析到的时间一定是不同。并且不同时区的时间可能对应同一个UTC</p>
+<h2 id="不同系统的默认时区，输出的时间不同"><a href="#不同系统的默认时区，输出的时间不同" class="headerlink" title="不同系统的默认时区，输出的时间不同"></a>不同系统的默认时区，输出的时间不同</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String stringDate=<span class="string">"2020-01-02 22:00:00"</span>;</span><br><span class="line">SimpleDateFormat inputFormat=<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">Date date=inputFormat.parse(stringDate);</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="keyword">new</span> SimpleDateFormat(<span class="string">"[yyyy-MM-dd HH:mm:ss Z]"</span>).format(date));</span><br><span class="line"></span><br><span class="line">TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">"America/New_York"</span>));</span><br><span class="line">System.out.println(<span class="keyword">new</span> SimpleDateFormat(<span class="string">"[yyyy-MM-dd HH:mm:ss Z]"</span>).format(date));</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202006011332_80.png" alt=""></p>
+<p>有时候相同的时间，但是在不同系统里面的输出不同，是因为系统的默认时区不同。UTC时间要根据当前时区解析为正确的本地时间</p>
+<blockquote>
+<p>正确处理时间，存的时候要存正确的当前时间的UTC.取的时候也要正确的将其转化为当前的时区</p>
+</blockquote>
+<h1 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String stringDate=<span class="string">"2020-01-02 22:00:00"</span>;</span><br><span class="line">       ZoneId timeZoneSH=ZoneId.of(<span class="string">"Asia/Shanghai"</span>);</span><br><span class="line">       ZoneId timeZoneNY=ZoneId.of(<span class="string">"America/New_York"</span>);</span><br><span class="line">       ZoneId timeZoneJST= ZoneOffset.ofHours(<span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">       DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">       ZonedDateTime dateTime=ZonedDateTime.of(LocalDateTime.parse(stringDate,dateTimeFormatter),timeZoneJST);</span><br><span class="line"></span><br><span class="line">       DateTimeFormatter dateTimeFormatter1=DateTimeFormatter.ofPattern(<span class="string">"yyyy-MM-dd HH:mm:ss Z"</span>);</span><br><span class="line">       System.out.println(timeZoneSH.getId()+dateTimeFormatter1.withZone(timeZoneSH).format(dateTime));</span><br><span class="line">       System.out.println(timeZoneNY.getId()+dateTimeFormatter1.withZone(timeZoneNY).format(dateTime));</span><br><span class="line">       System.out.println(timeZoneJST.getId()+dateTimeFormatter1.withZone(timeZoneJST).format(dateTime));</span><br></pre></td></tr></table></figure>
+
+<p>对于国际化时间问题，使用<code>ZonedDateTime</code>保存时间，然后使用设置了<code>ZoneId</code>的<code>DateTimeFormatter</code>配合<code>ZonedDateTime</code>进行时间格式化得到本地时间表示</p>
+<h1 id="时间格式的解析"><a href="#时间格式的解析" class="headerlink" title="时间格式的解析"></a>时间格式的解析</h1><h2 id="提前跨年"><a href="#提前跨年" class="headerlink" title="提前跨年"></a>提前跨年</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Locale.setDefault(Locale.SIMPLIFIED_CHINESE);</span><br><span class="line">      System.out.println(<span class="string">"defaultLocale:"</span>+Locale.getDefault());</span><br><span class="line">      Calendar calendar=Calendar.getInstance();</span><br><span class="line">      calendar.set(<span class="number">2019</span>,Calendar.DECEMBER,<span class="number">29</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">      SimpleDateFormat YYYY=<span class="keyword">new</span> SimpleDateFormat(<span class="string">"YYYY-MM-dd"</span>);</span><br><span class="line">      System.out.println(String.format(<span class="string">"格式化"</span> + YYYY.format(calendar.getTime())));</span><br><span class="line">      System.out.println(<span class="string">"weekYear"</span>+calendar.getWeekYear());</span><br><span class="line">      System.out.println(<span class="string">"firstDayOfWeek"</span>+calendar.getFirstDayOfWeek());</span><br><span class="line">      System.out.println(<span class="string">"minimalDaysInFirstWeek"</span>+calendar.getMinimalDaysInFirstWeek());</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202006011358_215.png" alt=""></p>
+<p>提前跨年的原因是：<code>YYYY</code>表示的当前所在周是属于哪一年，而<code>yyyy</code>表示的是年</p>
+<h2 id="非线程安全"><a href="#非线程安全" class="headerlink" title="非线程安全"></a>非线程安全</h2><p><code>SimpleDateFormat</code>不是线程安全的，所以要小心在多线程里面的问题</p>
+<h2 id="解析字符与格式不匹配"><a href="#解析字符与格式不匹配" class="headerlink" title="解析字符与格式不匹配"></a>解析字符与格式不匹配</h2><p>虽然不会报错，但是结果不符合预期</p>
+<h1 id="DateTimeFormatter"><a href="#DateTimeFormatter" class="headerlink" title="DateTimeFormatter"></a>DateTimeFormatter</h1><p>解决上面的问题可以使用<code>DateTimeFormatter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> DateTimeFormatter dateTimeFormatter=<span class="keyword">new</span> DateTimeFormatterBuilder()</span><br><span class="line">           .appendValue(ChronoField.YEAR)</span><br><span class="line">           .appendLiteral(<span class="string">"/"</span>)</span><br><span class="line">           .appendValue(ChronoField.MONTH_OF_YEAR)</span><br><span class="line">           .appendLiteral(<span class="string">"/"</span>)</span><br><span class="line">           .appendValue(ChronoField.DAY_OF_MONTH)</span><br><span class="line">           .appendLiteral(<span class="string">" "</span>)</span><br><span class="line">           .appendValue(ChronoField.HOUR_OF_DAY)</span><br><span class="line">           .appendLiteral(<span class="string">":"</span>)</span><br><span class="line">           .appendValue(ChronoField.MINUTE_OF_HOUR)</span><br><span class="line">           .appendLiteral(<span class="string">":"</span>)</span><br><span class="line">           .appendValue(ChronoField.SECOND_OF_MINUTE)</span><br><span class="line">           .appendLiteral(<span class="string">"."</span>)</span><br><span class="line">           .appendValue(ChronoField.MILLI_OF_SECOND)</span><br><span class="line">           .toFormatter();</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -512,38 +557,38 @@
   <!-- 本文标题 -->
   <li>
     <strong>本文标题： </strong>
-    Auto-configuration文档翻译
+    Java8日期
   </li>
 
   <!-- 本文作者 -->
   <li class="post-copyright-author">
     <strong>本文作者： </strong>
-    Xuxiaojin   |  徐小晋
+    XuxiaoJin   |  徐小晋
   </li>
 
   <!-- 创建时间 -->
   <li>
     <strong>创建于： </strong>
-    2019年10月13日 - 00时10分
+    2020年06月01日 - 00时06分
   </li>
 
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年03月07日 - 23时03分
+    2020年06月01日 - 14时06分
   </li>
 
   <!-- 引用链接 -->
   <li class="post-copyright-link">
     <strong>引用链接：</strong>
-    <a href="http://blog.xuxiaojin.com/1608351778.html" title="Auto-configuration文档翻译"
-      >http://blog.xuxiaojin.com/1608351778.html</a
+    <a href="http://blog.xuxiaojin.com/2895406079.html" title="Java8日期"
+      >http://blog.xuxiaojin.com/2895406079.html</a
     >
     <span class="copy-path" title="点击复制引用链接"
       ><i
         style="cursor: pointer"
         class="fa fa-clipboard"
-        data-clipboard-text="[Xuxiaojin's Blog | Auto-configuration文档翻译](http://blog.xuxiaojin.com/1608351778.html)"
+        data-clipboard-text="[XuxiaoJin's Blog | Java8日期](http://blog.xuxiaojin.com/2895406079.html)"
         aria-label="post.copy_success"
       ></i
     ></span>
@@ -581,7 +626,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SpringBoot%E6%96%87%E6%A1%A3/" rel="tag"><i class="fa fa-tag"></i> SpringBoot文档</a>
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
         </div>
       
@@ -594,8 +639,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/4044010014.html" rel="next" title="Build Systems文档翻译">
-                <i class="fa fa-chevron-left"></i> Build Systems文档翻译
+              <a href="/4186749648.html" rel="next" title="AOP入门">
+                <i class="fa fa-chevron-left"></i> AOP入门
               </a>
             
           </div>
@@ -603,10 +648,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2531096468.html" rel="prev" title="Installing Spring Boot文档翻译">
-                Installing Spring Boot文档翻译 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -764,7 +805,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自动配置"><span class="nav-number">1.</span> <span class="nav-text">自动配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逐渐取代自动配置"><span class="nav-number">1.1.</span> <span class="nav-text">逐渐取代自动配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#丢弃特殊的自动配置类"><span class="nav-number">1.2.</span> <span class="nav-text">丢弃特殊的自动配置类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学"><span class="nav-number">2.</span> <span class="nav-text">学</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Date"><span class="nav-number">2.</span> <span class="nav-text">Date</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Calendar国际化"><span class="nav-number">3.</span> <span class="nav-text">Calendar国际化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存时间"><span class="nav-number">4.</span> <span class="nav-text">保存时间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不保存时区，出现时间错乱"><span class="nav-number">4.1.</span> <span class="nav-text">不保存时区，出现时间错乱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同系统的默认时区，输出的时间不同"><span class="nav-number">4.2.</span> <span class="nav-text">不同系统的默认时区，输出的时间不同</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时区"><span class="nav-number">5.</span> <span class="nav-text">时区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时间格式的解析"><span class="nav-number">6.</span> <span class="nav-text">时间格式的解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#提前跨年"><span class="nav-number">6.1.</span> <span class="nav-text">提前跨年</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线程安全"><span class="nav-number">6.2.</span> <span class="nav-text">非线程安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析字符与格式不匹配"><span class="nav-number">6.3.</span> <span class="nav-text">解析字符与格式不匹配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DateTimeFormatter"><span class="nav-number">7.</span> <span class="nav-text">DateTimeFormatter</span></a></li></ol></div>
             
 
           </div>

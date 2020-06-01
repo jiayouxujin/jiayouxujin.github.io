@@ -510,7 +510,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -597,7 +597,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">99.4k</span>
+    <span title="Site words total count">100.3k</span>
   
 </div>
 
@@ -1123,7 +1123,29 @@
 <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 </body>
 </html>
-ut', 'local-search-result');
+    } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       } else {
         proceedsearch();
       };
