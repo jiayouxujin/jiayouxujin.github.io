@@ -130,14 +130,14 @@
 
 
 
-<meta name="description" content="存储器层次结构静态RAMSRAM只要有电，就能够永远保持它的值。这是因为SRAM把它的值存储在一个双稳态的存储器单元里面，这个电路有一个属性就是无限期保持在两个不同的电压配置或者状态之一，其他状态都是不稳定的。【类似于跷跷板，两端是稳定的，并且如果处于亚稳定的状态到了稳定的状态，就永远不可能恢复到亚稳定的状态】">
+<meta name="description" content="本文目录 [toc] 存储器层次结构静态RAMSRAM只要有电，就能够永远保持它的值。这是因为SRAM把它的值存储在一个双稳态的存储器单元里面，这个电路有一个属性就是无限期保持在两个不同的电压配置或者状态之一，其他状态都是不稳定的。【类似于跷跷板，两端是稳定的，并且如果处于亚稳定的状态到了稳定的状态，就永远不可能恢复到亚稳定的状态】 局部性 局部性指的是程序更加倾向去使用邻近的数据项  局部性分">
 <meta property="og:type" content="article">
 <meta property="og:title" content="拆书行动《深入理解计算机系统》">
 <meta property="og:url" content="http://blog.xuxiaojin.com/160663224.html">
 <meta property="og:site_name" content="徐小晋的博客">
-<meta property="og:description" content="存储器层次结构静态RAMSRAM只要有电，就能够永远保持它的值。这是因为SRAM把它的值存储在一个双稳态的存储器单元里面，这个电路有一个属性就是无限期保持在两个不同的电压配置或者状态之一，其他状态都是不稳定的。【类似于跷跷板，两端是稳定的，并且如果处于亚稳定的状态到了稳定的状态，就永远不可能恢复到亚稳定的状态】">
+<meta property="og:description" content="本文目录 [toc] 存储器层次结构静态RAMSRAM只要有电，就能够永远保持它的值。这是因为SRAM把它的值存储在一个双稳态的存储器单元里面，这个电路有一个属性就是无限期保持在两个不同的电压配置或者状态之一，其他状态都是不稳定的。【类似于跷跷板，两端是稳定的，并且如果处于亚稳定的状态到了稳定的状态，就永远不可能恢复到亚稳定的状态】 局部性 局部性指的是程序更加倾向去使用邻近的数据项  局部性分">
 <meta property="article:published_time" content="2020-05-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-01T00:36:46.445Z">
+<meta property="article:modified_time" content="2020-07-27T07:49:56.369Z">
 <meta property="article:author" content="徐晋">
 <meta property="article:tag" content="拆书">
 <meta property="article:tag" content="深入理解计算机系统">
@@ -396,8 +396,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-06-01T08:36:46+08:00">
-                2020-06-01
+              <time title="更新于" itemprop="dateModified" datetime="2020-07-27T15:49:56+08:00">
+                2020-07-27
               </time>
             
 
@@ -435,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  137
+                  950
                 </span>
               
 
@@ -451,7 +451,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -473,7 +473,52 @@
 
       
         <hr>
-<h2 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h2><h3 id="静态RAM"><a href="#静态RAM" class="headerlink" title="静态RAM"></a>静态RAM</h3><p>SRAM只要有电，就能够永远保持它的值。这是因为SRAM把它的值存储在一个<code>双稳态</code>的存储器单元里面，这个电路有一个属性就是无限期保持在两个不同的电压配置或者状态之一，其他状态都是不稳定的。【类似于跷跷板，两端是稳定的，并且如果处于亚稳定的状态到了稳定的状态，就永远不可能恢复到亚稳定的状态】</p>
+<p>本文目录</p>
+<p>[toc]</p>
+<h1 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h1><h2 id="静态RAM"><a href="#静态RAM" class="headerlink" title="静态RAM"></a>静态RAM</h2><p>SRAM只要有电，就能够永远保持它的值。这是因为SRAM把它的值存储在一个<code>双稳态</code>的存储器单元里面，这个电路有一个属性就是无限期保持在两个不同的电压配置或者状态之一，其他状态都是不稳定的。【类似于跷跷板，两端是稳定的，并且如果处于亚稳定的状态到了稳定的状态，就永远不可能恢复到亚稳定的状态】</p>
+<h2 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h2><blockquote>
+<p>局部性指的是程序更加倾向去使用邻近的数据项</p>
+</blockquote>
+<p>局部性分为时间局部性和空间局部性，时间局部性指的是某个数据被使用后，在不久的将来会再次被使用，如果使用标量话，变量只是用一次的话就具备时间局部性。而指令中如果步长越短，空间局部性越好。</p>
+<ol>
+<li>重复引用变量具有良好的时间局部性</li>
+<li>具有步长为k的引用模式的程序，步长越短空间局部性越好</li>
+<li>对于取指令，循环具有良好的空间和时间的局部性</li>
+</ol>
+<h3 id="程序中利用局部性"><a href="#程序中利用局部性" class="headerlink" title="程序中利用局部性"></a>程序中利用局部性</h3><ol>
+<li>注意力集中在内循环，大部分的计算都发生在这块</li>
+<li>以数据在存储器存储的方式进行访问，特别是以步长为1进行访问数据，这样能够极大的利用空间局部性</li>
+<li>如果某个变量从内存中读出来的后，就尽可能多使用它，利用时间的局部性</li>
+</ol>
+<h2 id="存储器层器结构"><a href="#存储器层器结构" class="headerlink" title="存储器层器结构"></a>存储器层器结构</h2><p>存储器是具有层次结构，越高层容量越少，但是访问的速度越快。为了解决不同层次的存储器之间速度的差异，引入了一个缓存。</p>
+<blockquote>
+<p>缓存是一个小而快的存储区域，作为更大更慢的存储区域的数据缓冲区</p>
+</blockquote>
+<p>缓存利用的局部性原则</p>
+<ol>
+<li>时间局部性，如果某个对象第一次没有命中，我们将其放到缓存里。然后由于时间局部性，该变量会在不久将来不断被访问，所以能够提高缓存的命中率，并且后面访问的速度会比第一次访问的速度要快。</li>
+<li>空间局部性，因为在存储器中的传送数据都是按块来传送的，特别是对于容量越大，速度越慢的存储器，块的大小越快。如果访问某个块没有命中，那么将其放到缓存里。由于空间局部性，该块中的数据还会在不久的将来被访问到。</li>
+</ol>
+<h2 id="高速缓存"><a href="#高速缓存" class="headerlink" title="高速缓存"></a>高速缓存</h2><blockquote>
+<p>由于CPU与主存之间的速度差异越来越明显，所以设计者被迫在CPU寄存器文件和主存之间插入了一个小的SRAM高速缓存存储器。</p>
+</blockquote>
+<h3 id="有关写策略"><a href="#有关写策略" class="headerlink" title="有关写策略"></a>有关写策略</h3><p>缓存中写操作分为两类策略：</p>
+<ol>
+<li>直写+非写分配<ol>
+<li>直写：首先将缓存中副本写上数据，然后直接写会低层次。</li>
+<li>非写分配：如果要写某个数据不在缓存中，那么会直接写到低层次，跳过高速缓存。</li>
+</ol>
+</li>
+<li>写回+写分配<ol>
+<li>写回：首先更新缓存中的副本，但是只有在该数据块在替换的时候，才更新低层次的数据【添加一个数据位称为修改位】。</li>
+<li>写分配：如果要写的数据不再缓存中，那么会把该数据读到缓存，并且更新该副本。</li>
+</ol>
+</li>
+</ol>
+<h3 id="编写高速缓存的代码"><a href="#编写高速缓存的代码" class="headerlink" title="编写高速缓存的代码"></a>编写高速缓存的代码</h3><ol>
+<li>让最常见的情况运行得快</li>
+<li>尽量减少每个循环里面缓存不命中的数量</li>
+</ol>
 
       
     </div>
@@ -521,7 +566,7 @@
   <!-- 修改时间 -->
   <li>
     <strong>更新于： </strong>
-    2020年06月01日 - 08时06分
+    2020年07月27日 - 15时07分
   </li>
 
   <!-- 引用链接 -->
@@ -589,8 +634,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2311727679.html" rel="next" title="JVM内存设置">
-                <i class="fa fa-chevron-left"></i> JVM内存设置
+              <a href="/3135873234.html" rel="next" title="RabbitMQ入门">
+                <i class="fa fa-chevron-left"></i> RabbitMQ入门
               </a>
             
           </div>
@@ -697,7 +742,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">107</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -710,7 +755,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -759,7 +804,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器层次结构"><span class="nav-number">1.</span> <span class="nav-text">存储器层次结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态RAM"><span class="nav-number">1.1.</span> <span class="nav-text">静态RAM</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储器层次结构"><span class="nav-number">1.</span> <span class="nav-text">存储器层次结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态RAM"><span class="nav-number">1.1.</span> <span class="nav-text">静态RAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部性"><span class="nav-number">1.2.</span> <span class="nav-text">局部性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序中利用局部性"><span class="nav-number">1.2.1.</span> <span class="nav-text">程序中利用局部性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器层器结构"><span class="nav-number">1.3.</span> <span class="nav-text">存储器层器结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高速缓存"><span class="nav-number">1.4.</span> <span class="nav-text">高速缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有关写策略"><span class="nav-number">1.4.1.</span> <span class="nav-text">有关写策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写高速缓存的代码"><span class="nav-number">1.4.2.</span> <span class="nav-text">编写高速缓存的代码</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -800,7 +845,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">100.3k</span>
+    <span title="Site words total count">118.3k</span>
   
 </div>
 
