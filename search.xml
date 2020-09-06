@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode</title>
+    <url>/970079933.html</url>
+    <content><![CDATA[<h2 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h2><h3 id="第K大元素"><a href="#第K大元素" class="headerlink" title="第K大元素"></a>第K大元素</h3><p><img src="http://cdn.xuxiaojin.com/202009061932_930.png" alt=""></p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>要求在一个无序的数组中，找到第K大元素。</p>
+<h4 id="思路1-排序"><a href="#思路1-排序" class="headerlink" title="思路1 排序"></a>思路1 排序</h4><p>调用sort函数，然后直接返回</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(nums);</span><br><span class="line"><span class="keyword">return</span> nums[nums.length-k];</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(nlogn)</p>
+<h4 id="思路2-最小堆"><a href="#思路2-最小堆" class="headerlink" title="思路2 最小堆"></a>思路2 最小堆</h4><p><del>用个大小为k的最小堆，如果元素个数还未满k，那么直接插入就行。如果元素个数等于k，则比较如果堆顶元素小于当前元素，那么把堆顶元素pop，插入当前元素，否则则跳过当前元素，最后返回堆顶元素。</del></p>
+<p>上面这个完全没有用到小顶堆的优势。</p>
+<p>正确思路应该是，把元素直接加入到堆中，如果堆的大小大于k，就直接弹出堆顶元素。最后返回堆顶元素就Ok了。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; pq=<span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> val:nums)&#123;</span><br><span class="line">            pq.add(val);</span><br><span class="line">            <span class="keyword">if</span>(pq.size()&gt;k)&#123;</span><br><span class="line">                pq.poll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pq.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度为O(nlogk) logk表示优先队列插入数据的时间复杂度。</p>
+<h4 id="思路3-类快速排序"><a href="#思路3-类快速排序" class="headerlink" title="思路3 类快速排序"></a>思路3 类快速排序</h4><p>理一下快速排序的思路：快速排序就是首先任意取一个元素，然后整理数组，让左边都小于该元素，右边都大于该元素。</p>
+<p>利用该思想，我们可以通过快速排序，如果取的元素在数组的位置小于<code>nums.length-k</code>,那么说明结果是在该元素的右边。如果大于，则说明结果是该元素的左边。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        k=nums.length-k;</span><br><span class="line">        <span class="keyword">int</span> lo=<span class="number">0</span>,hi=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(lo&lt;hi)&#123;</span><br><span class="line">            <span class="keyword">int</span> j=partition(nums,lo,hi);</span><br><span class="line">            <span class="keyword">if</span>(j&lt;k)&#123;</span><br><span class="line">                lo=j+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(j&gt;k)&#123;</span><br><span class="line">                hi=j-<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums[k];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> lo,<span class="keyword">int</span> hi)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i=lo,j=hi+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(i&lt;hi&amp;&amp;less(nums[++i],nums[lo]));</span><br><span class="line">            <span class="keyword">while</span>(j&gt;lo&amp;&amp;less(nums[lo],nums[--j]));</span><br><span class="line">            <span class="keyword">if</span>(i&gt;=j)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            exch(nums,i,j);</span><br><span class="line">        &#125;</span><br><span class="line">        exch(nums,lo,j);</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exch</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp=nums[i];</span><br><span class="line">        nums[i]=nums[j];</span><br><span class="line">        nums[j]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">less</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> v&lt;w;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最接近原点的K个点"><a href="#最接近原点的K个点" class="headerlink" title="最接近原点的K个点"></a>最接近原点的K个点</h3><p><img src="http://cdn.xuxiaojin.com/202009062039_770.png" alt=""></p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>题目表示从一组points中找到最接近原点的k个点，距离是欧拉公式距离。</p>
+<h4 id="思路1-排序-1"><a href="#思路1-排序-1" class="headerlink" title="思路1 排序"></a>思路1 排序</h4>]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>正则入门</title>
     <url>/735104786.html</url>
     <content><![CDATA[<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><h3 id="特殊单字符"><a href="#特殊单字符" class="headerlink" title="特殊单字符"></a>特殊单字符</h3><h4 id="任意字符-换行除外"><a href="#任意字符-换行除外" class="headerlink" title=".任意字符(换行除外)"></a><code>.</code>任意字符(换行除外)</h4><p><code>.</code>表示<code>Dot</code>可以匹配任意字符，除了换行符</p>
@@ -204,7 +230,8 @@
 <li>使用继承Thread类，每执行一个任务就需要新建一个线程。而实现Runnable接口，则可以把该任务传入线程池，使用固定的线程来完成任务。不需要每次新建销毁线程，大大降低了性能开销。</li>
 <li>Java语言不支持多继承，一旦继承Thread类后就无法在日后进行扩展。</li>
 </ol>
-<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h3 id="线程池的参数"><a href="#线程池的参数" class="headerlink" title="线程池的参数"></a>线程池的参数</h3><table>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p><a href="https://www.baeldung.com/thread-pool-java-and-guava" target="_blank" rel="noopener">Introduction to Thread Pools in Java</a></p>
+<h3 id="线程池的参数"><a href="#线程池的参数" class="headerlink" title="线程池的参数"></a>线程池的参数</h3><table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -298,11 +325,109 @@
 </tbody></table>
 <h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFixedThreadPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">       ThreadPoolExecutor executor=(ThreadPoolExecutor) Executors.newFixedThreadPool(<span class="number">2</span>);</span><br><span class="line">       executor.submit(()-&gt;&#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       &#125;);</span><br><span class="line">       executor.submit(()-&gt;&#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       &#125;);</span><br><span class="line">       executor.submit(()-&gt;&#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       &#125;);</span><br><span class="line">       assertEquals(<span class="number">2</span>,executor.getPoolSize());</span><br><span class="line">       assertEquals(<span class="number">1</span>,executor.getQueue().size());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCachedThreadPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">       ThreadPoolExecutor executor= (ThreadPoolExecutor) Executors.newCachedThreadPool();</span><br><span class="line">       executor.submit(()-&gt;&#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       &#125;);</span><br><span class="line">       executor.submit(()-&gt;&#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       &#125;);</span><br><span class="line">       executor.submit(()-&gt;&#123;</span><br><span class="line">           Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       &#125;);</span><br><span class="line">       assertEquals(<span class="number">3</span>,executor.getPoolSize());</span><br><span class="line">       assertEquals(<span class="number">0</span>,executor.getQueue().size());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSingleThreadPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">       AtomicInteger counter=<span class="keyword">new</span> AtomicInteger();</span><br><span class="line">       ExecutorService executorService=Executors.newSingleThreadExecutor();</span><br><span class="line">       executorService.submit(()-&gt;&#123;</span><br><span class="line">           counter.set(<span class="number">1</span>);</span><br><span class="line">       &#125;);</span><br><span class="line">       executorService.submit(()-&gt;&#123;</span><br><span class="line">           counter.compareAndSet(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testScheduledThreadPool</span><span class="params">()</span></span>&#123;</span><br><span class="line">       ScheduledExecutorService executor=Executors.newScheduledThreadPool(<span class="number">5</span>);</span><br><span class="line">       executor.schedule(()-&gt;&#123;</span><br><span class="line">           System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">       &#125;,<span class="number">500</span>, TimeUnit.MILLISECONDS);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="ForkJoinPool"><a href="#ForkJoinPool" class="headerlink" title="ForkJoinPool"></a>ForkJoinPool</h3><p><a href="https://www.baeldung.com/java-fork-join#forkJoinPool" target="_blank" rel="noopener">Guide to the Fork/Join Framework in Java</a></p>
+<p><code>ForkJoinPool</code>与其他线程不同的地方在与两处</p>
+<ol>
+<li>适合于子任务拆分，第一步是拆分任务fork，第二步就是汇总子任务的结果join</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fibonacci</span> <span class="keyword">extends</span> <span class="title">RecursiveTask</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fibonacci</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.n=n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Integer <span class="title">compute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n&lt;=<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> n;</span><br><span class="line">        &#125;</span><br><span class="line">        Fibonacci f1=<span class="keyword">new</span> Fibonacci(n-<span class="number">1</span>);</span><br><span class="line">        f1.fork();</span><br><span class="line">        Fibonacci f2=<span class="keyword">new</span> Fibonacci(n-<span class="number">2</span>);</span><br><span class="line">        f2.fork();</span><br><span class="line">        <span class="keyword">return</span> f1.join()+f2.join();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>底层实现的不同，与其他线程池类似的是都有一个公共的队列，如果发生任务拆分，每个线程都有一个工作队列(双端队列)，这样可以减少队列去公共的工作队列获取工作时，发生阻塞。然后同时还会有一个<code>work-steal</code>的机制，就是当某个线程完成自己的工作后，就会去其他比较繁忙的工作队列中，从尾部获取新的工作。</li>
+</ol>
 <h3 id="使用线程池"><a href="#使用线程池" class="headerlink" title="使用线程池"></a>使用线程池</h3><ol>
 <li>线程池解决了线程生命周期的系统开销问题，加快了响应的速度。因为线程池里的线程是可以复用的，只用少量线程去执行大量任务。减少了一个任务一个线程的创建和回收开销。</li>
 <li>线程池可以根据任务和配置灵活地控制线程数量，不够的时候就创建，太多的时候就回收。避免线程过多导致内存溢出，或者线程太少导致CPU资源浪费。</li>
 <li>线程池可以同一管理资源</li>
 </ol>
+<h2 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h2><p><a href="https://time.geekbang.org/column/article/86366" target="_blank" rel="noopener">Java线程（上）：Java线程的生命周期</a></p>
+<h3 id="NEW-初始化状态"><a href="#NEW-初始化状态" class="headerlink" title="NEW-初始化状态"></a>NEW-初始化状态</h3><p>这里是编程语言特有的，在编程语言层面被创建。在操作系统层面并没有被创建。</p>
+<p>指的是线程已经被创建，但还不允许分配CPU执行。</p>
+<h3 id="RUNNABLE-可运行状态"><a href="#RUNNABLE-可运行状态" class="headerlink" title="RUNNABLE-可运行状态"></a>RUNNABLE-可运行状态</h3><p>线程可以分配CPU执行，在这种状态下，真正的操作系统线程已经被成功创建。</p>
+<p>当有空闲的CPU的时候，操作系统会将其分配一个可运行状态的线程，将分配到CPU的线程状态转变成运行状态。</p>
+<h3 id="BLOCKED-阻塞状态"><a href="#BLOCKED-阻塞状态" class="headerlink" title="BLOCKED-阻塞状态"></a>BLOCKED-阻塞状态</h3><p>当线程在等待<code>synchronized</code>的隐式锁。synchronized修饰的方法、代码块同一时刻只能允许一个线程执行。这个时候，在等待的线程就会从<code>RUNNALBE</code>转换到<code>BLOCKED</code>状态，而当等待的线程获得synchronized的隐式锁，就会从blocked转换到runnable状态。</p>
+<h3 id="WAITING-无时限等待"><a href="#WAITING-无时限等待" class="headerlink" title="WAITING-无时限等待"></a>WAITING-无时限等待</h3><p>等待其它线程显式地唤醒。等待与阻塞的区别是，等待是主动的，调用<code>Object.wait()</code>，阻塞是被动的，等待获取synchronized隐式锁。</p>
+<table>
+<thead>
+<tr>
+<th>进入方法</th>
+<th>退出方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Object.wait()方法</td>
+<td>Object.notify()/Object.notifyAll()</td>
+</tr>
+<tr>
+<td>Thread.join()</td>
+<td>被调用的线程执行完毕</td>
+</tr>
+<tr>
+<td>LockSupport.park()</td>
+<td>LockSupport.unpark(Thread)</td>
+</tr>
+</tbody></table>
+<h3 id="TIMED-WAITING-有时限等待"><a href="#TIMED-WAITING-有时限等待" class="headerlink" title="TIMED_WAITING-有时限等待"></a>TIMED_WAITING-有时限等待</h3><p>无需等待其它线程显式唤醒，在一定的时间内能够自动被唤醒。</p>
+<table>
+<thead>
+<tr>
+<th>进入方法</th>
+<th>退出方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Thread.sleep(long millis)</td>
+<td>时间结束</td>
+</tr>
+<tr>
+<td>Object.wait(long timeout)</td>
+<td>时间结束/Object.notify()/Object.notifyAll()</td>
+</tr>
+<tr>
+<td>Thread.join(long millis)</td>
+<td>时间结束/被调用的线程执行完毕</td>
+</tr>
+<tr>
+<td>LockSupport.parkNanos(Object blocker,long deadline)</td>
+<td>LockSupport.unpark(Thread)</td>
+</tr>
+<tr>
+<td>LockSupport.parkUnit(long deadline)</td>
+<td>LockSupport.unpark(Thread)</td>
+</tr>
+</tbody></table>
+<p>有时限的等待超时与无限等待的区别是<code>设置了超时参数</code>。</p>
+<h3 id="TERMINATED-终止状态"><a href="#TERMINATED-终止状态" class="headerlink" title="TERMINATED-终止状态"></a>TERMINATED-终止状态</h3><p>线程执行完run()方法后，会自动转换到TERMINATED状态，或者是执行run()方法的时候抛出异常，也会导致线程终止。</p>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h3><p><code>悲观锁</code>为了确保结果的正确性，在每次获取并修改数据的同时，都把数据锁住，让其它线程无法访问该数据。这样就可以保证数据万无一失。</p>
+<p><code>乐观锁</code>并不会锁住被操作的对象，而是在需要修改数据的时候，把当前数据与自己的预期值进行比对。如果一样说明在修改的期间没有其他线程修改过，可以正常修改。如果不一致，那么就说明有人修改了，那么会放弃这次修改，并选择报错或者重试等策略。</p>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p><code>悲观锁</code>：synchronized关键词和lock接口，其中Lock的实现类ReentrantLock中的lock等方法就执行加锁操作，unlock就是执行解锁操作。处理资源前必须拿到锁，处理完后在解开锁。</p>
+<p><code>乐观锁</code>：原子类，比如AtomicInteger在更新数据时就会使用CAS思想。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p><code>悲观锁</code>适合用于并发写入多，临界区代码复杂，竞争激烈等场景，这样使用悲观锁可以避免大量无用反复尝试等操作。</p>
+<p><code>乐观锁</code>用于大量读取，少量修改的场景，这种情况下乐观锁不加锁的特点能够让性能大幅提高。</p>
+<h3 id="synchronized和Lock"><a href="#synchronized和Lock" class="headerlink" title="synchronized和Lock"></a>synchronized和Lock</h3><h4 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h4><ol>
+<li>都用来保护资源的线程安全</li>
+<li>都可以保证可见性</li>
+<li>都有<code>可重入</code>的特点，可重入指的是如果一个线程拥有某个资源的锁，试图再次请求这个锁，那么不需要提前释放这个锁，而是可以继续使用持有的这个锁。</li>
+</ol>
+<h3 id="公平锁和非公平锁"><a href="#公平锁和非公平锁" class="headerlink" title="公平锁和非公平锁"></a>公平锁和非公平锁</h3><p><code>公平锁</code>指的是线程获得锁的顺序是按照先来后到的顺序</p>
+<p><code>非公平锁</code>指的是可以插队，例如某个线程A获得了锁，此时有线程B、C正在尝试获得锁，因为没有拿到，那么就会放到等待队列里。此时线程A释放锁，并且线程D也在尝试获取锁，那么线程D会获取锁。线程B、C并不会获得到锁。</p>
+<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p><code>ReentrantReadWriteLock</code></p>
+<p>读写锁指的是如果一个线程获得到了读锁，那么其他线程也只能获得读锁，并不能获得写锁。如果一个线程获得到了写锁，那么其他线程不管要获取什么锁都只能等待该线程释放写锁。</p>
+<h2 id="原子类"><a href="#原子类" class="headerlink" title="原子类"></a>原子类</h2><blockquote>
+<p>无锁的方案相对于加锁的方案最大的好处就是性能。</p>
+</blockquote>
+<h3 id="无锁方案"><a href="#无锁方案" class="headerlink" title="无锁方案"></a>无锁方案</h3><p><code>CPU</code>为了解决并发问题，提供了CAS指令，CAS指令包含三个参数，共享变量的地址A，用于比较的值B和共享变量的新值C。CAS本身指令是可以保证原子性的。</p>
+<h3 id="Atomic-基本类型原子类"><a href="#Atomic-基本类型原子类" class="headerlink" title="Atomic\基本类型原子类"></a>Atomic\基本类型原子类</h3><p>如果要一个整型变量，并且这个变量会被运用在并发场景之下，那不能使用int、Integer而是应该直接使用AtomicInteger</p>
+<h3 id="Atomic-Reference引用类型原子类"><a href="#Atomic-Reference引用类型原子类" class="headerlink" title="Atomic\Reference引用类型原子类"></a>Atomic\Reference引用类型原子类</h3><p>三种AtomicReference引用类型原子类。</p>
+<ul>
+<li>AtomicStampedReference是对AtomicReference的升级，并且加上了时间戳解决了CAS的ABA的问题。</li>
+<li>AtomicMarkableReference和AtomicReference类似，多了个绑定的布尔值，可以用来表示该对象是否已经删除的场景。</li>
+</ul>
+<h3 id="原子化数组"><a href="#原子化数组" class="headerlink" title="原子化数组"></a>原子化数组</h3><p>相关实现有<code>AtomicIntegerArray</code>、<code>AtomicLongArray</code>和<code>AtomicReferenceArray</code>,可以 原子化的更新数组里面的每一个元素。</p>
+<h3 id="AtomicInteger高并发性能不好"><a href="#AtomicInteger高并发性能不好" class="headerlink" title="AtomicInteger高并发性能不好"></a>AtomicInteger高并发性能不好</h3><p>每次如果有数值上的更新，都需要进行flush和refresh，这样的操作耗费了很多资源，而且CAS也会经常失败。</p>
+<h4 id="LongAdder带来改进和原理"><a href="#LongAdder带来改进和原理" class="headerlink" title="LongAdder带来改进和原理"></a>LongAdder带来改进和原理</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LongAdderDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        LongAdder counter=<span class="keyword">new</span> LongAdder();</span><br><span class="line">        ExecutorService service= Executors.newFixedThreadPool(<span class="number">16</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++)&#123;</span><br><span class="line">            service.submit(<span class="keyword">new</span> Task(counter));</span><br><span class="line">        &#125;</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        System.out.println(counter.sum());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> LongAdder counter;</span><br><span class="line"></span><br><span class="line">        Task(LongAdder counter) &#123;</span><br><span class="line">            <span class="keyword">this</span>.counter = counter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            counter.increment();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为LongAdder引入了分段累加的概念，内部有两个参数参与技术，一个叫base是一个变量，第二个是Cell[]是个数组。如果竞争不激烈，直接把累加的结果改到base变量，如果竞争激烈的话，每个线程都会加到各自所对应的cell[]数组中的某一个对象中。</p>
 ]]></content>
       <tags>
         <tag>Java</tag>
@@ -1420,27 +1545,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JVM内存设置</title>
-    <url>/2311727679.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="JVM内存设置"><a href="#JVM内存设置" class="headerlink" title="JVM内存设置"></a>JVM内存设置</h2><p>Java运行时内容是堆，分为新生代(默认占1/3)、老年代(默认占2/3)、永久代</p>
-<p><img src="http://cdn.xuxiaojin.com/202005201630_499.png" alt=""></p>
-<p>基本的内存设置</p>
-<p><img src="http://cdn.xuxiaojin.com/202005201633_995.png" alt=""></p>
-<blockquote>
-<p>-Xms 初始对堆大小</p>
-<p>-Xmx 最大堆大小</p>
-<p>一般将这两个值设置为相同的值，避免重新分配堆</p>
-<p>-XX:NewSize表示新生代，一般设置为堆的1/3</p>
-<p>-XX:MaxPermSize表示最大永久代大小，如果加载的类库很多的时候，可以适当调高这个值</p>
-<p>-XX:NewRatio表示新生代与年老代的比值</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RabbitMQ入门</title>
     <url>/3135873234.html</url>
     <content><![CDATA[<hr>
@@ -1649,6 +1753,41 @@
       </tags>
   </entry>
   <entry>
+    <title>JVM内存设置</title>
+    <url>/2311727679.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="JVM内存设置"><a href="#JVM内存设置" class="headerlink" title="JVM内存设置"></a>JVM内存设置</h2><p>Java运行时内容是堆，分为新生代(默认占1/3)、老年代(默认占2/3)、永久代</p>
+<p><img src="http://cdn.xuxiaojin.com/202005201630_499.png" alt=""></p>
+<p>基本的内存设置</p>
+<p><img src="http://cdn.xuxiaojin.com/202005201633_995.png" alt=""></p>
+<blockquote>
+<p>-Xms 初始对堆大小</p>
+<p>-Xmx 最大堆大小</p>
+<p>一般将这两个值设置为相同的值，避免重新分配堆</p>
+<p>-XX:NewSize表示新生代，一般设置为堆的1/3</p>
+<p>-XX:MaxPermSize表示最大永久代大小，如果加载的类库很多的时候，可以适当调高这个值</p>
+<p>-XX:NewRatio表示新生代与年老代的比值</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>再学elasticsearch</title>
+    <url>/3781284629.html</url>
+    <content><![CDATA[<h2 id="文档管理"><a href="#文档管理" class="headerlink" title="文档管理"></a>文档管理</h2><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://blog.csdn.net/qq_43039260/article/details/87462377" target="_blank" rel="noopener">elasticsearch启动时报错：error=’Cannot allocate memory’ (errno=12)</a></li>
+<li><a href="[https://esdoc.bbossgroups.com/#/db-es-tool?id=%e6%95%b0%e6%8d%ae%e5%af%bc%e5%85%a5elasticsearch%e6%a1%88%e4%be%8b%e5%88%86%e4%ba%ab](https://esdoc.bbossgroups.com/#/db-es-tool?id=数据导入elasticsearch案例分享)">数据导入Elasticsearch案例分享</a></li>
+<li><a href="https://segmentfault.com/a/1190000020140461" target="_blank" rel="noopener">Docker下安装ElasticSearch和Kibana</a></li>
+<li></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python实现关联规则的笔记</title>
     <url>/1583838332.html</url>
     <content><![CDATA[<hr>
@@ -1763,20 +1902,6 @@
         <tag>Python</tag>
         <tag>Apriori</tag>
         <tag>FP-growth</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>再学elasticsearch</title>
-    <url>/3781284629.html</url>
-    <content><![CDATA[<h2 id="文档管理"><a href="#文档管理" class="headerlink" title="文档管理"></a>文档管理</h2><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://blog.csdn.net/qq_43039260/article/details/87462377" target="_blank" rel="noopener">elasticsearch启动时报错：error=’Cannot allocate memory’ (errno=12)</a></li>
-<li><a href="[https://esdoc.bbossgroups.com/#/db-es-tool?id=%e6%95%b0%e6%8d%ae%e5%af%bc%e5%85%a5elasticsearch%e6%a1%88%e4%be%8b%e5%88%86%e4%ba%ab](https://esdoc.bbossgroups.com/#/db-es-tool?id=数据导入elasticsearch案例分享)">数据导入Elasticsearch案例分享</a></li>
-<li><a href="https://segmentfault.com/a/1190000020140461" target="_blank" rel="noopener">Docker下安装ElasticSearch和Kibana</a></li>
-<li></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>elasticsearch</tag>
       </tags>
   </entry>
   <entry>
@@ -3290,162 +3415,6 @@
       </tags>
   </entry>
   <entry>
-    <title>程序编译、链接和装载</title>
-    <url>/1264663068.html</url>
-    <content><![CDATA[<hr>
-<h2 id="编译、链接和装载"><a href="#编译、链接和装载" class="headerlink" title="编译、链接和装载"></a>编译、链接和装载</h2><h3 id="先安装必要的包"><a href="#先安装必要的包" class="headerlink" title="先安装必要的包"></a>先安装必要的包</h3><p>实验环境：Centos</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y groupinstall 'Development Tools'</span><br></pre></td></tr></table></figure>
-
-<p>解释上面的命令</p>
-<blockquote>
-<p>yum 是安装的命令</p>
-<p>-y 对所有问题回答yes</p>
-<p><a href="https://www.unixmen.com/yum-groupinstall-a-quick-introduction/" target="_blank" rel="noopener" title="Groupinstall">groupinstall</a>是一个强大的命令行，它将安装一个包下面的所有组，并不需要一个个安装</p>
-<p><a href="https://tecadmin.net/install-development-tools-on-centos/" target="_blank" rel="noopener" title="Development Tools">Development Tools</a>如果你打算做一个software，这个包需要安装到你的系统上。里面包含很多很有用的工具,GCC,g++,make等</p>
-</blockquote>
-<p>例如需要安装一下的包，手动执行这么多命令比较麻烦，所以可以通过安装整个包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install gcc</span><br><span class="line">yum install glibc</span><br><span class="line">yum install make</span><br></pre></td></tr></table></figure>
-
-<p>首先可以通过执行<code>yum grouplist</code>，查看对应下面有哪些包</p>
-<p><img src="http://cdn.xuxiaojin.com/202003020926_538.png" alt=""></p>
-<p>如果需要安装一些开发的库，只需要简单执行<code>yum groupinstall &quot;Development Tools&quot;</code></p>
-<h3 id="两个简单的程序"><a href="#两个简单的程序" class="headerlink" title="两个简单的程序"></a>两个简单的程序</h3><p>add_lib.c</p>
-<p><img src="http://cdn.xuxiaojin.com/202003020933_60.png" alt=""></p>
-<p>link_example.c</p>
-<p><img src="http://cdn.xuxiaojin.com/202003020934_732.png" alt=""></p>
-<p>现在对这两个文件进行编译,执行<code>gcc -g -c add_lib.c link_example.c</code></p>
-<blockquote>
-<p><a href="https://www.rapidtables.com/code/linux/gcc/gcc-g.html" target="_blank" rel="noopener" title="GCC -g">gcc -g</a>被GDB debugger生成debug信息</p>
-<p><a href="https://www.rapidtables.com/code/linux/gcc/gcc-g.html" target="_blank" rel="noopener" title="GCC -c">gcc -c</a>编译与汇编程序，但是没有链接</p>
-</blockquote>
-<p>通过上面语句，已经对程序进行编译了，可以通过<code>objdump</code>进行查看汇编代码</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">objdump -d -M intel -S add_lib.o</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>objdump -d -M 表示将汇编代码display</p>
-<p>intel 表示以intel的语法展示(类似于格式)</p>
-<p>-S 可以将源代码一起展示</p>
-</blockquote>
-<p><img src="http://cdn.xuxiaojin.com/202003021048_119.png" alt=""></p>
-<p>可以看到这里的地址是0000…，如果查看<code>link_example.o</code>同样会得到是000..的地址，并且通过查看，发现这个并不是一个可以执行的文件</p>
-<p><img src="http://cdn.xuxiaojin.com/202003021050_368.png" alt=""></p>
-<h3 id="这里介绍个命令"><a href="#这里介绍个命令" class="headerlink" title="这里介绍个命令"></a>这里介绍个命令</h3><p><a href="https://www.computerhope.com/unix/uchmod.htm" target="_blank" rel="noopener" title="chmod"><code>chmod</code></a>表示change mode.在操作系统中，一系列flags与每个文件相连接，定义着这些文件如何访问。通常这些flags被叫做文件权限或者访问。<code>chmod</code>限制这文件被访问的方式。</p>
-<p>录入要设置如下的权限：</p>
-<ul>
-<li>用户可以<code>read</code>、<code>write</code>、<code>execue</code></li>
-<li>用户所在group可以<code>read</code>、<code>execute</code></li>
-<li>其他人只能<code>read</code></li>
-</ul>
-<p>这个命令长这样</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod u=rwx,g=rx,o=r myfile</span><br></pre></td></tr></table></figure>
-
-<p>这个命令也可以长这样</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 754 myfile</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>4 表示<code>read</code></p>
-<p>2 表示<code>write</code></p>
-<p>1 表示<code>execute</code></p>
-<p>0 表示<code>没有权限</code></p>
-</blockquote>
-<p>那么如何查看一个文件的权限呢？</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l file.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://cdn.xuxiaojin.com/202003021103_889.png" alt=""></p>
-<blockquote>
-<p><code>-</code>第一个字符表示这个文件的类型(在linux系统里一起皆文件)，<code>-</code>表示通常的文件，<code>d</code>表示是个文件夹，<code>l</code>表示一个符号链接</p>
-<p><code>rw</code>表示这个文件的拥有者的权限</p>
-</blockquote>
-<p>在深入一下。如果是要求对一个文件夹下的所有文件进行赋权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod -R 755 myfile</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>-R 表示<code>递归</code>,对myfile文件夹下所包含的所有文件进行赋权限</p>
-</blockquote>
-<p>既然<code>add_lib.o</code>和<code>link_example.o</code>两个都不是可执行文件，那么有没有办法给他们改成可执行的文件?</p>
-<p><img src="http://cdn.xuxiaojin.com/202003021111_500.png" alt=""></p>
-<p>现在执行<code>./link_example.o</code>发现无法执行</p>
-<p><img src="http://cdn.xuxiaojin.com/202003021113_293.png" alt=""></p>
-<p>这是因为<code>.o</code>文件并不是一个可执行文件，而是<strong>目标文件</strong>，只有通过链接器把多个目标文件以及调用的各种函数库链接起来，才可以得到一个可执行文件。</p>
-<p>可以通过<code>gcc -o</code>生成对应的可执行文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc -o link_example add_lib.o link_example.o</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://cdn.xuxiaojin.com/202003021119_8.png" alt=""></p>
-<p>这样的话，才把一个简单的c程序编译运行。</p>
-<p>上面的<strong>C语言代码-汇编代码-机器码</strong>由两部分组成</p>
-<ul>
-<li>第一部分 编译，汇编，链接生成一个可执行文件</li>
-<li>第二部分 通过装载器，将可执行文件装载到内存中,CPU通过读取指令和内存</li>
-</ul>
-<h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><p>接下来我们研究下ELF，在Linux下，可执行文件和目标文件所使用的都是一种叫做<a href="https://www.thegeekstuff.com/2012/09/objdump-examples/" target="_blank" rel="noopener" title="ELF"><code>ELF</code></a>的文件格式，中文是<strong>可执行与可链接文件格式</strong></p>
-<h3 id="File-Header文件头"><a href="#File-Header文件头" class="headerlink" title="File Header文件头"></a>File Header文件头</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">objdump -f link_example</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://cdn.xuxiaojin.com/202003021134_606.png" alt=""></p>
-<p>文件头保留了文件的属性，对应的CPU等硬件平台，对应的操作系统等等，这里还可以看到代码的起始地址</p>
-<h3 id="text-Section-代码段"><a href="#text-Section-代码段" class="headerlink" title=".text Section 代码段"></a>.text Section 代码段</h3><p><img src="http://cdn.xuxiaojin.com/202003021142_171.png" alt=""></p>
-<p>程序编译出来的指令，可以看到程序的起始地址与文件头一样。</p>
-<h3 id="data-Section-数据段"><a href="#data-Section-数据段" class="headerlink" title=".data Section 数据段"></a>.data Section 数据段</h3><p><img src="http://cdn.xuxiaojin.com/202003021146_823.png" alt=""></p>
-<p>保留程序的全部变量和局部静态变量，记住如果是局部变量的话，并不会存在data，我们知道，临时变量其实是在程序运行时，创建的。</p>
-<h3 id="rel-text-Section重定位表"><a href="#rel-text-Section重定位表" class="headerlink" title=".rel.text Section重定位表"></a>.rel.text Section重定位表</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">objdump -r link_example.o</span><br></pre></td></tr></table></figure>
-
-<p>保留的是当前文件里面，哪些跳转地址其实是我们不知道的。比如<code>link_example.o</code>里面，调用了add和printf两个函数，在链接发生之前，我们并不知道该跳转到哪里。</p>
-<h3 id="symtab-Section符号表"><a href="#symtab-Section符号表" class="headerlink" title=".symtab Section符号表"></a>.symtab Section符号表</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readelf -s link_example.o</span><br></pre></td></tr></table></figure>
-
-<p>保留了当前文件里面定义的函数名称和对应地址的地址。</p>
-<h3 id="链接器执行过程"><a href="#链接器执行过程" class="headerlink" title="链接器执行过程"></a>链接器执行过程</h3><blockquote>
-<p>链接器会扫描所有输入的目标文件，将其符号表整合成<code>全局符号表</code>，然后在查看重定位表，将里面未知的地址通过全局符号表替换掉，进行修正。然后把所有目标文件的对应字段进行了一次合并。编程最终的可执行代码</p>
-</blockquote>
-<p>为什么同一份程序不可以同时在linux和window下一起执行？</p>
-<p>因为Linux的是ELF文件格式，Window是PE格式。Linux下的装载器只能解析ELF格式而不能解析PE格式</p>
-<h2 id="程序装载"><a href="#程序装载" class="headerlink" title="程序装载"></a>程序装载</h2><p>程序装载需要满足的两个要求</p>
-<ul>
-<li>可执行程序加载后占用的内存空间应该是连续的，因为在程序指令执行时，执行的顺序是一条条指令执行下去，这就是指令需要连续村粗</li>
-<li>需要同时加载多个程序，并且不能让程序自己规定在内存中加载的位置.</li>
-</ul>
-<p>那么要满足这两个做法，只要给地址做一个<strong>映射</strong>就可以。</p>
-<p>程序指令代码里的地址称为<strong>虚拟地址</strong></p>
-<p>实际在硬件中的地址称为<strong>物理内存地址</strong><br>有两种分割的方式</p>
-<h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>段指的是系统分配出来的那个连续的内存空间</p>
-<p><img src="http://cdn.xuxiaojin.com/202003021545_359.png" alt=""></p>
-<p>但是会出现<strong>内存碎片</strong>问题，内存碎片指的是，就是内存被分割掉，要加载一个大的内存空间，但是这个时候任意一个段都无法满足这个内存空间，将这些段加起来就可以满足这个内存空间。</p>
-<p>解决这个问题的方法是<strong>内存交换</strong>，通过将内存上的程序放到硬盘上，在将其取出来，这个时候不是放到原来的位置，而是将内存碎片清除掉，然后就有足够大的内存空间了。</p>
-<p>但是这样也会面临一个问题，就是硬盘的读写速度太慢了，如果一次转移太多的内存的话，会使得整个机器显得卡顿。</p>
-<h3 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h3><p>刚刚上面<strong>内存分段</strong>出现的是当内存交换的时候，机器会显得卡顿。当时如果一次交换的内存比较小的话，这种卡顿的现象就会明显减少。所以提出了将内存进行<strong>分页</strong>，默认Linux的页大小是4KB</p>
-<p><img src="http://cdn.xuxiaojin.com/202003021659_204.png" alt=""></p>
-<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>前面我们讲到了链接，是将多个目标文件进行合并，但是如果某个模块被多个程序调用，都需要合并的话，浪费了很多空间。并且本来我们的<strong>内存空间不够用</strong>在这么整下去的话，都不用运行了。</p>
-<p>生活中，我们会碰到共享单车的例子，那么实际上在计算机上，我们就是用一种新的链接方式，叫做<strong>动态链接</strong></p>
-<blockquote>
-<p>动态链接中链接的不是存储在硬盘上的目标文件代码，而是加载在内存中的共享库</p>
-</blockquote>
-<h3 id="地址无关"><a href="#地址无关" class="headerlink" title="地址无关"></a>地址无关</h3><p>动态链接最重要的就是要做到地址无关，就是无论加载在那个内存地址，都能够正常执行，使用<strong>相对地址</strong>就可以解决地址无关问题</p>
-<h3 id="PLT和GOT"><a href="#PLT和GOT" class="headerlink" title="PLT和GOT"></a>PLT和GOT</h3><p><code>lib.h</code></p>
-<p><img src="http://cdn.xuxiaojin.com/202003021722_183.png" alt=""></p>
-<p><code>lib.c</code></p>
-<p><img src="http://cdn.xuxiaojin.com/202003021724_856.png" alt=""></p>
-<p><code>main.c</code></p>
-<p><img src="http://cdn.xuxiaojin.com/202003021725_258.png" alt=""></p>
-<p>然后将<code>lib.c</code>编译成一个动态的链接库即.so文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc lib.c -fPIC -shared -o lib.so</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>-shared 表示创建一个共享库</p>
-<p>-o 把输入放到后面紧跟的文件 lib.so</p>
-<p>-fPIC 表示要将这个编译成一个地址无关代码</p>
-</blockquote>
-<p>然后通过gcc编译main动态链接了lib.so的可执行文件，接着通过objdump可以看到</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc -o main main.c ./lib.so</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://cdn.xuxiaojin.com/202003021933_912.png" alt=""></p>
-<p><img src="http://cdn.xuxiaojin.com/202003021934_436.png" alt=""></p>
-<p>可以看到在main函数中调用函数是，对应的代码有一个关键字@plt,表示我们从PLT也就是<strong>程序链接表</strong>里面找到调用的函数，就是地址4004f0</p>
-<p><img src="http://cdn.xuxiaojin.com/202003021936_259.png" alt=""></p>
-<p>在4004f0的位置，又进行了一次跳转，跳到<a href="http://bottomupcs.sourceforge.net/csbu/x3824.htm" target="_blank" rel="noopener" title="GOT"><strong>全局偏移表</strong></a></p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2>]]></content>
-      <tags>
-        <tag>ELF</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>算法练习</title>
     <url>/3045170151.html</url>
     <content><![CDATA[<h2 id="2020-06-20"><a href="#2020-06-20" class="headerlink" title="2020-06-20"></a>2020-06-20</h2><p>###<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805500414115840" target="_blank" rel="noopener">PAT A1013</a></p>
@@ -3740,6 +3709,162 @@
 ]]></content>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>程序编译、链接和装载</title>
+    <url>/1264663068.html</url>
+    <content><![CDATA[<hr>
+<h2 id="编译、链接和装载"><a href="#编译、链接和装载" class="headerlink" title="编译、链接和装载"></a>编译、链接和装载</h2><h3 id="先安装必要的包"><a href="#先安装必要的包" class="headerlink" title="先安装必要的包"></a>先安装必要的包</h3><p>实验环境：Centos</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y groupinstall 'Development Tools'</span><br></pre></td></tr></table></figure>
+
+<p>解释上面的命令</p>
+<blockquote>
+<p>yum 是安装的命令</p>
+<p>-y 对所有问题回答yes</p>
+<p><a href="https://www.unixmen.com/yum-groupinstall-a-quick-introduction/" target="_blank" rel="noopener" title="Groupinstall">groupinstall</a>是一个强大的命令行，它将安装一个包下面的所有组，并不需要一个个安装</p>
+<p><a href="https://tecadmin.net/install-development-tools-on-centos/" target="_blank" rel="noopener" title="Development Tools">Development Tools</a>如果你打算做一个software，这个包需要安装到你的系统上。里面包含很多很有用的工具,GCC,g++,make等</p>
+</blockquote>
+<p>例如需要安装一下的包，手动执行这么多命令比较麻烦，所以可以通过安装整个包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install gcc</span><br><span class="line">yum install glibc</span><br><span class="line">yum install make</span><br></pre></td></tr></table></figure>
+
+<p>首先可以通过执行<code>yum grouplist</code>，查看对应下面有哪些包</p>
+<p><img src="http://cdn.xuxiaojin.com/202003020926_538.png" alt=""></p>
+<p>如果需要安装一些开发的库，只需要简单执行<code>yum groupinstall &quot;Development Tools&quot;</code></p>
+<h3 id="两个简单的程序"><a href="#两个简单的程序" class="headerlink" title="两个简单的程序"></a>两个简单的程序</h3><p>add_lib.c</p>
+<p><img src="http://cdn.xuxiaojin.com/202003020933_60.png" alt=""></p>
+<p>link_example.c</p>
+<p><img src="http://cdn.xuxiaojin.com/202003020934_732.png" alt=""></p>
+<p>现在对这两个文件进行编译,执行<code>gcc -g -c add_lib.c link_example.c</code></p>
+<blockquote>
+<p><a href="https://www.rapidtables.com/code/linux/gcc/gcc-g.html" target="_blank" rel="noopener" title="GCC -g">gcc -g</a>被GDB debugger生成debug信息</p>
+<p><a href="https://www.rapidtables.com/code/linux/gcc/gcc-g.html" target="_blank" rel="noopener" title="GCC -c">gcc -c</a>编译与汇编程序，但是没有链接</p>
+</blockquote>
+<p>通过上面语句，已经对程序进行编译了，可以通过<code>objdump</code>进行查看汇编代码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">objdump -d -M intel -S add_lib.o</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>objdump -d -M 表示将汇编代码display</p>
+<p>intel 表示以intel的语法展示(类似于格式)</p>
+<p>-S 可以将源代码一起展示</p>
+</blockquote>
+<p><img src="http://cdn.xuxiaojin.com/202003021048_119.png" alt=""></p>
+<p>可以看到这里的地址是0000…，如果查看<code>link_example.o</code>同样会得到是000..的地址，并且通过查看，发现这个并不是一个可以执行的文件</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021050_368.png" alt=""></p>
+<h3 id="这里介绍个命令"><a href="#这里介绍个命令" class="headerlink" title="这里介绍个命令"></a>这里介绍个命令</h3><p><a href="https://www.computerhope.com/unix/uchmod.htm" target="_blank" rel="noopener" title="chmod"><code>chmod</code></a>表示change mode.在操作系统中，一系列flags与每个文件相连接，定义着这些文件如何访问。通常这些flags被叫做文件权限或者访问。<code>chmod</code>限制这文件被访问的方式。</p>
+<p>录入要设置如下的权限：</p>
+<ul>
+<li>用户可以<code>read</code>、<code>write</code>、<code>execue</code></li>
+<li>用户所在group可以<code>read</code>、<code>execute</code></li>
+<li>其他人只能<code>read</code></li>
+</ul>
+<p>这个命令长这样</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod u=rwx,g=rx,o=r myfile</span><br></pre></td></tr></table></figure>
+
+<p>这个命令也可以长这样</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 754 myfile</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>4 表示<code>read</code></p>
+<p>2 表示<code>write</code></p>
+<p>1 表示<code>execute</code></p>
+<p>0 表示<code>没有权限</code></p>
+</blockquote>
+<p>那么如何查看一个文件的权限呢？</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -l file.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021103_889.png" alt=""></p>
+<blockquote>
+<p><code>-</code>第一个字符表示这个文件的类型(在linux系统里一起皆文件)，<code>-</code>表示通常的文件，<code>d</code>表示是个文件夹，<code>l</code>表示一个符号链接</p>
+<p><code>rw</code>表示这个文件的拥有者的权限</p>
+</blockquote>
+<p>在深入一下。如果是要求对一个文件夹下的所有文件进行赋权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod -R 755 myfile</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-R 表示<code>递归</code>,对myfile文件夹下所包含的所有文件进行赋权限</p>
+</blockquote>
+<p>既然<code>add_lib.o</code>和<code>link_example.o</code>两个都不是可执行文件，那么有没有办法给他们改成可执行的文件?</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021111_500.png" alt=""></p>
+<p>现在执行<code>./link_example.o</code>发现无法执行</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021113_293.png" alt=""></p>
+<p>这是因为<code>.o</code>文件并不是一个可执行文件，而是<strong>目标文件</strong>，只有通过链接器把多个目标文件以及调用的各种函数库链接起来，才可以得到一个可执行文件。</p>
+<p>可以通过<code>gcc -o</code>生成对应的可执行文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc -o link_example add_lib.o link_example.o</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021119_8.png" alt=""></p>
+<p>这样的话，才把一个简单的c程序编译运行。</p>
+<p>上面的<strong>C语言代码-汇编代码-机器码</strong>由两部分组成</p>
+<ul>
+<li>第一部分 编译，汇编，链接生成一个可执行文件</li>
+<li>第二部分 通过装载器，将可执行文件装载到内存中,CPU通过读取指令和内存</li>
+</ul>
+<h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><p>接下来我们研究下ELF，在Linux下，可执行文件和目标文件所使用的都是一种叫做<a href="https://www.thegeekstuff.com/2012/09/objdump-examples/" target="_blank" rel="noopener" title="ELF"><code>ELF</code></a>的文件格式，中文是<strong>可执行与可链接文件格式</strong></p>
+<h3 id="File-Header文件头"><a href="#File-Header文件头" class="headerlink" title="File Header文件头"></a>File Header文件头</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">objdump -f link_example</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021134_606.png" alt=""></p>
+<p>文件头保留了文件的属性，对应的CPU等硬件平台，对应的操作系统等等，这里还可以看到代码的起始地址</p>
+<h3 id="text-Section-代码段"><a href="#text-Section-代码段" class="headerlink" title=".text Section 代码段"></a>.text Section 代码段</h3><p><img src="http://cdn.xuxiaojin.com/202003021142_171.png" alt=""></p>
+<p>程序编译出来的指令，可以看到程序的起始地址与文件头一样。</p>
+<h3 id="data-Section-数据段"><a href="#data-Section-数据段" class="headerlink" title=".data Section 数据段"></a>.data Section 数据段</h3><p><img src="http://cdn.xuxiaojin.com/202003021146_823.png" alt=""></p>
+<p>保留程序的全部变量和局部静态变量，记住如果是局部变量的话，并不会存在data，我们知道，临时变量其实是在程序运行时，创建的。</p>
+<h3 id="rel-text-Section重定位表"><a href="#rel-text-Section重定位表" class="headerlink" title=".rel.text Section重定位表"></a>.rel.text Section重定位表</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">objdump -r link_example.o</span><br></pre></td></tr></table></figure>
+
+<p>保留的是当前文件里面，哪些跳转地址其实是我们不知道的。比如<code>link_example.o</code>里面，调用了add和printf两个函数，在链接发生之前，我们并不知道该跳转到哪里。</p>
+<h3 id="symtab-Section符号表"><a href="#symtab-Section符号表" class="headerlink" title=".symtab Section符号表"></a>.symtab Section符号表</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readelf -s link_example.o</span><br></pre></td></tr></table></figure>
+
+<p>保留了当前文件里面定义的函数名称和对应地址的地址。</p>
+<h3 id="链接器执行过程"><a href="#链接器执行过程" class="headerlink" title="链接器执行过程"></a>链接器执行过程</h3><blockquote>
+<p>链接器会扫描所有输入的目标文件，将其符号表整合成<code>全局符号表</code>，然后在查看重定位表，将里面未知的地址通过全局符号表替换掉，进行修正。然后把所有目标文件的对应字段进行了一次合并。编程最终的可执行代码</p>
+</blockquote>
+<p>为什么同一份程序不可以同时在linux和window下一起执行？</p>
+<p>因为Linux的是ELF文件格式，Window是PE格式。Linux下的装载器只能解析ELF格式而不能解析PE格式</p>
+<h2 id="程序装载"><a href="#程序装载" class="headerlink" title="程序装载"></a>程序装载</h2><p>程序装载需要满足的两个要求</p>
+<ul>
+<li>可执行程序加载后占用的内存空间应该是连续的，因为在程序指令执行时，执行的顺序是一条条指令执行下去，这就是指令需要连续村粗</li>
+<li>需要同时加载多个程序，并且不能让程序自己规定在内存中加载的位置.</li>
+</ul>
+<p>那么要满足这两个做法，只要给地址做一个<strong>映射</strong>就可以。</p>
+<p>程序指令代码里的地址称为<strong>虚拟地址</strong></p>
+<p>实际在硬件中的地址称为<strong>物理内存地址</strong><br>有两种分割的方式</p>
+<h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>段指的是系统分配出来的那个连续的内存空间</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021545_359.png" alt=""></p>
+<p>但是会出现<strong>内存碎片</strong>问题，内存碎片指的是，就是内存被分割掉，要加载一个大的内存空间，但是这个时候任意一个段都无法满足这个内存空间，将这些段加起来就可以满足这个内存空间。</p>
+<p>解决这个问题的方法是<strong>内存交换</strong>，通过将内存上的程序放到硬盘上，在将其取出来，这个时候不是放到原来的位置，而是将内存碎片清除掉，然后就有足够大的内存空间了。</p>
+<p>但是这样也会面临一个问题，就是硬盘的读写速度太慢了，如果一次转移太多的内存的话，会使得整个机器显得卡顿。</p>
+<h3 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h3><p>刚刚上面<strong>内存分段</strong>出现的是当内存交换的时候，机器会显得卡顿。当时如果一次交换的内存比较小的话，这种卡顿的现象就会明显减少。所以提出了将内存进行<strong>分页</strong>，默认Linux的页大小是4KB</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021659_204.png" alt=""></p>
+<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>前面我们讲到了链接，是将多个目标文件进行合并，但是如果某个模块被多个程序调用，都需要合并的话，浪费了很多空间。并且本来我们的<strong>内存空间不够用</strong>在这么整下去的话，都不用运行了。</p>
+<p>生活中，我们会碰到共享单车的例子，那么实际上在计算机上，我们就是用一种新的链接方式，叫做<strong>动态链接</strong></p>
+<blockquote>
+<p>动态链接中链接的不是存储在硬盘上的目标文件代码，而是加载在内存中的共享库</p>
+</blockquote>
+<h3 id="地址无关"><a href="#地址无关" class="headerlink" title="地址无关"></a>地址无关</h3><p>动态链接最重要的就是要做到地址无关，就是无论加载在那个内存地址，都能够正常执行，使用<strong>相对地址</strong>就可以解决地址无关问题</p>
+<h3 id="PLT和GOT"><a href="#PLT和GOT" class="headerlink" title="PLT和GOT"></a>PLT和GOT</h3><p><code>lib.h</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021722_183.png" alt=""></p>
+<p><code>lib.c</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021724_856.png" alt=""></p>
+<p><code>main.c</code></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021725_258.png" alt=""></p>
+<p>然后将<code>lib.c</code>编译成一个动态的链接库即.so文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc lib.c -fPIC -shared -o lib.so</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-shared 表示创建一个共享库</p>
+<p>-o 把输入放到后面紧跟的文件 lib.so</p>
+<p>-fPIC 表示要将这个编译成一个地址无关代码</p>
+</blockquote>
+<p>然后通过gcc编译main动态链接了lib.so的可执行文件，接着通过objdump可以看到</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc -o main main.c ./lib.so</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cdn.xuxiaojin.com/202003021933_912.png" alt=""></p>
+<p><img src="http://cdn.xuxiaojin.com/202003021934_436.png" alt=""></p>
+<p>可以看到在main函数中调用函数是，对应的代码有一个关键字@plt,表示我们从PLT也就是<strong>程序链接表</strong>里面找到调用的函数，就是地址4004f0</p>
+<p><img src="http://cdn.xuxiaojin.com/202003021936_259.png" alt=""></p>
+<p>在4004f0的位置，又进行了一次跳转，跳到<a href="http://bottomupcs.sourceforge.net/csbu/x3824.htm" target="_blank" rel="noopener" title="GOT"><strong>全局偏移表</strong></a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2>]]></content>
+      <tags>
+        <tag>ELF</tag>
       </tags>
   </entry>
   <entry>
@@ -4267,6 +4392,67 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring Beans and Dependency Injection文档翻译</title>
+    <url>/3052345267.html</url>
+    <content><![CDATA[<hr>
+<h1 id="SpringBeans和依赖注入"><a href="#SpringBeans和依赖注入" class="headerlink" title="SpringBeans和依赖注入"></a>SpringBeans和依赖注入</h1><p>你可以使用任何标准spring框架的技术来定义你的bean和他们的注入依赖。为简单期间，我们通常使用@ComponentScan(来找到你的beans)使用@Autowired(来管理注入)。</p>
+<p>如果你是以先前所有的那种code layout来组织你的代码，将你的主要配置(main方法)放到root package.你可以添加@ComponentScan不需要任何参数，你的所有应用程序组件（@Component,@Service,@Repository,@Controller等等）都会被自动注册为spring Beans。</p>
+<p>以下例子展示了@Service Beans的两种方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html" target="_blank" rel="noopener">Spring Beans and Dependency Injection</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>依赖注入，在main方法上的类里添加@ComponentScan就会自动将所有应用的组件内注册为spring bean</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Configuration Classes文档翻译</title>
+    <url>/316142548.html</url>
+    <content><![CDATA[<hr>
+<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
+<blockquote>
+<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
+</blockquote>
+<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
+<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
+<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBootApplication文档翻译</title>
+    <url>/1324367350.html</url>
+    <content><![CDATA[<hr>
+<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
+<ul>
+<li>@EnableAutoConfiguration</li>
+<li>@ComponentScan</li>
+<li>@Configuration</li>
+</ul>
+<p>如下面这个例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
+<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
+<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
+<p>也可以讲远程的debugger绑定到你的应用程序。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
+<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot文档</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Installing Spring Boot文档翻译</title>
     <url>/2531096468.html</url>
     <content><![CDATA[<hr>
@@ -4394,78 +4580,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring Beans and Dependency Injection文档翻译</title>
-    <url>/3052345267.html</url>
-    <content><![CDATA[<hr>
-<h1 id="SpringBeans和依赖注入"><a href="#SpringBeans和依赖注入" class="headerlink" title="SpringBeans和依赖注入"></a>SpringBeans和依赖注入</h1><p>你可以使用任何标准spring框架的技术来定义你的bean和他们的注入依赖。为简单期间，我们通常使用@ComponentScan(来找到你的beans)使用@Autowired(来管理注入)。</p>
-<p>如果你是以先前所有的那种code layout来组织你的代码，将你的主要配置(main方法)放到root package.你可以添加@ComponentScan不需要任何参数，你的所有应用程序组件（@Component,@Service,@Repository,@Controller等等）都会被自动注册为spring Beans。</p>
-<p>以下例子展示了@Service Beans的两种方式</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseAccountService</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> RiskAssessor riskAssessor;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DatabaseAccountService</span><span class="params">(RiskAssessor riskAssessor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.riskAssessor = riskAssessor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html" target="_blank" rel="noopener">Spring Beans and Dependency Injection</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>依赖注入，在main方法上的类里添加@ComponentScan就会自动将所有应用的组件内注册为spring bean</p>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Build Systems文档翻译</title>
-    <url>/4044010014.html</url>
-    <content><![CDATA[<hr>
-<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
-<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
-<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
-<blockquote>
-<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
-<p>但是我们强烈建议你不要写上version</p>
-</blockquote>
-<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
-<ul>
-<li>Java 1.8 作为默认的编译级别</li>
-<li>源代码通过UTF-8编码</li>
-<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
-<li>一个执行的repackage goal</li>
-<li>必要的资源筛选</li>
-<li>必要的插件配置</li>
-<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
-</ul>
-<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
-</blockquote>
-<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
-<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
-</blockquote>
-<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
-<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
-<blockquote>
-<p>命名里奥妙</p>
-<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
-<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
-</blockquote>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
-<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
-<li>以后依赖不写版本，通过springboot的依赖管理</li>
-<li>观察自己引入的依赖是以什么开头</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Developer Tools文档翻译</title>
     <url>/462033071.html</url>
     <content><![CDATA[<hr>
@@ -4538,17 +4652,54 @@
       </tags>
   </entry>
   <entry>
-    <title>Configuration Classes文档翻译</title>
-    <url>/316142548.html</url>
+    <title>Build Systems文档翻译</title>
+    <url>/4044010014.html</url>
     <content><![CDATA[<hr>
-<h1 id="配置类"><a href="#配置类" class="headerlink" title="配置类"></a>配置类</h1><p>SpringBoot支持以Java编写的配置，尽管他可能可以将springbootapplication和xml一起使用，我们通常建议(前面这里翻译成 真诚建议hhh),你的主要源是一个单独的有@Configuration注解的类。通常定义Main方法的类是首选的配置。</p>
+<h1 id="使用springboot"><a href="#使用springboot" class="headerlink" title="使用springboot"></a>使用springboot</h1><p>这一部分我们继续深入关于你应该怎样使用SpringBoot。会包含一些话题例如 构建系统，自动配置和如何运行你的应用。我们也会包含一些SpringBoot最好的练习。尽管关于springboot没有什么特殊的地方(你可以把它想象成一个另外一个库)，但是这里仍有一些建议，随着你的学习，会让你的部署步骤变得更简单</p>
+<h2 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h2><p>强烈建议你通过支持依赖管理的关键工具来构建系统，并且我们建议使用Maven或者Gradle.</p>
+<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>每一个版本的springboot都会提供一个关于它支持哪些依赖的“精选清单”，在实践中，你不需要在你的构建配置中为每一个依赖提供版本号(version)，因为springboot为你管理好这个。当你升级springboot的时候，这些依赖也会以相同的方式进行升级。</p>
 <blockquote>
-<p>许多网上流传的spring配置都是通过xml,如果可能可以尝试使用java编写该配置</p>
+<p>当然，如果也可以选择一个特殊的版本，而不是springboot默认提供给你的</p>
+<p>但是我们强烈建议你不要写上version</p>
 </blockquote>
-<h2 id="导入额外的配置类"><a href="#导入额外的配置类" class="headerlink" title="导入额外的配置类"></a>导入额外的配置类</h2><p>你需要在这个单独类上添加@Configuration,@Import注解可以被用来导入额外的配置类，通常，你可以使用@ComponentScan来自动识别所有spring组件，包括@Configuration类</p>
-<h2 id="导入XMLpeizhi"><a href="#导入XMLpeizhi" class="headerlink" title="导入XMLpeizhi"></a>导入XMLpeizhi</h2><p>如果你确信你要使用xml编写的配置，我们建议你仍然以@Configuration类，你可以使用@ImportResource注解来加载xml配置文件</p>
-<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-configuration-classes.html" target="_blank" rel="noopener">Configuration Classes</a></p>
-<h1 id="学"><a href="#学" class="headerlink" title="学"></a>学</h1><p>如标题所说，尝试着类完成配置。</p>
+<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p>Maven用户可以通过继承spring-boot-starter-parent获得一些必要的配置，该parent文件提供以下特性：</p>
+<ul>
+<li>Java 1.8 作为默认的编译级别</li>
+<li>源代码通过UTF-8编码</li>
+<li>一个Dependency Management，从spring-boot-dependencies pom继承过来的，它会管理通常依赖的version,该依赖管理让你当使用一些依赖是忽略version的标志</li>
+<li>一个执行的repackage goal</li>
+<li>必要的资源筛选</li>
+<li>必要的插件配置</li>
+<li>为了application.properties和application,yml包括特殊的文件(例如 application-dev.properties和application-dev.yml)进行必要的资源筛选</li>
+</ul>
+<h4 id="继承starter-parent"><a href="#继承starter-parent" class="headerlink" title="继承starter parent"></a>继承starter parent</h4><p>为了继承自spring-boot-starter-parent来配置你的文件，通过如下来设置parent：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>你仅仅需要特别标注该配置的version,其他都可以放心的忽略掉version</p>
+</blockquote>
+<h4 id="不通过parent-pom使用spring-boot"><a href="#不通过parent-pom使用spring-boot" class="headerlink" title="不通过parent pom使用spring boot"></a>不通过parent pom使用spring boot</h4><p>不是每个人都喜欢继承spring-boot-starter-parent。你可能需要使用更合适的父类，或者想要为每一个Maven配置明确的声明。</p>
+<p>如果你不想要使用spring-boot-starter-parent,你仍然可以通过scope=import来使用依赖管理的好处(但是没有插件管理)，例如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用springboot-maben-plugin"><a href="#使用springboot-maben-plugin" class="headerlink" title="使用springboot maben plugin"></a>使用springboot maben plugin</h4><p>SpringBoot包含Maven Plugin，可以为把项目打包成可执行jar.如果你想要使用它，将其添加到你的plugins部分，如下面所示:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你使用springboot starter parent pom,你仅需要添加该plugin.除非你想要更改该parent定义的设置，否则没有必要自己配置它</p>
+</blockquote>
+<h3 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h3><p>这部分我们后面可以见到(为了不打扰翻译的顺序，我们按照文本来)</p>
+<h3 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h3><p>Starters是一系列你可以添加到你的应用的便利的依赖描述符。你可以一站式( a one-stop shop)得到你想要的spring和相关技术，而不是遍历(hunt through)相同的代码和张贴复制依赖描述符。例如，如果你想要通过spring and jpa来访问数据库，只需要包含spring-boot-starter-data-jpa依赖到你的文件里。</p>
+<blockquote>
+<p>命名里奥妙</p>
+<p>所有官方的starter都遵循着相似的命名样式：spring-boot-starter-,后面是一个程序的特别类型。当你需要找到一个starter，该命名结果能够提供帮助。</p>
+<p>第三方的starter不能够以spring-boot开头，通常是以项目的名字开头的。</p>
+</blockquote>
+<p>以上翻译自<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html" target="_blank" rel="noopener">Build Systems</a></p>
+<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><ol>
+<li>以后依赖不写版本，通过springboot的依赖管理</li>
+<li>观察自己引入的依赖是以什么开头</li>
+</ol>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -4603,32 +4754,6 @@
 <li>main方法是通过run转移到springbootapplication</li>
 <li>打成jar包需要在pom下添加plugins</li>
 </ol>
-]]></content>
-      <tags>
-        <tag>SpringBoot文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBootApplication文档翻译</title>
-    <url>/1324367350.html</url>
-    <content><![CDATA[<hr>
-<h1 id="使用-SpringBootApplication注解"><a href="#使用-SpringBootApplication注解" class="headerlink" title="使用@SpringBootApplication注解"></a>使用@SpringBootApplication注解</h1><p>许多SpringBoot开发者喜欢他们的应用能够使用自动配置，组件扫描还能够支持自定义另外的配置在他们的“应用类”上，一个单独的@SpringBootApplication注解就能够用来完成以上三个特性</p>
-<ul>
-<li>@EnableAutoConfiguration</li>
-<li>@ComponentScan</li>
-<li>@Configuration</li>
-</ul>
-<p>如下面这个例子</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myapplication;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span> <span class="comment">// same as @Configuration @EnableAutoConfiguration @ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行你的应用程序"><a href="#运行你的应用程序" class="headerlink" title="运行你的应用程序"></a>运行你的应用程序</h1><p>将你的应用程序打包成jar并且使用嵌入式的HTTP服务器使得你可以向其他应用程序以一样来运行是一个巨大的优点。调试SpringBoot应用也很简单，不需要任何特别的IDEA的插件</p>
-<h2 id="从一个IDE中运行"><a href="#从一个IDE中运行" class="headerlink" title="从一个IDE中运行"></a>从一个IDE中运行</h2><p>你可以向一个简单地java应用一样，在你的IDE里运行。但是首先你需要导入你的项目，导入项目的方式依赖于你的IDE和你的构建系统的方式(maven等)。大多数IDE可以直接导入maven文件。</p>
-<h2 id="作为打包程序被运行"><a href="#作为打包程序被运行" class="headerlink" title="作为打包程序被运行"></a>作为打包程序被运行</h2><p>如果你将应用程序打包成可执行的jar文件，你可以通过java -jar 来运行程序。</p>
-<p>也可以讲远程的debugger绑定到你的应用程序。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,<span class="built_in">suspend</span>=n \</span></span><br><span class="line">       -jar target/myapplication-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过Maven-Plugin"><a href="#通过Maven-Plugin" class="headerlink" title="通过Maven Plugin"></a>通过Maven Plugin</h2><p>可以通过使用mvn spring-boot:run来运行</p>
-<h2 id="通过Gradle-Plugin"><a href="#通过Gradle-Plugin" class="headerlink" title="通过Gradle Plugin"></a>通过Gradle Plugin</h2><p>使用gradle bootRun</p>
 ]]></content>
       <tags>
         <tag>SpringBoot文档</tag>
@@ -4855,6 +4980,55 @@
       </tags>
   </entry>
   <entry>
+    <title>初始Docker</title>
+    <url>/1285007893.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新东西。</p>
+<h4 id="Docker-Hello-world"><a href="#Docker-Hello-world" class="headerlink" title="Docker Hello world"></a>Docker Hello world</h4><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> ubunbtu:16.04 /bin/<span class="built_in">echo</span> <span class="string">"hello world</span></span></span><br></pre></td></tr></table></figure>
+
+<p>docker run 组合起来运行一个容器</p>
+<p>ubuntu:16.04 指定要运行的镜像，如果没有的话，会下载这个镜像</p>
+<h3 id="进行交互式的容器"><a href="#进行交互式的容器" class="headerlink" title="进行交互式的容器"></a>进行交互式的容器</h3><p>进入bash模式</p>
+<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -it unbunt:16.04 /bin/bash</span></span><br></pre></td></tr></table></figure>
+
+<p>-it  i表示在新容器内指定一个伪终端或终端  t允许你对容器的标准输入STDIN进行交互</p>
+<p>退出容器使用 exit</p>
+<h3 id="运行一个容器"><a href="#运行一个容器" class="headerlink" title="运行一个容器"></a>运行一个容器</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -d -P training/webapp python app.py</span></span><br></pre></td></tr></table></figure>
+
+<p>-d 让容器在后台运行</p>
+<p>-P 将容器内部使用的网络端口映射到我们使用的主机上</p>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker pull mysql</span><br></pre></td></tr></table></figure>
+
+<p>以上会下载最新的mysql 8.0以上</p>
+<p>使用mysql镜像</p>
+<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql</span></span><br></pre></td></tr></table></figure>
+
+<p>进入容器</p>
+<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker exec -it mysql bash</span><br></pre></td></tr></table></figure>
+
+<p>docke exec 表示 运行一条指令到正在运行的容器</p>
+<p>登录mysql</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>添加远程登录用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create USER &#39;xuxiaojin&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;123456&#39;</span><br><span class="line"></span><br><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;123456&#39;</span><br></pre></td></tr></table></figure>
+
+<p>‘root’@’%‘ root表示用户名 %表示随便Ip都可以访问 如果是Localhost的话 只允许本机访问 </p>
+<h3 id="安装mongo"><a href="#安装mongo" class="headerlink" title="安装mongo"></a>安装mongo</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker pull mongo</span><br></pre></td></tr></table></figure>
+
+<p>使用mongo镜像</p>
+<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -p 27017:27017 -v <span class="variable">$PWD</span>/db:/data/db -d mongo</span></span><br></pre></td></tr></table></figure>
+
+<p>进入容器</p>
+<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">首先通过docker ps找到name</span><br><span class="line">或者在启动是 添加--name</span><br><span class="line"></span><br><span class="line">docker exec -it mongo mongo</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>如果使用阿里云，记得把端口打开。</p>
+]]></content>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mybatis Plus</title>
     <url>/2780498761.html</url>
     <content><![CDATA[<hr>
@@ -4904,55 +5078,6 @@
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>初始Docker</title>
-    <url>/1285007893.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天多学一点新东西。</p>
-<h4 id="Docker-Hello-world"><a href="#Docker-Hello-world" class="headerlink" title="Docker Hello world"></a>Docker Hello world</h4><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> ubunbtu:16.04 /bin/<span class="built_in">echo</span> <span class="string">"hello world</span></span></span><br></pre></td></tr></table></figure>
-
-<p>docker run 组合起来运行一个容器</p>
-<p>ubuntu:16.04 指定要运行的镜像，如果没有的话，会下载这个镜像</p>
-<h3 id="进行交互式的容器"><a href="#进行交互式的容器" class="headerlink" title="进行交互式的容器"></a>进行交互式的容器</h3><p>进入bash模式</p>
-<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -it unbunt:16.04 /bin/bash</span></span><br></pre></td></tr></table></figure>
-
-<p>-it  i表示在新容器内指定一个伪终端或终端  t允许你对容器的标准输入STDIN进行交互</p>
-<p>退出容器使用 exit</p>
-<h3 id="运行一个容器"><a href="#运行一个容器" class="headerlink" title="运行一个容器"></a>运行一个容器</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -d -P training/webapp python app.py</span></span><br></pre></td></tr></table></figure>
-
-<p>-d 让容器在后台运行</p>
-<p>-P 将容器内部使用的网络端口映射到我们使用的主机上</p>
-<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker pull mysql</span><br></pre></td></tr></table></figure>
-
-<p>以上会下载最新的mysql 8.0以上</p>
-<p>使用mysql镜像</p>
-<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql</span></span><br></pre></td></tr></table></figure>
-
-<p>进入容器</p>
-<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker exec -it mysql bash</span><br></pre></td></tr></table></figure>
-
-<p>docke exec 表示 运行一条指令到正在运行的容器</p>
-<p>登录mysql</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
-
-<p>添加远程登录用户</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">create USER &#39;xuxiaojin&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;123456&#39;</span><br><span class="line"></span><br><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;123456&#39;</span><br></pre></td></tr></table></figure>
-
-<p>‘root’@’%‘ root表示用户名 %表示随便Ip都可以访问 如果是Localhost的话 只允许本机访问 </p>
-<h3 id="安装mongo"><a href="#安装mongo" class="headerlink" title="安装mongo"></a>安装mongo</h3><figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker pull mongo</span><br></pre></td></tr></table></figure>
-
-<p>使用mongo镜像</p>
-<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -p 27017:27017 -v <span class="variable">$PWD</span>/db:/data/db -d mongo</span></span><br></pre></td></tr></table></figure>
-
-<p>进入容器</p>
-<figure class="highlight docker"><table><tr><td class="code"><pre><span class="line">首先通过docker ps找到name</span><br><span class="line">或者在启动是 添加--name</span><br><span class="line"></span><br><span class="line">docker exec -it mongo mongo</span><br></pre></td></tr></table></figure>
-
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>如果使用阿里云，记得把端口打开。</p>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -5833,59 +5958,6 @@
   </entry>
   <entry>
     <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
-    <url>/1697153394.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
-<h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#max file size</span><br><span class="line">spring.servlet.multipart.max-file-size=<span class="number">10</span>MB</span><br><span class="line">#max request size</span><br><span class="line">spring.servlet.multipart.max-request-size=<span class="number">10</span>MB</span><br><span class="line">#files storage location</span><br><span class="line">#the linux storage.location=/root/test</span><br><span class="line">storage.location=D:<span class="comment">//test/</span></span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<p>因为springboot自动允许multipart/form-data 请求</p>
-<p>storage.location表示存储的rootLocation</p>
-<h3 id="使配置可以使用"><a href="#使配置可以使用" class="headerlink" title="使配置可以使用"></a>使配置可以使用</h3><p>因为我们在application.properties里面定义了storage location，所以我们需要定义一下POJO类并且通过@ConfigurationProperties注解来自动绑定这个配置</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//StorageProperties.java</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"storage"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String location;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLocation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> location;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocation</span><span class="params">(String location)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.location = location;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意到prefix=”storage”，当application启动的时候，绑定以storage前缀的属性。</p>
-<p>并且需要在Application.java中添加注解@EnableConfigurationProperties(StorageProperties.class)</p>
-<h3 id="Storage-Service"><a href="#Storage-Service" class="headerlink" title="Storage Service"></a>Storage Service</h3><h4 id="StorageService"><a href="#StorageService" class="headerlink" title="StorageService"></a>StorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Stream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">store</span><span class="params">(MultipartFile file,String type)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Path <span class="title">load</span><span class="params">(String filename)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个是可以用得到的方法，所以接下来就是实现这些方法</p>
-<h4 id="FileSystemStorageService"><a href="#FileSystemStorageService" class="headerlink" title="FileSystemStorageService"></a>FileSystemStorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemStorageService</span> <span class="keyword">implements</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Path rootLocation;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemStorageService</span><span class="params">(StorageProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.rootLocation = Paths.get(properties.getLocation());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Files.createDirectories(rootLocation);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Could not initialize storage location"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">store</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">        String filename = StringUtils.cleanPath(file.getOriginalFilename());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store empty file "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (filename.contains(<span class="string">".."</span>)) &#123;</span><br><span class="line">                <span class="comment">// This is a security check</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(</span><br><span class="line">                        <span class="string">"Cannot store file with relative path outside current directory "</span></span><br><span class="line">                                + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> (InputStream inputStream = file.getInputStream()) &#123;</span><br><span class="line">                Files.copy(inputStream, <span class="keyword">this</span>.rootLocation.resolve(filename),</span><br><span class="line">                        StandardCopyOption.REPLACE_EXISTING);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store file "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> filename;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> Files.walk(<span class="keyword">this</span>.rootLocation, <span class="number">1</span>)</span><br><span class="line">                    .filter(path -&gt; !path.equals(<span class="keyword">this</span>.rootLocation))</span><br><span class="line">                    .map(<span class="keyword">this</span>.rootLocation::relativize);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to read stored files"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Path <span class="title">load</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rootLocation.resolve(filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Path file = load(filename);</span><br><span class="line">            Resource resource = <span class="keyword">new</span> UrlResource(file.toUri());</span><br><span class="line">            <span class="keyword">if</span> (resource.exists() || resource.isReadable()) &#123;</span><br><span class="line">                <span class="keyword">return</span> resource;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(</span><br><span class="line">                        <span class="string">"Could not read file: "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(<span class="string">"Could not read file: "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        FileSystemUtils.deleteRecursively(rootLocation.toFile());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<ol>
-<li>@PostConstuct注解，保证init()方法被调用当该bean被完全初始化</li>
-</ol>
-<h4 id="StorageException"><a href="#StorageException" class="headerlink" title="StorageException"></a>StorageException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="FileNotFoundException"><a href="#FileNotFoundException" class="headerlink" title="FileNotFoundException"></a>FileNotFoundException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.NOT_FOUND)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileNotFoundException</span> <span class="keyword">extends</span> <span class="title">StorageException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<ol>
-<li>@ResponseStatus(HttpStatus.NOT_FOUND)该注解确保springboot返回的一个404的Http状态码</li>
-</ol>
-<p>以上可以实现上传文件，但是今天的项目需求是需要将图片等文件上传到服务器里面，就是上传到外部文件夹，并且通过url访问</p>
-<h4 id="SpringBoot访问绝对路径下的静态资源"><a href="#SpringBoot访问绝对路径下的静态资源" class="headerlink" title="SpringBoot访问绝对路径下的静态资源"></a>SpringBoot访问绝对路径下的静态资源</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfiguration</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/image/**"</span>).addResourceLocations(<span class="string">"file:D://test/images/"</span>);</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/download/**"</span>).addResourceLocations(<span class="string">"file:D://test/files/"</span>);</span><br><span class="line">        <span class="keyword">super</span>.addResourceHandlers(registry);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解释：</p>
-<ol>
-<li>可以通过<a href="http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件" target="_blank" rel="noopener">http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件</a></li>
-</ol>
-<h4 id="其他收获"><a href="#其他收获" class="headerlink" title="其他收获"></a>其他收获</h4><ol>
-<li>通过postman发送表单 选择body里面的form-data然后添加key-value</li>
-<li>处理@RequestBody 该注解无法通过url和form来传递参数，只能通过json串 选择body里面的raw 然后选择JSON格式 提交的格式为</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"key"</span>:<span class="string">"value"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://attacomsian.com/blog/uploading-files-spring-boot" target="_blank" rel="noopener">file upload</a></p>
-<p><a href="https://blog.csdn.net/jy02268879/article/details/82830789" target="_blank" rel="noopener">postman</a></p>
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
     <url>/1697153393.html</url>
     <content><![CDATA[<hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
@@ -5938,6 +6010,81 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot上传文件到服务器上并且通过url访问静态资源</title>
+    <url>/1697153394.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>每天都要比前一天都学一点新的东西，这样的一天才有价值。</p>
+<h3 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a>配置属性</h3><p>在application.properties文件下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#max file size</span><br><span class="line">spring.servlet.multipart.max-file-size=<span class="number">10</span>MB</span><br><span class="line">#max request size</span><br><span class="line">spring.servlet.multipart.max-request-size=<span class="number">10</span>MB</span><br><span class="line">#files storage location</span><br><span class="line">#the linux storage.location=/root/test</span><br><span class="line">storage.location=D:<span class="comment">//test/</span></span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<p>因为springboot自动允许multipart/form-data 请求</p>
+<p>storage.location表示存储的rootLocation</p>
+<h3 id="使配置可以使用"><a href="#使配置可以使用" class="headerlink" title="使配置可以使用"></a>使配置可以使用</h3><p>因为我们在application.properties里面定义了storage location，所以我们需要定义一下POJO类并且通过@ConfigurationProperties注解来自动绑定这个配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//StorageProperties.java</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"storage"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String location;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLocation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> location;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocation</span><span class="params">(String location)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.location = location;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到prefix=”storage”，当application启动的时候，绑定以storage前缀的属性。</p>
+<p>并且需要在Application.java中添加注解@EnableConfigurationProperties(StorageProperties.class)</p>
+<h3 id="Storage-Service"><a href="#Storage-Service" class="headerlink" title="Storage Service"></a>Storage Service</h3><h4 id="StorageService"><a href="#StorageService" class="headerlink" title="StorageService"></a>StorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Stream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">store</span><span class="params">(MultipartFile file,String type)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Path <span class="title">load</span><span class="params">(String filename)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个是可以用得到的方法，所以接下来就是实现这些方法</p>
+<h4 id="FileSystemStorageService"><a href="#FileSystemStorageService" class="headerlink" title="FileSystemStorageService"></a>FileSystemStorageService</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystemStorageService</span> <span class="keyword">implements</span> <span class="title">StorageService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Path rootLocation;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileSystemStorageService</span><span class="params">(StorageProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.rootLocation = Paths.get(properties.getLocation());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Files.createDirectories(rootLocation);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Could not initialize storage location"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">store</span><span class="params">(MultipartFile file)</span> </span>&#123;</span><br><span class="line">        String filename = StringUtils.cleanPath(file.getOriginalFilename());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.isEmpty()) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store empty file "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (filename.contains(<span class="string">".."</span>)) &#123;</span><br><span class="line">                <span class="comment">// This is a security check</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(</span><br><span class="line">                        <span class="string">"Cannot store file with relative path outside current directory "</span></span><br><span class="line">                                + filename);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> (InputStream inputStream = file.getInputStream()) &#123;</span><br><span class="line">                Files.copy(inputStream, <span class="keyword">this</span>.rootLocation.resolve(filename),</span><br><span class="line">                        StandardCopyOption.REPLACE_EXISTING);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to store file "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> filename;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Stream&lt;Path&gt; <span class="title">loadAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> Files.walk(<span class="keyword">this</span>.rootLocation, <span class="number">1</span>)</span><br><span class="line">                    .filter(path -&gt; !path.equals(<span class="keyword">this</span>.rootLocation))</span><br><span class="line">                    .map(<span class="keyword">this</span>.rootLocation::relativize);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StorageException(<span class="string">"Failed to read stored files"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Path <span class="title">load</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rootLocation.resolve(filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Resource <span class="title">loadAsResource</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Path file = load(filename);</span><br><span class="line">            Resource resource = <span class="keyword">new</span> UrlResource(file.toUri());</span><br><span class="line">            <span class="keyword">if</span> (resource.exists() || resource.isReadable()) &#123;</span><br><span class="line">                <span class="keyword">return</span> resource;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(</span><br><span class="line">                        <span class="string">"Could not read file: "</span> + filename);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(<span class="string">"Could not read file: "</span> + filename, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        FileSystemUtils.deleteRecursively(rootLocation.toFile());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<ol>
+<li>@PostConstuct注解，保证init()方法被调用当该bean被完全初始化</li>
+</ol>
+<h4 id="StorageException"><a href="#StorageException" class="headerlink" title="StorageException"></a>StorageException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StorageException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="FileNotFoundException"><a href="#FileNotFoundException" class="headerlink" title="FileNotFoundException"></a>FileNotFoundException</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.NOT_FOUND)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileNotFoundException</span> <span class="keyword">extends</span> <span class="title">StorageException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FileNotFoundException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<ol>
+<li>@ResponseStatus(HttpStatus.NOT_FOUND)该注解确保springboot返回的一个404的Http状态码</li>
+</ol>
+<p>以上可以实现上传文件，但是今天的项目需求是需要将图片等文件上传到服务器里面，就是上传到外部文件夹，并且通过url访问</p>
+<h4 id="SpringBoot访问绝对路径下的静态资源"><a href="#SpringBoot访问绝对路径下的静态资源" class="headerlink" title="SpringBoot访问绝对路径下的静态资源"></a>SpringBoot访问绝对路径下的静态资源</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfiguration</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/image/**"</span>).addResourceLocations(<span class="string">"file:D://test/images/"</span>);</span><br><span class="line">        registry.addResourceHandler(<span class="string">"/download/**"</span>).addResourceLocations(<span class="string">"file:D://test/files/"</span>);</span><br><span class="line">        <span class="keyword">super</span>.addResourceHandlers(registry);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<ol>
+<li>可以通过<a href="http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件" target="_blank" rel="noopener">http://127.0.0.1/image/**.jpg访问D://test/images/下的图片文件</a></li>
+</ol>
+<h4 id="其他收获"><a href="#其他收获" class="headerlink" title="其他收获"></a>其他收获</h4><ol>
+<li>通过postman发送表单 选择body里面的form-data然后添加key-value</li>
+<li>处理@RequestBody 该注解无法通过url和form来传递参数，只能通过json串 选择body里面的raw 然后选择JSON格式 提交的格式为</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"key"</span>:<span class="string">"value"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://attacomsian.com/blog/uploading-files-spring-boot" target="_blank" rel="noopener">file upload</a></p>
+<p><a href="https://blog.csdn.net/jy02268879/article/details/82830789" target="_blank" rel="noopener">postman</a></p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot的JDBC操作数据库</title>
+    <url>/81179857.html</url>
+    <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接Mysql数据库"><a href="#连接Mysql数据库" class="headerlink" title="连接Mysql数据库"></a>连接Mysql数据库</h3><p>在pom文件下引入Mysql数据库依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;5.1.21&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在application.properties中配置数据源信息</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=****</span><br><span class="line">spring.datasource.driver-<span class="class"><span class="keyword">class</span>-<span class="title">name</span></span>=com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用JdbcTemplate操作数据库"><a href="#使用JdbcTemplate操作数据库" class="headerlink" title="使用JdbcTemplate操作数据库"></a>使用JdbcTemplate操作数据库</h3><p>建立新的类UserServiceImpl</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"insert into USER(NAME,AGE) values(?,?)"</span>,name,age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteByName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user where name=?"</span>,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate.queryForObject(<span class="string">"select count(1) from user"</span>,Integer<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot开发Web应用</title>
     <url>/764686384.html</url>
     <content><![CDATA[<h3 id="SpringBoot的静态资源访问"><a href="#SpringBoot的静态资源访问" class="headerlink" title="SpringBoot的静态资源访问"></a>SpringBoot的静态资源访问</h3><p>位置src/main/resources下的static(没有的需要自己建立一个static文件夹)</p>
@@ -5963,6 +6110,37 @@
 <p>the advantage of ModalMap is it gives us the ability to pass a collection of values.</p>
 </blockquote>
 <p>打开浏览器localhost:8080即可访问到</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot的配置文件解析</title>
+    <url>/3020356367.html</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
+<p>位置 src/main/java/resources/application.properties</p>
+<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
+<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
+<p>打包后在target的文件夹下</p>
+<p>或者使用 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<p>运行jar包</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
+<ul>
+<li>application-dev.properties:开发环境</li>
+<li>application-test.properties:测试环境</li>
+<li>application-prod.properties:生产环境</li>
+</ul>
+<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -6004,59 +6182,6 @@
 </ul>
 <h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">ApplicationTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        userRepository.save(<span class="keyword">new</span> User(<span class="string">"AAA"</span>,<span class="number">0</span>));</span><br><span class="line">        ....</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot的JDBC操作数据库</title>
-    <url>/81179857.html</url>
-    <content><![CDATA[<h3 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h3><p>需要在pom文件下引入依赖，jdbc支持</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="连接Mysql数据库"><a href="#连接Mysql数据库" class="headerlink" title="连接Mysql数据库"></a>连接Mysql数据库</h3><p>在pom文件下引入Mysql数据库依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;5.1.21&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在application.properties中配置数据源信息</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql:<span class="comment">//localhost:3306/test</span></span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=****</span><br><span class="line">spring.datasource.driver-<span class="class"><span class="keyword">class</span>-<span class="title">name</span></span>=com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用JdbcTemplate操作数据库"><a href="#使用JdbcTemplate操作数据库" class="headerlink" title="使用JdbcTemplate操作数据库"></a>使用JdbcTemplate操作数据库</h3><p>建立新的类UserServiceImpl</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"insert into USER(NAME,AGE) values(?,?)"</span>,name,age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteByName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user where name=?"</span>,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate.queryForObject(<span class="string">"select count(1) from user"</span>,Integer<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAllUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">"delete from user"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <tags>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot的配置文件解析</title>
-    <url>/3020356367.html</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对SpringBoot的配置进行解析</p>
-<p>位置 src/main/java/resources/application.properties</p>
-<h3 id="添加自定义属性"><a href="#添加自定义属性" class="headerlink" title="添加自定义属性"></a>添加自定义属性</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.xujin.name=xujin</span><br><span class="line">com.xujin.say=I am xuxiaojin</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用自定义属性"><a href="#使用自定义属性" class="headerlink" title="使用自定义属性"></a>使用自定义属性</h3><p>通过使用@Value(“${}”)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;com.xujin.say&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String say;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/xu"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">" "</span>+say;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用Jar来运行SpringBoot"><a href="#使用Jar来运行SpringBoot" class="headerlink" title="使用Jar来运行SpringBoot"></a>使用Jar来运行SpringBoot</h3><p>可以通过maven打包</p>
-<p>在IDEA的右侧 Maven Projects-&gt;Lifecycle-&gt;package</p>
-<p>打包后在target的文件夹下</p>
-<p>或者使用 </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
-
-<p>运行jar包</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java -jar xx.jar</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用两种环境来生产"><a href="#使用两种环境来生产" class="headerlink" title="使用两种环境来生产"></a>使用两种环境来生产</h3><p>在springboot的多种环境中文件名需要满足application-{profile}.properties。例如</p>
-<ul>
-<li>application-dev.properties:开发环境</li>
-<li>application-test.properties:测试环境</li>
-<li>application-prod.properties:生产环境</li>
-</ul>
-<p>具体使用哪种环境需要在application.properties文件中通过spring.profiles.active=test等等</p>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
@@ -6119,6 +6244,24 @@
       </tags>
   </entry>
   <entry>
+    <title>python异常与模块化</title>
+    <url>/2483463584.html</url>
+    <content><![CDATA[<p>###异常处理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>还有一种常见形式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+
+<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
+<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
+]]></content>
+      <tags>
+        <tag>编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux一些常见的命令行</title>
     <url>/2560767953.html</url>
     <content><![CDATA[<hr>
@@ -6166,18 +6309,51 @@
       </tags>
   </entry>
   <entry>
-    <title>python异常与模块化</title>
-    <url>/2483463584.html</url>
-    <content><![CDATA[<p>###异常处理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'continue'</span>)</span><br></pre></td></tr></table></figure>
+    <title>python的字符串</title>
+    <url>/4045311999.html</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要对python的字符串操作进行探讨与分析</p>
+<h4 id="字符串基础"><a href="#字符串基础" class="headerlink" title="字符串基础"></a>字符串基础</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">'jason'</span></span><br><span class="line">city=<span class="string">'''shanghai'''</span></span><br><span class="line">text=<span class="string">"welcome to shanghai"</span></span><br><span class="line">print(name)</span><br><span class="line">print(city)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure>
 
-<p>还有一种常见形式</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    s=input(<span class="string">'Please enter two numbers separated by comma:'</span>)</span><br><span class="line">    num1=int(s.split(<span class="string">','</span>)[<span class="number">0</span>].strip())</span><br><span class="line">    num2=int(s.split(<span class="string">','</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Value Error:&#123;&#125;'</span>.format(err))</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'Other error:&#123;&#125;'</span>.format(err))</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">'continue'</span>)</span><br><span class="line"><span class="comment">#无论发生什么，finally块中的语句都会被执行</span></span><br></pre></td></tr></table></figure>
+<p>python的字符串通常包含在单引号，双引号以及三引号中</p>
+<h4 id="字符串的常用操作"><a href="#字符串的常用操作" class="headerlink" title="字符串的常用操作"></a>字符串的常用操作</h4><p>可以将字符串想象成由单个字符组成的数组，即python的字符串支持索引，切片和遍历等</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">print(name[<span class="number">0</span>])</span><br><span class="line">print(name[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> name:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
 
-<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyInputException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        self.value=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"&#123;&#125; is invalid input"</span>.format(repr(self.value)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> MyInputException(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">except</span> MyInputException <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">"error:&#123;&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+<p>其中特别要注意的就是python的字符串是不可变的(immutable)这一点跟元组有点类似</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">name[<span class="number">0</span>]=<span class="string">'j'</span></span><br><span class="line"><span class="comment">#报错，'str' object does not support item assignment</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="py模块化"><a href="#py模块化" class="headerlink" title="py模块化"></a>py模块化</h3><p>from your_file import function_name,class_name</p>
-<p>巧用 if <strong>name</strong>==’<strong>main</strong>‘来避开import使得执行</p>
+<p>所以跟元组类似，如果要改变python的字符串，只能通过创建新的字符串来完成</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">a=<span class="string">'j'</span>+name[<span class="number">1</span>:]</span><br><span class="line">print(a)</span><br><span class="line">b=name.replace(<span class="string">'X'</span>,<span class="string">'j'</span>)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
+
+<p>接着我们来看+=操作符的字符串拼接方法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">'Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin'</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">print(firstname)</span><br><span class="line"></span><br><span class="line"><span class="comment">#在拼接的时候，python解释器首先会检测是否还有其他引用，如果没有的话会在原地扩充字符串buffer的大小(后面要跟stringBuild联系起来)</span></span><br></pre></td></tr></table></figure>
+
+<p>我们再看一下字符串的分割函数split(separator),表示把字符串分割成子字符串，并且返回一个分割后的字符串组合的里列表</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=firstname.split(<span class="string">" "</span>) <span class="comment">#以空格分隔</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> a:</span><br><span class="line">    print(item)</span><br></pre></td></tr></table></figure>
+
+<p>还需要看一下字符串处理的操作</p>
+<ul>
+<li>string.strip(str),去掉<strong>首尾</strong>的str字符串</li>
+<li>string.lstrip(str),去掉<strong>开头</strong>的str字符串</li>
+<li>string.rstrip(str)去掉<strong>尾部</strong>的str字符串</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">' Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin '</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">a=firstname.strip(<span class="string">' '</span>)</span><br><span class="line">b=firstname.lstrip(<span class="string">' '</span>)</span><br><span class="line">c=firstname.rstrip(<span class="string">' '</span>)</span><br><span class="line">print(firstname)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment">#用来去掉空格很有效果，验证密码什么的</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h4><p>先来看一个例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id:&#123;&#125;,name:&#123;&#125;'</span>.format(id,name))</span><br></pre></td></tr></table></figure>
+
+<p>这里的string.format()就是**格式化函数，而{}就是格式符，用来为后面的真实值预留位置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id: %s,name: %s'</span>%(id,name))</span><br></pre></td></tr></table></figure>
+
+<p>这个是之前python版本处理相通功能的做法，当然我更喜欢用{}因为这样看起来比较规范</p>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>这篇文章主要讨论了python的字符串，总结一下</p>
+<ol>
+<li>python的字符串三种表现形式</li>
+<li>python字符串的操作，索引，切片，遍历，拼接，分割，处理</li>
+<li>python的字符的格式化，用来处理一些日志</li>
+<li>python的字符串是不可变的与元组相同</li>
+</ol>
+<p>好了~可以滚去复习了，考试周来了！</p>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
@@ -6319,57 +6495,6 @@
 <p>元组tuple，通过()表示，可以存储各种各样的数据类型，有顺序，其长度不可发生改变，可以任意访问，增加通过+会创建一个新的元组</p>
 <p>字典dict，通过{}表示，存储键值对，长度可以改变，可以通过hash的访问，任意删除，增加，修改</p>
 <p>集合set，通过{},相对于字典存储值，长度可变，访问不可通过索引，只能通过in，可以添加add(),可以删除remove()</p>
-]]></content>
-      <tags>
-        <tag>编程语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python的字符串</title>
-    <url>/4045311999.html</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要对python的字符串操作进行探讨与分析</p>
-<h4 id="字符串基础"><a href="#字符串基础" class="headerlink" title="字符串基础"></a>字符串基础</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">'jason'</span></span><br><span class="line">city=<span class="string">'''shanghai'''</span></span><br><span class="line">text=<span class="string">"welcome to shanghai"</span></span><br><span class="line">print(name)</span><br><span class="line">print(city)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure>
-
-<p>python的字符串通常包含在单引号，双引号以及三引号中</p>
-<h4 id="字符串的常用操作"><a href="#字符串的常用操作" class="headerlink" title="字符串的常用操作"></a>字符串的常用操作</h4><p>可以将字符串想象成由单个字符组成的数组，即python的字符串支持索引，切片和遍历等</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">print(name[<span class="number">0</span>])</span><br><span class="line">print(name[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> name:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
-
-<p>其中特别要注意的就是python的字符串是不可变的(immutable)这一点跟元组有点类似</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">name[<span class="number">0</span>]=<span class="string">'j'</span></span><br><span class="line"><span class="comment">#报错，'str' object does not support item assignment</span></span><br></pre></td></tr></table></figure>
-
-<p>所以跟元组类似，如果要改变python的字符串，只能通过创建新的字符串来完成</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name=<span class="string">"XuXiaoJin"</span></span><br><span class="line">a=<span class="string">'j'</span>+name[<span class="number">1</span>:]</span><br><span class="line">print(a)</span><br><span class="line">b=name.replace(<span class="string">'X'</span>,<span class="string">'j'</span>)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
-
-<p>接着我们来看+=操作符的字符串拼接方法</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">'Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin'</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">print(firstname)</span><br><span class="line"></span><br><span class="line"><span class="comment">#在拼接的时候，python解释器首先会检测是否还有其他引用，如果没有的话会在原地扩充字符串buffer的大小(后面要跟stringBuild联系起来)</span></span><br></pre></td></tr></table></figure>
-
-<p>我们再看一下字符串的分割函数split(separator),表示把字符串分割成子字符串，并且返回一个分割后的字符串组合的里列表</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=firstname.split(<span class="string">" "</span>) <span class="comment">#以空格分隔</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> a:</span><br><span class="line">    print(item)</span><br></pre></td></tr></table></figure>
-
-<p>还需要看一下字符串处理的操作</p>
-<ul>
-<li>string.strip(str),去掉<strong>首尾</strong>的str字符串</li>
-<li>string.lstrip(str),去掉<strong>开头</strong>的str字符串</li>
-<li>string.rstrip(str)去掉<strong>尾部</strong>的str字符串</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">firstname=<span class="string">' Xu'</span></span><br><span class="line">secondename=<span class="string">'Xiao'</span></span><br><span class="line">thirdname=<span class="string">'Jin '</span></span><br><span class="line">firstname+=<span class="string">' '</span>+secondename+<span class="string">" "</span>+thirdname</span><br><span class="line">a=firstname.strip(<span class="string">' '</span>)</span><br><span class="line">b=firstname.lstrip(<span class="string">' '</span>)</span><br><span class="line">c=firstname.rstrip(<span class="string">' '</span>)</span><br><span class="line">print(firstname)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment">#用来去掉空格很有效果，验证密码什么的</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h4><p>先来看一个例子</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id:&#123;&#125;,name:&#123;&#125;'</span>.format(id,name))</span><br></pre></td></tr></table></figure>
-
-<p>这里的string.format()就是**格式化函数，而{}就是格式符，用来为后面的真实值预留位置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l=[(<span class="number">1</span>,<span class="string">'xujin'</span>)]</span><br><span class="line"><span class="keyword">for</span> id,name <span class="keyword">in</span> l:</span><br><span class="line">    print(<span class="string">'the id: %s,name: %s'</span>%(id,name))</span><br></pre></td></tr></table></figure>
-
-<p>这个是之前python版本处理相通功能的做法，当然我更喜欢用{}因为这样看起来比较规范</p>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>这篇文章主要讨论了python的字符串，总结一下</p>
-<ol>
-<li>python的字符串三种表现形式</li>
-<li>python字符串的操作，索引，切片，遍历，拼接，分割，处理</li>
-<li>python的字符的格式化，用来处理一些日志</li>
-<li>python的字符串是不可变的与元组相同</li>
-</ol>
-<p>好了~可以滚去复习了，考试周来了！</p>
 ]]></content>
       <tags>
         <tag>编程语言</tag>
